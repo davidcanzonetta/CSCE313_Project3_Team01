@@ -6,6 +6,8 @@ public class Fanorona {
 	 * @param args
 	 */
 	int moves = 0; //Keep track of number of game moves
+	int whitePieces = 22;
+	int blackPieces = 22;
 	
 	public static void main(String[] args) 
 	{
@@ -19,6 +21,16 @@ public class Fanorona {
 			return false;
 		else
 			return true;
+	}
+	//Return number of remaining white pieces
+	public static int rem_white()
+	{
+		return whitePieces;
+	}
+	//Return number of remaining black pieces
+	public static int rem_black()
+	{
+		return blackPieces;
 	}
 
 }
