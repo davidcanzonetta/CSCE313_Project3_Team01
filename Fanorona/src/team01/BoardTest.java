@@ -8,7 +8,7 @@ public class BoardTest {
 
 	@Test
 	public void testConstructor() {
-		Board board = new Board();
+		Board board = new Board();	// test the default board
 		
 		assertTrue (board.isEmpty(22));
 		assertEquals (board.numBlack(), 22);

@@ -2,6 +2,7 @@ package team01;
 
 import java.util.*;
 
+//comment test
 public class Board {
 
 	static final int ROW_SIZE = 5;
@@ -43,6 +44,16 @@ public class Board {
 		// last 2 rows
 		while (i < BOARD_SIZE) {
 			board.add(i++, WHITE);
+		}
+	}
+	
+	// copy constructor with deep array copy
+	public Board(Board b) {
+		this.nBlack = b.nBlack;
+		this.nWhite = b.nWhite;
+		
+		for (int x : b.board) {
+			this.board.add(x);
 		}
 	}
 
