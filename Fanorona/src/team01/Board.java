@@ -23,27 +23,35 @@ public class Board {
 		nWhite = nBlack = 22;
 		
 		// first 2 rows
-		for (int i = 0; i < 2*COL_SIZE; i++) {
-			this.setPosition(i, BLACK);
+		int i = 0;
+		
+		while (i < 2*COL_SIZE) {
+			board.add(i++, BLACK);
 		}
 		
 		// middle row
-		this.setPosition(18,BLACK);
-		this.setPosition(19,WHITE);
-		this.setPosition(20,BLACK);
-		this.setPosition(21,WHITE);
-		this.setPosition(22,EMPTY);
-		this.setPosition(23,BLACK);
-		this.setPosition(24,WHITE);
-		this.setPosition(25,BLACK);
-		this.setPosition(26,WHITE);
+		board.add(i++,BLACK);
+		board.add(i++,WHITE);
+		board.add(i++,BLACK);
+		board.add(i++,WHITE);
+		board.add(i++,EMPTY);
+		board.add(i++,BLACK);
+		board.add(i++,WHITE);
+		board.add(i++,BLACK);
+		board.add(i++,WHITE);
 		
 		// last 2 rows
-		for (int i = 3*COL_SIZE; i < BOARD_SIZE; i++) {
-			this.setPosition(i, WHITE);
+		while (i < BOARD_SIZE) {
+			board.add(i++, WHITE);
 		}
 	}
-	
+
+//	@Override
+//	public String toString() {
+//		String str = "";
+//		return str;
+//	}
+
 	public int numWhite() {
 		return nWhite;
 	}
