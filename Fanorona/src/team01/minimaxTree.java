@@ -19,7 +19,7 @@ public class minimaxTree {
 	}
 	*/
 	public static int utilityValue(MinimaxNode n) {
-		return (n.data.rem_white() - n.data.rem_black());
+		return n.data.numWhite() - n.data.numBlack();
 	}
 	
 	public static int minimax(MinimaxNode n, int depth) {
@@ -36,20 +36,20 @@ public class minimaxTree {
 	//Data members
 	private MinimaxNode root;
 	
-	
+	// TODO: still need Board copy constructor or clone that performs a deep copy
 	public static class MinimaxNode {
 		//Constructors
-		MinimaxNode(Fanorona nData) {//No parent, No children
+		MinimaxNode(Board nData) {//No parent, No children
 			data = nData;
 			children = null;
 			parent = null;
 		} 
-		MinimaxNode(Fanorona nData, List<MinimaxNode> nChildren) { //No parent
+		MinimaxNode(Board nData, List<MinimaxNode> nChildren) { //No parent
 			data = nData;
 			children = nChildren;
 			parent = null;
 		}
-		MinimaxNode(Fanorona nData, List<MinimaxNode> nChildren, MinimaxNode nParent) {
+		MinimaxNode(Board nData, List<MinimaxNode> nChildren, MinimaxNode nParent) {
 			data = nData;
 			children = nChildren;
 			parent = nParent;
@@ -71,7 +71,7 @@ public class minimaxTree {
 		}
 		*/
 		//Data members
-		private Fanorona data;
+		private Board data;
 		private MinimaxNode parent;
 		private List<MinimaxNode> children;
 		
