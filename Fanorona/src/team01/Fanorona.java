@@ -5,9 +5,9 @@ public class Fanorona {
 	/**
 	 * @param args
 	 */
-	int moves = 0; //Keep track of number of game moves
-	int whitePieces = 22;
-	int blackPieces = 22;
+	static int moves = 0; //Keep track of number of game moves
+	static int whitePieces = 22;
+	static int blackPieces = 22;
 	
 	public static void main(String[] args) 
 	{
