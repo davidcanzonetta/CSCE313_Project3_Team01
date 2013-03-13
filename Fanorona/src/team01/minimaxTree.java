@@ -28,7 +28,7 @@ public class minimaxTree {
 		}
 		int alpha = -99999;
 		for(int i = 0; i < n.children.size(); i++) {
-			alpha = max(alpha, -minimax(n.children.get(i), depth-1));
+			alpha = Math.max(alpha, -minimax(n.children.get(i), depth-1));
 		}
 		return alpha;
 	}
