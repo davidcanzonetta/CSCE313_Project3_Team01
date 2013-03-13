@@ -91,6 +91,7 @@ public class Board {
 		return board.get(pos) == BLACK;
 	}
 	
+	// TODO: should captures modify the values for nWhite/nBlack or should this?
 	public void setPosition(int pos, int state) {
 		board.set(pos, state);
 	}
