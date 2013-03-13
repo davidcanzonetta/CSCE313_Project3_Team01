@@ -36,21 +36,21 @@ public class minimaxTree {
 	//Data members
 	private MinimaxNode root;
 	
-	// TODO: still need Board copy constructor or clone that performs a deep copy
+	// use Board copy constructor that performs a deep copy
 	public static class MinimaxNode {
 		//Constructors
 		MinimaxNode(Board nData) {//No parent, No children
-			data = nData;
+			data = new Board(nData);
 			children = null;
 			parent = null;
 		} 
 		MinimaxNode(Board nData, List<MinimaxNode> nChildren) { //No parent
-			data = nData;
+			data = new Board(nData);
 			children = nChildren;
 			parent = null;
 		}
 		MinimaxNode(Board nData, List<MinimaxNode> nChildren, MinimaxNode nParent) {
-			data = nData;
+			data = new Board(nData);
 			children = nChildren;
 			parent = nParent;
 	

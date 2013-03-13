@@ -46,6 +46,16 @@ public class Board {
 			board.add(i++, WHITE);
 		}
 	}
+	
+	// copy constructor with deep array copy
+	public Board(Board b) {
+		this.nBlack = b.nBlack;
+		this.nWhite = b.nWhite;
+		
+		for (int x : b.board) {
+			this.board.add(x);
+		}
+	}
 
 	@Override
 	public String toString() {
