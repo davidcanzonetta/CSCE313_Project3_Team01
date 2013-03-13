@@ -2,6 +2,7 @@ package team01;
 
 import java.util.*;
 
+//comment test
 public class Board {
 
 	static final int ROW_SIZE = 5;
