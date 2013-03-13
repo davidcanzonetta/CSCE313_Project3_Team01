@@ -44,31 +44,31 @@ public class Board {
 		}
 	}
 	
-	int numWhite() {
+	public int numWhite() {
 		return nWhite;
 	}
 	
-	int numBlack() {
+	public int numBlack() {
 		return nBlack;
 	}
 	
-	int numEmpty() {
+	public int numEmpty() {
 		return BOARD_SIZE - nWhite - nBlack;
 	}
 	
-	boolean isEmpty(int pos) {
+	public boolean isEmpty(int pos) {
 		return board.get(pos) == EMPTY;
 	}
 	
-	boolean isWhite(int pos) {
+	public boolean isWhite(int pos) {
 		return board.get(pos) == WHITE;
 	}
 	
-	boolean isBlack(int pos) {
+	public boolean isBlack(int pos) {
 		return board.get(pos) == BLACK;
 	}
 	
-	void setPosition(int pos, int state) {
+	public void setPosition(int pos, int state) {
 		board.set(pos, state);
 	}
 }
