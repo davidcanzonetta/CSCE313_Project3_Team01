@@ -8,6 +8,7 @@ public class Fanorona {
 	static int moves = 0; //Keep track of number of game moves
 	static int whitePieces = 22;
 	static int blackPieces = 22;
+	static Board board = new Board();
 	
 	public static void main(String[] args) 
 	{
@@ -31,6 +32,28 @@ public class Fanorona {
 	public static int rem_black()
 	{
 		return blackPieces;
+	}
+	
+	//Function to move white pieces, returns -1 if invalid move etc.
+	public static int move_white(int curr_pos, int new_pos) {
+		if(board.isWhite(curr_pos) && board.isEmpty(new_pos)) {
+			board.setPosition(curr_pos, Board.EMPTY);
+			board.setPosition(new_pos, Board.WHITE);
+			return 0; 
+		} else {
+			return -1;
+		}
+	}
+	
+	//Function to move black pieces, returns -1 if invalid move etc.
+	public static int move_black(int curr_pos, int new_pos) {
+		if(board.isBlack(curr_pos) && board.isEmpty(new_pos)) {
+			board.setPosition(curr_pos, Board.EMPTY);
+			board.setPosition(new_pos, Board.BLACK);
+			return 0; 
+		} else {
+			return -1;
+		}
 	}
 
 }

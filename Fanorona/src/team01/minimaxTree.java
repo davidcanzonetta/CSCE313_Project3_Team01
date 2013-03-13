@@ -19,11 +19,11 @@ public class minimaxTree {
 	}
 	*/
 	public static int utilityValue(MinimaxNode n) {
-		return (n.data.rem_white() - n.data.rem_black());
+		return (n.data.numWhite() - n.data.numBlack());
 	}
 	
 	public static int minimax(MinimaxNode n, int depth) {
-		if(depth <= 0) {
+		if(depth <= 0 || n.children.size() == 0) {
 			return utilityValue(n);
 		}
 		int alpha = -99999;
@@ -32,6 +32,28 @@ public class minimaxTree {
 		}
 		return alpha;
 	}
+	/*
+	 function integer play_minimax(node, depth)
+    if node is a terminal node or depth == 0:
+        return the heuristic value of node
+    α = -∞
+    LOOP: # try all possible movements for this node/game state
+        player = depth mod 2
+        move = make_game_move(node, player)
+        break if not any move
+        α = max(α, -play_minimax(move, depth-1))
+    return α
+	 */
+	public int depth(){ //Returns the depth of the tree
+		int max_depth=0;
+		for(int i = 0; i < root.children.size(); i++) {
+			int curr_depth = MinimaxNode.depth(root.children.get(i));
+			if (curr_depth > max_depth) {
+				max_depth = curr_depth;
+			}
+		}
+		return max_depth;
+	}
 	
 	//Data members
 	private MinimaxNode root;
@@ -39,17 +61,17 @@ public class minimaxTree {
 	
 	public static class MinimaxNode {
 		//Constructors
-		MinimaxNode(Fanorona nData) {//No parent, No children
+		MinimaxNode(Board nData) {//No parent, No children
 			data = nData;
 			children = null;
 			parent = null;
 		} 
-		MinimaxNode(Fanorona nData, List<MinimaxNode> nChildren) { //No parent
+		MinimaxNode(Board nData, List<MinimaxNode> nChildren) { //No parent
 			data = nData;
 			children = nChildren;
 			parent = null;
 		}
-		MinimaxNode(Fanorona nData, List<MinimaxNode> nChildren, MinimaxNode nParent) {
+		MinimaxNode(Board nData, List<MinimaxNode> nChildren, MinimaxNode nParent) {
 			data = nData;
 			children = nChildren;
 			parent = nParent;
@@ -67,11 +89,17 @@ public class minimaxTree {
 		}
 		/*
 		public int height(MinimaxNode n) {//Return the height of a node where leafs have height 0
-		
+			if (n == NULL)
+				return -1;
+			else {
+				int max_height;
+				for(int i = 0; i < children.size(); i++)
+					
+			}
 		}
 		*/
 		//Data members
-		private Fanorona data;
+		private Board data;
 		private MinimaxNode parent;
 		private List<MinimaxNode> children;
 		
