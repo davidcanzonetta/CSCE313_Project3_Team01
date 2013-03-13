@@ -30,15 +30,15 @@ public class Board {
 		}
 		
 		// middle row
-		board.add(i++,BLACK);
-		board.add(i++,WHITE);
-		board.add(i++,BLACK);
-		board.add(i++,WHITE);
-		board.add(i++,EMPTY);
-		board.add(i++,BLACK);
-		board.add(i++,WHITE);
-		board.add(i++,BLACK);
-		board.add(i++,WHITE);
+		board.add(i++, BLACK);
+		board.add(i++, WHITE);
+		board.add(i++, BLACK);
+		board.add(i++, WHITE);
+		board.add(i++, EMPTY);
+		board.add(i++, BLACK);
+		board.add(i++, WHITE);
+		board.add(i++, BLACK);
+		board.add(i++, WHITE);
 		
 		// last 2 rows
 		while (i < BOARD_SIZE) {
@@ -46,11 +46,26 @@ public class Board {
 		}
 	}
 
-//	@Override
-//	public String toString() {
-//		String str = "";
-//		return str;
-//	}
+	@Override
+	public String toString() {
+		String str = "";
+		
+		for (int i = 0; i < BOARD_SIZE; i++) {
+			if (isBlack(i))
+				str += "x";
+			else if (isWhite(i))
+				str += "o";
+			else // if (isEmpty(i))
+				str += "_";
+			
+			if ((i+1) % Board.COL_SIZE == 0)
+				str += "\n";
+			else
+				str += " ";
+		}
+		
+		return str;
+	}
 
 	public int numWhite() {
 		return nWhite;
