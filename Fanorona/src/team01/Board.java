@@ -23,7 +23,7 @@ public class Board {
 		nWhite = nBlack = 22;
 		
 		// first 2 rows
-		for (int i = 0; i < 2*ROW_SIZE; i++) {
+		for (int i = 0; i < 2*COL_SIZE; i++) {
 			this.setPosition(i, BLACK);
 		}
 		
@@ -39,7 +39,7 @@ public class Board {
 		this.setPosition(26,WHITE);
 		
 		// last 2 rows
-		for (int i = 3*ROW_SIZE; i < BOARD_SIZE; i++) {
+		for (int i = 3*COL_SIZE; i < BOARD_SIZE; i++) {
 			this.setPosition(i, WHITE);
 		}
 	}
