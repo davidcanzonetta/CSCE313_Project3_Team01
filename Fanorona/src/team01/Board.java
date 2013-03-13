@@ -58,7 +58,7 @@ public class Board {
 			else // if (isEmpty(i))
 				str += "_";
 			
-			if ((i+1) % Board.COL_SIZE == 0)
+			if ((i+1) % COL_SIZE == 0)
 				str += "\n";
 			else
 				str += " ";
