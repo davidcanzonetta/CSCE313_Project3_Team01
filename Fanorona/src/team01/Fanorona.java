@@ -1,5 +1,7 @@
 package team01;
 
+import java.util.*
+
 public class Fanorona {
 
 	/**
@@ -12,8 +14,53 @@ public class Fanorona {
 	
 	public static void main(String[] args) 
 	{
-			
-		
+		//Implements move functionality, not visual yet
+		//TODO: Print the board
+		boolean valid_move = false, quit = false;
+		int curr_pos, new_pos, error_check = 0, in;
+		Scanner input=new Scanner(System.in);
+		while(!quit)
+		{
+			while(!valid_move)
+			{
+				System.out.print("Enter the current numerical position of the white piece to move: ");
+				curr_pos = input.nextInt();
+				System.out.print("Enter the numerical position to move to: ");
+				new_pos = input.nextInt();
+				error_check = move_white(curr_pos, new_pos);
+				if(error_check == 0)
+				{
+					System.out.println("Valid move");
+					moves++;
+					valid_move = true;
+				}
+				else
+					System.out.println("Not a valid move");
+			}
+			valid_move = false;
+			while(!valid_move)
+			{
+				System.out.print("Enter the current numerical position of the black piece to move: ");
+				curr_pos = input.nextInt();
+				System.out.print("Enter the numerical position to move to: ");
+				new_pos = input.nextInt();
+				error_check = move_black(curr_pos, new_pos);
+				if(error_check == 0)
+				{
+					System.out.println("Valid move");
+					moves++;
+					valid_move = true;
+				}
+				else
+					System.out.println("Not a valid move");
+			}
+			System.out.print("Enter 1 to keep moving: ");
+			in = input.nextInt();
+			if(in != 1)
+				quit = true;
+			//quit stays false if moves has not exceeded 50
+			quit = max_moves();
+		}
 	}
 	//Returns FALSE if maximum number of moves has been exceeded
 	public static boolean max_moves()
