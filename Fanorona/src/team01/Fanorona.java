@@ -1,6 +1,6 @@
 package team01;
 
-import java.util.*
+import java.util.*;
 
 public class Fanorona {
 
@@ -52,19 +52,22 @@ public class Fanorona {
 				else
 					System.out.println("Not a valid move");
 			}
+			quit = max_moves();
 			System.out.print("Enter 1 to keep moving: ");
 			in = input.nextInt();
 			if(in != 1)
 				quit = true;
 			//quit stays false if moves has not exceeded 50
-			quit = max_moves();
 		}
 	}
 	//Returns FALSE if maximum number of moves has been exceeded
 	public static boolean max_moves()
 	{
 		if(moves >= 50)
+		{
+			System.out.println("Maximum moves exceeded");
 			return false;
+		}
 		else
 			return true;
 	}
