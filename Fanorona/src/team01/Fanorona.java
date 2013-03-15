@@ -8,8 +8,6 @@ public class Fanorona {
 	 * @param args
 	 */
 	static int moves = 0; //Keep track of number of game moves
-	static int whitePieces = 22;
-	static int blackPieces = 22;
 	static Board board = new Board();
 	
 	public static void main(String[] args) 
@@ -69,16 +67,6 @@ public class Fanorona {
 			return false;
 		else
 			return true;
-	}
-	//Return number of remaining white pieces
-	public static int rem_white()
-	{
-		return whitePieces;
-	}
-	//Return number of remaining black pieces
-	public static int rem_black()
-	{
-		return blackPieces;
 	}
 	
 	//Function to move white pieces, returns -1 if invalid move etc.
