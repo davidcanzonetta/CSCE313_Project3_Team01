@@ -49,11 +49,12 @@ public class Board {
 	
 	// copy constructor with deep array copy
 	public Board(Board b) {
-		this.nBlack = b.nBlack;
-		this.nWhite = b.nWhite;
+		nBlack = b.nBlack;
+		nWhite = b.nWhite;
+		board = new ArrayList <Integer> (BOARD_SIZE);
 		
 		for (int x : b.board) {
-			this.board.add(x);
+			board.add(x);
 		}
 	}
 
