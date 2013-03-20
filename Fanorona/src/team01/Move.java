@@ -10,6 +10,7 @@ public class Move {
 		path = new ArrayList<Point>();
 	}
 	
+	// check move from (x1, y1) to (x2, y2).
 	// this code should not have side effects!
 	public boolean isValidMove(int x1, int y1, int x2, int y2)
 	{
