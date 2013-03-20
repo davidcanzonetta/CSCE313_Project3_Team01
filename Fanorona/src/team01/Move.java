@@ -1,41 +1,48 @@
 package team01;
 
+import java.util.*;
+
 public class Move {
 	
 	public Move (Board b)
 	{
 		board = b;
-		// previous deltas are infinity
-		prevdx = Integer.MAX_VALUE;
-		prevdy = Integer.MAX_VALUE;
+		path = new ArrayList<Point>();
 	}
 	
+	// this code should not have side effects!
 	public boolean isValidMove(int x1, int y1, int x2, int y2)
 	{
-		// position (x2, y2) is out of range
+		// position (x2, y2) is in range?
 		if (! board.isValidPosition(x2, y2))
 		{
 			return false;
 		}
 		
-		// position is empty?
+		// position (x2, y2) is empty?
 		if (! board.isEmpty(x2, y2))
 		{
 			return false;
 		}
 		
-		// cannot move to position multiple times in a move
-		if (! isUniquePosition(x2, y2))
+		// position (x2, y2) already in path?
+		if (findInPath(x2, y2))
 		{
 			return false;
 		}
 		
-		// delta x and delta y
+		// use delta x and delta y to check direction
 		int dx = x2 - x1;
 		int dy = y2 - y1;
 		
-		// check delta range and direction
+		// check delta ranges
 		if (! isValidDelta(dx, dy))
+		{
+			return false;
+		}
+		
+		// direction of current move different than last move?
+		if (! isNewDirection(x1, y1, dx, dy))
 		{
 			return false;
 		}
@@ -43,39 +50,68 @@ public class Move {
 		// handle diagonal moves
 		if (Math.abs(dx) + Math.abs(dy) == 2)
 		{
-			// current position must be able to move diagonally
+			// current position (x1, y1) can move diagonally?
 			if (! board.isDiagonalPosition(x1, y1))
 			{
 				return false;
 			}
 		}
 		
-		
-		// TODO: this code should not have side-effects!
-		
-//		prevdx = dx;
-//		prevdy = dy;
-		
 		return true;
 	}
 	
-	// TODO: add position to uniquePosition set
+	// check if position (x, y) is in path
+	private boolean findInPath(int x, int y)
+	{
+		for (Point point : path)
+		{
+			if (point.x == x && point.y == y)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	// add position (x, y) to path
+	private void addToPath(int x, int y)
+	{
+		path.add(new Point(x, y));
+	}
 	
 	private boolean isValidDelta(int dx, int dy)
 	{
 		// delta values in [-1, 1] ?
 		return -1 <= dx && dx <= 1
-			&& -1 <= dy && dy <= 1
-			&& (dx != prevdx || dy != prevdy);
+			&& -1 <= dy && dy <= 1;
 	}
 	
-	private boolean isUniquePosition(int x, int y)
+	private boolean isNewDirection(int x, int y, int dx, int dy)
 	{
-		// TODO: is position in set?
+		int last = path.size() - 1;
+		
+		// check direction of last move in the path
+		if (last >= 0)
+		{
+			Point point = path.get(last);
+			int lastdx = x - point.x;
+			int lastdy = y - point.y;
+			return (dx != lastdx || dy != lastdy);
+		}
+		
+		// no moves to check
 		return true;
 	}
 	
+	private class Point {
+		public Point (int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+		public int x;
+		public int y;
+	}
+	
+	private List<Point> path;
 	private Board board;
-	private int prevdx;
-	private int prevdy;
 }
