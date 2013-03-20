@@ -1,110 +1,148 @@
 package team01;
 
-import java.util.*;
-
-//comment test
 public class Board {
 
-	static final int ROW_SIZE = 5;
-	static final int COL_SIZE = 9;
-	static final int BOARD_SIZE = ROW_SIZE * COL_SIZE;
-	
 	// board states
-	static final int EMPTY = 0;
-	static final int WHITE = 1;
-	static final int BLACK = 2;
+	public static final int WHITE = 0;
+	public static final int BLACK = 1;
+	public static final int EMPTY = 2;
 	
-	private List <Integer> board;
-	private int nWhite;
-	private int nBlack;
+	public Board (int w, int h)
+	{
+		width = w;
+		height = h;
+		grid = new int [height][width];
+		
+		// initialize grid
+		newGame ();
+	}
 	
-	// new game
-	public Board() {
-		board = new ArrayList <Integer>(BOARD_SIZE);
-		nWhite = nBlack = 22;
+	public Board (Board board)
+	{
+		width = board.width;
+		height = board.height;
+		grid = new int [height][width];
 		
-		// first 2 rows
-		int i = 0;
-		
-		while (i < 2*COL_SIZE) {
-			board.add(i++, BLACK);
-		}
-		
-		// middle row
-		board.add(i++, BLACK);
-		board.add(i++, WHITE);
-		board.add(i++, BLACK);
-		board.add(i++, WHITE);
-		board.add(i++, EMPTY);
-		board.add(i++, BLACK);
-		board.add(i++, WHITE);
-		board.add(i++, BLACK);
-		board.add(i++, WHITE);
-		
-		// last 2 rows
-		while (i < BOARD_SIZE) {
-			board.add(i++, WHITE);
+		// deep copy of grid
+		for (int i = 0; i < height; i++)
+		{
+			for (int k = 0; k < width; k++)
+			{
+				grid[i][k] = board.grid[i][k];
+			}
 		}
 	}
 	
-	// copy constructor with deep array copy
-	public Board(Board b) {
-		nBlack = b.nBlack;
-		nWhite = b.nWhite;
-		board = new ArrayList <Integer> (BOARD_SIZE);
+	@Override public String toString()
+	{
+		StringBuilder str = new StringBuilder();
 		
-		for (int x : b.board) {
-			board.add(x);
+		for (int i = 0; i < height; i++)
+		{
+			for (int k = 0; k < width; k++)
+			{
+				int x = grid[i][k];
+				
+				if (x == WHITE) {
+					str.append("o ");
+				} else if (x == BLACK) {
+					str.append("x ");
+				} else { // if (x == EMPTY)
+					str.append("_ ");
+				}
+			}
+			str.append('\n');
 		}
+		
+		return str.toString();
 	}
 
-	@Override
-	public String toString() {
-		String str = "";
+	public int getWidth()
+	{
+		return width;
+	}
+
+	public int getHeight()
+	{
+		return height;
+	}
+	
+	public int getPosition(int x, int y)
+	{
+		return grid[y][x];
+	}
+	
+	public void setPosition(int x, int y, int val)
+	{
+		if (isValidPosition(x, y))
+		{
+			grid[y][x] = val;
+		}
+	}
+	
+	public boolean isValidPosition(int x, int y)
+	{
+		// x in [0, width) and y in [0, height) ?
+		return 0 <= x && x < width
+			&& 0 <= y && y < height;
+	}
+	
+	private void newGame()
+	{
+		int middle = height / 2;	// middle row
+		int center = width / 2;	// center column
 		
-		for (int i = 0; i < BOARD_SIZE; i++) {
-			if (isBlack(i))
-				str += "x";
-			else if (isWhite(i))
-				str += "o";
-			else // if (isEmpty(i))
-				str += "_";
-			
-			if ((i+1) % COL_SIZE == 0)
-				str += "\n";
+		// top 2 rows
+		for (int i = 0; i < middle; i++)
+		{
+			for (int k = 0; k < width; k++)
+			{
+				grid[i][k] = BLACK;
+			}
+		}
+		
+		// left half of middle row
+		for (int i = 0; i < center; i++)
+		{
+			if (i % 2 == 0)
+				grid[middle][i] = BLACK;
 			else
-				str += " ";
+				grid[middle][i] = WHITE;
 		}
 		
-		return str;
-	}
-
-	public int numWhite() {
-		return nWhite;
-	}
-	
-	public int numBlack() {
-		return nBlack;
-	}
-	
-	public int numEmpty() {
-		return BOARD_SIZE - nWhite - nBlack;
-	}
-	
-	public boolean isEmpty(int pos) {
-		return board.get(pos) == EMPTY;
-	}
-	
-	public boolean isWhite(int pos) {
-		return board.get(pos) == WHITE;
-	}
-	
-	public boolean isBlack(int pos) {
-		return board.get(pos) == BLACK;
+		// middle center position
+		grid[middle][center] = EMPTY;
+		
+		// right half of middle row
+		for (int i = center+1; i < width; i++)
+		{
+			if (i % 2 == 0)
+				grid[middle][i] = WHITE;
+			else
+				grid[middle][i] = BLACK;
+		}
+		
+		// bottom 2 rows
+		for (int i = middle+1; i < height; i++)
+		{
+			for (int k = 0; k < width; k++)
+			{
+				grid[i][k] = WHITE;
+			}
+		}
 	}
 	
-	// TODO: should captures modify the values for nWhite/nBlack or should this?
-	public void setPosition(int pos, int state) {
-		board.set(pos, state);
+	public static void main (String[] args)
+	{
+		Board board1 = new Board (3, 3);
+		Board board2 = new Board (board1);
+		
+		board2.setPosition(0, 1, EMPTY);
+		System.out.println (board1);
+		System.out.println (board2);
 	}
+	
+	private int width;
+	private int height;
+	private int [][] grid;
 }
