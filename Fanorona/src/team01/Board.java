@@ -74,7 +74,7 @@ public class Board {
 	
 	public void setPosition(int x, int y, int val)
 	{
-		if (isValidPosition(x, y))
+//		if (isValidPosition(x, y))
 		{
 			grid[y][x] = val;
 		}
@@ -85,6 +85,27 @@ public class Board {
 		// x in [0, width) and y in [0, height) ?
 		return 0 <= x && x < width
 			&& 0 <= y && y < height;
+	}
+	
+	public boolean isDiagonalPosition(int x, int y)
+	{
+		// position has diagonal if x+y is even
+		return (x + y) % 2 == 0;
+	}
+	
+	public boolean isEmpty(int x, int y)
+	{
+		return grid[y][x] == EMPTY;
+	}
+	
+	public boolean isWhite(int x, int y)
+	{
+		return grid[y][x] == WHITE;
+	}
+	
+	public boolean isBlack(int x, int y)
+	{
+		return grid[y][x] == BLACK;
 	}
 	
 	private void newGame()
@@ -132,15 +153,15 @@ public class Board {
 		}
 	}
 	
-	public static void main (String[] args)
-	{
-		Board board1 = new Board (3, 3);
-		Board board2 = new Board (board1);
-		
-		board2.setPosition(0, 1, EMPTY);
-		System.out.println (board1);
-		System.out.println (board2);
-	}
+//	public static void main (String[] args)
+//	{
+//		Board board1 = new Board (3, 3);
+//		Board board2 = new Board (board1);
+//		
+//		board2.setPosition(0, 1, EMPTY);
+//		System.out.println (board1);
+//		System.out.println (board2);
+//	}
 	
 	private int width;
 	private int height;
