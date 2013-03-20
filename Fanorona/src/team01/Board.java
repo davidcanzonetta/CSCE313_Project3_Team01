@@ -43,11 +43,16 @@ public class Board {
 			{
 				int x = grid[i][k];
 				
-				if (x == WHITE) {
+				if (x == WHITE)
+				{
 					str.append("o ");
-				} else if (x == BLACK) {
+				}
+				else if (x == BLACK)
+				{
 					str.append("x ");
-				} else { // if (x == EMPTY)
+				}
+				else // if (x == EMPTY)
+				{
 					str.append("_ ");
 				}
 			}
@@ -123,24 +128,18 @@ public class Board {
 		}
 		
 		// left half of middle row
-		for (int i = 0; i < center; i++)
+		for (int k = 0; k < center; k++)
 		{
-			if (i % 2 == 0)
-				grid[middle][i] = BLACK;
-			else
-				grid[middle][i] = WHITE;
+			grid[middle][k] = isEven(k) ? BLACK : WHITE;
 		}
 		
 		// middle center position
 		grid[middle][center] = EMPTY;
 		
 		// right half of middle row
-		for (int i = center+1; i < width; i++)
+		for (int k = center+1; k < width; k++)
 		{
-			if (i % 2 == 0)
-				grid[middle][i] = WHITE;
-			else
-				grid[middle][i] = BLACK;
+			grid[middle][k] = isEven(k) ? WHITE : BLACK;
 		}
 		
 		// bottom 2 rows
@@ -162,6 +161,11 @@ public class Board {
 //		System.out.println (board1);
 //		System.out.println (board2);
 //	}
+	
+	private boolean isEven(int n)
+	{
+		return (n & 1) == 0;
+	}
 	
 	private int width;
 	private int height;
