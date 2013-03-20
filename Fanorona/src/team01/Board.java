@@ -11,6 +11,7 @@ public class Board {
 	{
 		width = w;
 		height = h;
+		nWhite = nBlack = (height * width - 1) / 2;
 		grid = new int [height][width];
 		
 		// initialize grid
@@ -21,6 +22,9 @@ public class Board {
 	{
 		width = board.width;
 		height = board.height;
+		nWhite = board.nWhite;
+		nBlack = board.nBlack;
+		
 		grid = new int [height][width];
 		
 		// deep copy of grid
@@ -113,6 +117,21 @@ public class Board {
 		return getPosition(x, y) == BLACK;
 	}
 	
+	public int numWhite()
+	{
+		return nWhite;
+	}
+	
+	public int numBlack()
+	{
+		return nBlack;
+	}
+	
+	public int numEmpty()
+	{
+		return width * height - nWhite - nBlack;
+	}
+	
 	private void newGame()
 	{
 		int middle = height / 2;	// middle row
@@ -170,4 +189,7 @@ public class Board {
 	private int width;
 	private int height;
 	private int [][] grid;
+	
+	private int nWhite;
+	private int nBlack;
 }

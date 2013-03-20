@@ -58,7 +58,31 @@ public class Move {
 			}
 		}
 		
+		int player = board.getPosition(x1, y1);
+		
+		// move will capture other player's piece by approach or withdrawal?
+		if (! (hasCapture(player, x2 + dx, y2 + dy)
+			|| hasCapture(player, x1 - dx, y1 - dy)))
+		{
+			return false;
+		}
+		
 		return true;
+	}
+	
+	private boolean hasCapture(int player, int x, int y)
+	{
+		if (board.isValidPosition(x, y))
+		{
+			int otherplayer = board.getPosition(x, y);
+			
+			if (otherplayer != Board.EMPTY && otherplayer != player)
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	// check if position (x, y) is in path
