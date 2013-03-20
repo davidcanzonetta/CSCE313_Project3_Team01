@@ -5,9 +5,9 @@ public class Move {
 	public Move (Board b)
 	{
 		board = b;
-		// previous direction
-		prevdx = 0;
-		prevdy = 0;
+		// previous deltas are infinity
+		prevdx = Integer.MAX_VALUE;
+		prevdy = Integer.MAX_VALUE;
 	}
 	
 	public boolean isValidMove(int x1, int y1, int x2, int y2)
@@ -50,21 +50,23 @@ public class Move {
 			}
 		}
 		
-		// TODO: add position to uniquePosition set
 		
-		prevdx = dx;
-		prevdy = dy;
+		// TODO: this code should not have side-effects!
+		
+//		prevdx = dx;
+//		prevdy = dy;
 		
 		return true;
 	}
+	
+	// TODO: add position to uniquePosition set
 	
 	private boolean isValidDelta(int dx, int dy)
 	{
 		// delta values in [-1, 1] ?
 		return -1 <= dx && dx <= 1
 			&& -1 <= dy && dy <= 1
-			&& dx != prevdx
-			&& dy != prevdy;
+			&& (dx != prevdx || dy != prevdy);
 	}
 	
 	private boolean isUniquePosition(int x, int y)
