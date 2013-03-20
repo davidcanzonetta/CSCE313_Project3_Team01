@@ -95,7 +95,7 @@ public class Board {
 	public boolean isDiagonalPosition(int x, int y)
 	{
 		// position has diagonal if x+y is even
-		return (x + y) % 2 == 0;
+		return isEven(x + y);
 	}
 	
 	public boolean isEmpty(int x, int y)
