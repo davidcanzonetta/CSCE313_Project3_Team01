@@ -8,7 +8,7 @@ public class Fanorona {
 	 * @param args
 	 */
 	static int moves = 0; //Keep track of number of game moves
-	static Board board = new Board();
+	static Board board = new Board(9, 5);
 	
 	public static void main(String[] args) 
 	{
