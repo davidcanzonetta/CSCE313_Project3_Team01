@@ -58,6 +58,8 @@ public class Move {
 			}
 		}
 		
+		// TODO: possibly check for approach or withdraw captures separately
+		
 		int player = board.getPosition(x1, y1);
 		
 		// move will capture other player's piece by approach or withdrawal?
@@ -82,6 +84,7 @@ public class Move {
 			}
 		}
 		
+		// not a capture
 		return false;
 	}
 	
@@ -95,6 +98,8 @@ public class Move {
 				return true;
 			}
 		}
+		
+		// (x, y) not in path
 		return false;
 	}
 	
