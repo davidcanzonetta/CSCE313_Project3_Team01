@@ -100,17 +100,17 @@ public class Board {
 	
 	public boolean isEmpty(int x, int y)
 	{
-		return grid[y][x] == EMPTY;
+		return getPosition(x, y) == EMPTY;
 	}
 	
 	public boolean isWhite(int x, int y)
 	{
-		return grid[y][x] == WHITE;
+		return getPosition(x, y) == WHITE;
 	}
 	
 	public boolean isBlack(int x, int y)
 	{
-		return grid[y][x] == BLACK;
+		return getPosition(x, y) == BLACK;
 	}
 	
 	private void newGame()
