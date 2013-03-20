@@ -112,8 +112,8 @@ public class Move {
 	private boolean isValidDelta(int dx, int dy)
 	{
 		// delta values in [-1, 1] ?
-		return -1 <= dx && dx <= 1
-			&& -1 <= dy && dy <= 1;
+		return (-1 <= dx && dx <= 1)
+			&& (-1 <= dy && dy <= 1);
 	}
 	
 	private boolean isNewDirection(int x, int y, int dx, int dy)
