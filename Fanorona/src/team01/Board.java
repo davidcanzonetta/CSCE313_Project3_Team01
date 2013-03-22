@@ -171,6 +171,7 @@ public class Board {
 		}
 	}
 	
+	/*
 	public static void main (String[] args)
 	{
 		Board board1 = new Board (3, 3);
@@ -180,6 +181,7 @@ public class Board {
 		System.out.println (board1);
 		System.out.println (board2);
 	}
+	*/
 	
 	private boolean isEven(int n)
 	{

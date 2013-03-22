@@ -12,8 +12,8 @@ public class Fanorona {
 	
 	public static void main(String[] args) 
 	{
-		//Implements move functionality, not visual yet
-		//TODO: Print the board
+		//Prints board
+		//TODO: Implement Move class
 		boolean valid_move = false, quit = false;
 		int curr_pos_x, curr_pos_y, new_pos_x, new_pos_y, error_check = 0, in;
 		Scanner input=new Scanner(System.in);
@@ -21,11 +21,13 @@ public class Fanorona {
 		{
 			while(!valid_move)
 			{
-				System.out.print("Enter current X pos:");
+				System.out.println("White's turn\n------------\n");
+				System.out.print(board);
+				System.out.print("\nEnter X position of piece to move: ");
 				curr_pos_x = input.nextInt();
-				System.out.print("Enter current Y pos: ");
+				System.out.print("Enter Y position of piece to move: ");
 				curr_pos_y = input.nextInt();
-				System.out.print("Enter new X pos:");
+				System.out.print("Enter new X pos: ");
 				new_pos_x = input.nextInt();
 				System.out.print("Enter new Y pos: ");
 				new_pos_y = input.nextInt();
@@ -42,11 +44,14 @@ public class Fanorona {
 			valid_move = false;
 			while(!valid_move)
 			{
-				System.out.print("Enter current X pos:");
+				System.out.println("Black's turn\n------------");
+				System.out.print(board);
+				System.out.println("\n0 1 2 3 4 5 6 7 8 <- X values");
+				System.out.print("\nEnter X position of piece to move: ");
 				curr_pos_x = input.nextInt();
-				System.out.print("Enter current Y pos: ");
+				System.out.print("Enter Y position of piece to move: ");
 				curr_pos_y = input.nextInt();
-				System.out.print("Enter new X pos:");
+				System.out.print("Enter new X pos: ");
 				new_pos_x = input.nextInt();
 				System.out.print("Enter new Y pos: ");
 				new_pos_y = input.nextInt();
