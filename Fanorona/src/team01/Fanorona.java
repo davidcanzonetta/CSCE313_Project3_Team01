@@ -15,17 +15,21 @@ public class Fanorona {
 		//Implements move functionality, not visual yet
 		//TODO: Print the board
 		boolean valid_move = false, quit = false;
-		int curr_pos, new_pos, error_check = 0, in;
+		int curr_pos_x, curr_pos_y, new_pos_x, new_pos_y, error_check = 0, in;
 		Scanner input=new Scanner(System.in);
 		while(!quit)
 		{
 			while(!valid_move)
 			{
-				System.out.print("Enter the current numerical position of the white piece to move: ");
-				curr_pos = input.nextInt();
-				System.out.print("Enter the numerical position to move to: ");
-				new_pos = input.nextInt();
-				error_check = move_white(curr_pos, new_pos);
+				System.out.print("Enter current X pos:");
+				curr_pos_x = input.nextInt();
+				System.out.print("Enter current Y pos: ");
+				curr_pos_y = input.nextInt();
+				System.out.print("Enter new X pos:");
+				new_pos_x = input.nextInt();
+				System.out.print("Enter new Y pos: ");
+				new_pos_y = input.nextInt();
+				error_check = move_white(curr_pos_x, curr_pos_y, new_pos_x, new_pos_y);
 				if(error_check == 0)
 				{
 					System.out.println("Valid move");
@@ -38,11 +42,15 @@ public class Fanorona {
 			valid_move = false;
 			while(!valid_move)
 			{
-				System.out.print("Enter the current numerical position of the black piece to move: ");
-				curr_pos = input.nextInt();
-				System.out.print("Enter the numerical position to move to: ");
-				new_pos = input.nextInt();
-				error_check = move_black(curr_pos, new_pos);
+				System.out.print("Enter current X pos:");
+				curr_pos_x = input.nextInt();
+				System.out.print("Enter current Y pos: ");
+				curr_pos_y = input.nextInt();
+				System.out.print("Enter new X pos:");
+				new_pos_x = input.nextInt();
+				System.out.print("Enter new Y pos: ");
+				new_pos_y = input.nextInt();
+				error_check = move_black(curr_pos_x, curr_pos_y, new_pos_x, new_pos_y);
 				if(error_check == 0)
 				{
 					System.out.println("Valid move");
@@ -73,11 +81,10 @@ public class Fanorona {
 	}
 	
 	//Function to move white pieces, returns -1 if invalid move etc.
-	public static int move_white(int curr_pos, int new_pos) {
-		if(board.isWhite(curr_pos) && board.isEmpty(new_pos)) {
-			ambiguity_check_white(curr_pos, new_pos);
-			board.setPosition(curr_pos, Board.EMPTY);
-			board.setPosition(new_pos, Board.WHITE);
+	public static int move_white(int curr_pos_x, int curr_pos_y, int new_pos_x, int new_pos_y) {
+		if(board.isWhite(curr_pos_x, curr_pos_y) && board.isEmpty(new_pos_x, new_pos_y)) {
+			board.setPosition(curr_pos_x, curr_pos_y, Board.EMPTY);
+			board.setPosition(new_pos_x, new_pos_y, Board.WHITE);
 			return 0; 
 		} else {
 			return -1;
@@ -85,76 +92,13 @@ public class Fanorona {
 	}
 	
 	//Function to move black pieces, returns -1 if invalid move etc.
-	public static int move_black(int curr_pos, int new_pos) {
-		if(board.isBlack(curr_pos) && board.isEmpty(new_pos)) {
-			ambiguity_check_black(curr_pos, new_pos);
-			board.setPosition(curr_pos, Board.EMPTY);
-			board.setPosition(new_pos, Board.BLACK);
+	public static int move_black(int curr_pos_x, int curr_pos_y, int new_pos_x, int new_pos_y) {
+		if(board.isBlack(curr_pos_x, curr_pos_y) && board.isEmpty(new_pos_x, new_pos_y)) {
+			board.setPosition(curr_pos_x, curr_pos_y, Board.EMPTY);
+			board.setPosition(new_pos_x, new_pos_y, Board.BLACK);
 			return 0; 
 		} else {
 			return -1;
 		}
-	}
-	//Doesn't let user choose which to capture yet, but notifies if more than one choice available
-	//Also assuming that by this point it is a valid move
-	public static boolean ambiguity_check_white(int curr_pos, int new_pos){
-		int curr_pos_copy = curr_pos;
-		boolean forward = false, backward = false, capture_1 = false, capture_2 = false;
-		//Anything to import for Math.abs?
-		int diff = Math.abs(curr_pos-new_pos);
-		while(!forward){
-			if(board.isEmpty(curr_pos))
-				curr_pos = curr_pos + diff;
-			else {
-				if(board.isBlack(curr_pos))
-					capture_1 = true;
-				forward = true;
-			}
-		}
-		curr_pos = curr_pos_copy;
-		while(!backward){
-			if(board.isEmpty(curr_pos))
-				curr_pos = curr_pos - diff;
-			else {
-				if(board.isBlack(curr_pos))
-					capture_2 = true;
-				forward = true;
-			}
-		}
-		if(capture_1 && capture_2)
-			System.out.println("More than one piece available to be captured");
-		else
-			System.out.println("No more than one piece available to be captured");
-		return true;
-	}
-	public static boolean ambiguity_check_black(int curr_pos, int new_pos){
-		int curr_pos_copy = curr_pos;
-		boolean forward = false, backward = false, capture_1 = false, capture_2 = false;
-		//Anything to import for Math.abs?
-		int diff = Math.abs(curr_pos-new_pos);
-		while(!forward){
-			if(board.isEmpty(curr_pos))
-				curr_pos = curr_pos + diff;
-			else {
-				if(board.isWhite(curr_pos))
-					capture_1 = true;
-				forward = true;
-			}
-		}
-		curr_pos = curr_pos_copy;
-		while(!backward){
-			if(board.isEmpty(curr_pos))
-				curr_pos = curr_pos - diff;
-			else {
-				if(board.isWhite(curr_pos))
-					capture_2 = true;
-				forward = true;
-			}
-		}
-		if(capture_1 && capture_2)
-			System.out.println("More than one piece available to be captured");
-		else
-			System.out.println("No more than one piece available to be captured");
-		return true;
 	}
 }
