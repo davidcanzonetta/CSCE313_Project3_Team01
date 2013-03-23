@@ -62,4 +62,44 @@ public class MoveTest {
 		System.out.println();
 	}
 
+	@Test
+	public void availableMovesBlack() {
+		assertEquals(board.numEmpty(), 4);
+		
+		System.out.println("available moves black:");
+		System.out.println(board);
+		
+		int count = 0;
+		
+		for (Point from : board)
+		{
+			if (board.getPosition(from) == Board.BLACK)
+			{
+				// TODO: possibly add a delta iterator?
+				for (int dx = Delta.MIN_DELTA; dx <= Delta.MAX_DELTA; dx++)
+				{
+					for (int dy = Delta.MIN_DELTA; dy <= Delta.MAX_DELTA; dy++)
+					{
+						Point to = from.getApproach(dx, dy);
+
+						if ((from.x == 4 && from.y == 4)
+							&& (to.x == 5 && to.y == 3))
+						{
+							System.out.print("");
+						}
+						if (move.isValidMove(from, to))
+						{
+							++ count;
+							System.out.printf("%s -> %s\n", from, to);
+						}
+					}
+				}
+			}
+		}
+		
+		assertEquals(count, 4);
+		
+		System.out.println();
+	}
+	
 }
