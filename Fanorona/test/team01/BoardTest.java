@@ -54,5 +54,55 @@ public class BoardTest {
 		
 		System.out.println();
 	}
+	
+	@Test
+	public void moveApproachUpTest() {
+		assertEquals(board.numWhite(), 22);
+		assertEquals(board.numBlack(), 22);
+		
+		Point from = new Point(4, 3);
+		Point to = new Point(4, 2);
+		
+		System.out.println(board);
+		
+		assertTrue(move.isValidMove(from, to));
+		assertFalse(move.approach(from, to));
+		
+		System.out.println(board);
+	}
+	
+	@Test
+	public void moveApproachDiagTest() {
+		assertEquals(board.numWhite(), 22);
+		assertEquals(board.numBlack(), 22);
+		
+		Point from = new Point(3, 3);
+		Point to = new Point(4, 2);
+		
+		System.out.println(board);
+		
+		assertTrue(move.isValidMove(from, to));
+		assertFalse(move.approach(from, to));
+		
+		System.out.println(board);
+	}
+	
+
+	
+	@Test
+	public void moveApproachSideTest() {
+		assertEquals(board.numWhite(), 22);
+		assertEquals(board.numBlack(), 22);
+		
+		Point from = new Point(3, 2);
+		Point to = new Point(4, 2);
+		
+		System.out.println(board);
+		
+		assertTrue(move.isValidMove(from, to));
+		assertFalse(move.approach(from, to));
+		
+		System.out.println(board);
+	}
 
 }

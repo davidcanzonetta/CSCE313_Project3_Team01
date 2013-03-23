@@ -13,21 +13,22 @@ public class Move {
 	
 	public boolean approach(Point from, Point to)
 	{
-		addToPath(from);
-		
-		Delta dir = Delta.getDelta(from, to);
+		Delta delta = Delta.getDelta(from, to);
 		int player = board.getPosition(from);
-		
+		int enemy = player ^ 1;
+
+		addToPath(from);
 		board.setPosition(from, Board.EMPTY);
 		board.setPosition(to, player);
 		
 		from = to;
+		to = to.getApproach(delta);
 		
-		while (hasCapture(from, to, true))
+		while (board.isValidPosition(to)
+			&& board.getPosition(to) == enemy)
 		{
-			addToPath(to);
-			to = to.getApproach(dir);
 			board.setPosition(to, Board.EMPTY);
+			to = to.getApproach(delta);
 		}
 		
 		// TODO: check for additional captures
