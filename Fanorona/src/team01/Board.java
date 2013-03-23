@@ -1,6 +1,9 @@
 package team01;
 
-public class Board {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class Board implements Iterable<Point> {
 
 	// board states
 	public static final int WHITE = 0;
@@ -37,7 +40,8 @@ public class Board {
 		}
 	}
 	
-	@Override public String toString()
+	@Override
+	public String toString()
 	{
 		StringBuilder str = new StringBuilder();
 		
@@ -76,45 +80,42 @@ public class Board {
 		return height;
 	}
 	
-	public int getPosition(int x, int y)
+	public int getPosition(Point pt)
 	{
-		return grid[y][x];
+		return grid[pt.y][pt.x];
 	}
 	
-	public void setPosition(int x, int y, int val)
+	public void setPosition(Point pt, int val)
 	{
-//		if (isValidPosition(x, y))
-		{
-			grid[y][x] = val;
-		}
+		grid[pt.y][pt.x] = val;
 	}
 	
-	public boolean isValidPosition(int x, int y)
+	// x in [0, width) and y in [0, height) ?
+	public boolean isValidPosition(Point pt)
 	{
-		// x in [0, width) and y in [0, height) ?
-		return 0 <= x && x < width
-			&& 0 <= y && y < height;
+		return (Util.inRange(pt.x, 0, width-1))
+			&& (Util.inRange(pt.y, 0, height-1));
 	}
 	
-	public boolean isDiagonalPosition(int x, int y)
+	// position has diagonal if x+y is even
+	public boolean isDiagonalPosition(Point pt)
 	{
-		// position has diagonal if x+y is even
-		return isEven(x + y);
+		return Util.isEven(pt.x + pt.y);
 	}
 	
-	public boolean isEmpty(int x, int y)
+	public boolean isEmpty(Point pt)
 	{
-		return getPosition(x, y) == EMPTY;
+		return getPosition(pt) == EMPTY;
 	}
 	
-	public boolean isWhite(int x, int y)
+	public boolean isWhite(Point pt)
 	{
-		return getPosition(x, y) == WHITE;
+		return getPosition(pt) == WHITE;
 	}
 	
-	public boolean isBlack(int x, int y)
+	public boolean isBlack(Point pt)
 	{
-		return getPosition(x, y) == BLACK;
+		return getPosition(pt) == BLACK;
 	}
 	
 	public int numWhite()
@@ -129,7 +130,7 @@ public class Board {
 	
 	public int numEmpty()
 	{
-		return width * height - nWhite - nBlack;
+		return (width * height) - nWhite - nBlack;
 	}
 	
 	private void newGame()
@@ -149,7 +150,7 @@ public class Board {
 		// left half of middle row
 		for (int k = 0; k < center; k++)
 		{
-			grid[middle][k] = isEven(k) ? BLACK : WHITE;
+			grid[middle][k] = Util.isEven(k) ? BLACK : WHITE;
 		}
 		
 		// middle center position
@@ -158,7 +159,7 @@ public class Board {
 		// right half of middle row
 		for (int k = center+1; k < width; k++)
 		{
-			grid[middle][k] = isEven(k) ? WHITE : BLACK;
+			grid[middle][k] = Util.isEven(k) ? WHITE : BLACK;
 		}
 		
 		// bottom 2 rows
@@ -171,27 +172,54 @@ public class Board {
 		}
 	}
 	
-	/*
-	public static void main (String[] args)
-	{
-		Board board1 = new Board (3, 3);
-		Board board2 = new Board (board1);
-		
-		board2.setPosition(0, 1, EMPTY);
-		System.out.println (board1);
-		System.out.println (board2);
-	}
-	*/
-	
-	private boolean isEven(int n)
-	{
-		return (n & 1) == 0;
-	}
-	
+	private int [][] grid;
 	private int width;
 	private int height;
-	private int [][] grid;
-	
 	private int nWhite;
 	private int nBlack;
+
+	@Override
+	public Iterator<Point> iterator() {
+		// TODO Auto-generated method stub
+		return new Itr();
+	}
+	
+	private class Itr implements Iterator<Point> {
+
+		int x = 0;
+		int y = 0;
+		
+		@Override
+		public boolean hasNext() {
+			return (x < width)
+				|| (y < height);
+		}
+
+		@Override
+		public Point next() {
+			if (x >= width && y >= height)
+			{
+				throw new NoSuchElementException();
+			}
+			
+			x = x % width;
+			y = y % height;
+			
+			Point point = new Point(x, y);
+			
+			if (++x == width)
+			{
+				++y;
+			}
+			
+			return point;
+		}
+
+		@Override
+		public void remove() {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+		
+	}
 }

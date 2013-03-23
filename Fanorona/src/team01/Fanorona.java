@@ -87,23 +87,27 @@ public class Fanorona {
 	
 	//Function to move white pieces, returns -1 if invalid move etc.
 	public static int move_white(int curr_pos_x, int curr_pos_y, int new_pos_x, int new_pos_y) {
-		if(board.isWhite(curr_pos_x, curr_pos_y) && board.isEmpty(new_pos_x, new_pos_y)) {
-			board.setPosition(curr_pos_x, curr_pos_y, Board.EMPTY);
-			board.setPosition(new_pos_x, new_pos_y, Board.WHITE);
-			return 0; 
-		} else {
-			return -1;
-		}
+//		if(board.isWhite(curr_pos_x, curr_pos_y) && board.isEmpty(new_pos_x, new_pos_y)) {
+//			board.setPosition(curr_pos_x, curr_pos_y, Board.EMPTY);
+//			board.setPosition(new_pos_x, new_pos_y, Board.WHITE);
+//			return 0; 
+//		} else {
+//			return -1;
+//		}
+		
+		return 0;
 	}
 	
 	//Function to move black pieces, returns -1 if invalid move etc.
 	public static int move_black(int curr_pos_x, int curr_pos_y, int new_pos_x, int new_pos_y) {
-		if(board.isBlack(curr_pos_x, curr_pos_y) && board.isEmpty(new_pos_x, new_pos_y)) {
-			board.setPosition(curr_pos_x, curr_pos_y, Board.EMPTY);
-			board.setPosition(new_pos_x, new_pos_y, Board.BLACK);
-			return 0; 
-		} else {
-			return -1;
-		}
+//		if(board.isBlack(curr_pos_x, curr_pos_y) && board.isEmpty(new_pos_x, new_pos_y)) {
+//			board.setPosition(curr_pos_x, curr_pos_y, Board.EMPTY);
+//			board.setPosition(new_pos_x, new_pos_y, Board.BLACK);
+//			return 0; 
+//		} else {
+//			return -1;
+//		}
+		
+		return 0;
 	}
 }
