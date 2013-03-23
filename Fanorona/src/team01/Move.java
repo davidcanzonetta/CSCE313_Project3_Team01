@@ -182,18 +182,19 @@ public class Move {
 			capture = from.getWithdraw(delta);
 		}
 		
-		int player = board.getPosition(from);
-		
-		if (board.isValidPosition(capture))
+		if (! board.isValidPosition(capture))
 		{
-			int enemy = board.getPosition(capture);
-			
-			// other position must have an enemy piece
-			if (enemy == Board.EMPTY
-				|| enemy == player)
-			{
-				return false;
-			}
+			return false;
+		}
+
+		int player = board.getPosition(from);
+		int enemy = board.getPosition(capture);
+		
+		// other position must have an enemy piece
+		if (enemy == Board.EMPTY
+			|| enemy == player)
+		{
+			return false;
 		}
 		
 		// move has a capture
