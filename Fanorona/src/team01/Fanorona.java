@@ -13,12 +13,7 @@ public class Fanorona {
 	public static void main(String[] args) 
 	{
 		//Prints board
-<<<<<<< HEAD
 		boolean quit = false, move_done=true;
-=======
-		//TODO: Implement Move class
-		boolean valid_move = false, quit = false;
->>>>>>> Revert "Revert "Merge remote-tracking branch 'origin/master'""
 		int curr_pos_x, curr_pos_y, new_pos_x, new_pos_y, in;
 		Move m = new Move(board);
 		Scanner input=new Scanner(System.in);
@@ -41,11 +36,7 @@ public class Fanorona {
 				Point to = new Point(new_pos_x, new_pos_y);
 				if(m.isValidMove(from, to))
 				{
-<<<<<<< HEAD
 					move_done = m.approach(from, to);
-=======
-					m.approach(from, to);
->>>>>>> Revert "Revert "Merge remote-tracking branch 'origin/master'""
 					System.out.println("Valid move");
 					moves++;
 				}
@@ -72,12 +63,8 @@ public class Fanorona {
 				Point to = new Point(new_pos_x, new_pos_y);
 				if(m.isValidMove(from, to))
 				{
-<<<<<<< HEAD
 					//if move_done == false, no more captures
 					move_done = m.approach(from, to);
-=======
-					m.approach(from, to);
->>>>>>> Revert "Revert "Merge remote-tracking branch 'origin/master'""
 					System.out.println("Valid move");
 					moves++;
 				}
@@ -86,16 +73,7 @@ public class Fanorona {
 					System.out.println("Not a valid move");
 				}
 			}
-<<<<<<< HEAD
-=======
-			valid_move = false;
 			quit = max_moves();
-			System.out.print("Enter 1 to keep moving: ");
-			in = input.nextInt();
-			if(in != 1)
-				quit = true;
->>>>>>> Revert "Revert "Merge remote-tracking branch 'origin/master'""
-			//quit stays false if moves has not exceeded 50
 		}
 	}
 	//Returns FALSE if maximum number of moves has been exceeded
