@@ -17,7 +17,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void availableMovesTest() {
+	public void availableMovesNewBoardTest() {
 		int player = Board.WHITE;
 		
 		assertEquals(board.numWhite(), 22);
@@ -63,7 +63,7 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void approachUpTest() {
+	public void captureApproachUpTest() {
 		// make sure moves/captures update the board properly
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 22);
@@ -87,7 +87,7 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void approachDiagTest() {
+	public void captureApproachDiagonalTest() {
 		// make sure moves/captures update the board properly
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 22);
@@ -111,7 +111,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void approachSideTest() {
+	public void captureApproachSideTest() {
 		// make sure moves/captures update the board properly
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 22);
@@ -135,7 +135,7 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void withdrawSideTest() {
+	public void captureWithdrawSideTest() {
 		// make sure moves/captures update the board properly
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 22);

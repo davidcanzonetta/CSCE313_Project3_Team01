@@ -19,7 +19,7 @@ public class PointTest {
 	}
 
 	@Test
-	public void test() {
+	public void pointEqualsTest() {
 		assertTrue(point1.equals(point1));
 		assertTrue(point1.equals(point2));
 		assertTrue(point2.equals(point1));

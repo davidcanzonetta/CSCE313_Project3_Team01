@@ -118,6 +118,8 @@ public class MoveTest {
 		
 		System.out.println("after move 2:");
 		System.out.println(board);
+		
+		assertEquals(board.numBlack() + board.numWhite() + board.numEmpty(), 45);
 	}
 	
 }

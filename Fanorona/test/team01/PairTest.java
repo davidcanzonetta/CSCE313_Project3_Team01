@@ -18,7 +18,7 @@ private List<Pair> list;
 	}
 
 	@Test
-	public void testList() {
+	public void testListofPairs() {
 		for (int x = 1; x <= 4; x++) {
 			for (int y = 1; y <= 4; y++) {
 				list.add(new Pair(new Point(x, y), new Point(x+1, y-1)));
