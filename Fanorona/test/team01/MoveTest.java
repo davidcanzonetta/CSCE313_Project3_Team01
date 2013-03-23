@@ -42,11 +42,6 @@ public class MoveTest {
 					{
 						Point to = from.getApproach(dx, dy);
 
-						if ((from.x == 4 && from.y == 4)
-							&& (to.x == 5 && to.y == 3))
-						{
-							System.out.print("");
-						}
 						if (move.isValidMove(from, to))
 						{
 							++ count;
@@ -82,11 +77,6 @@ public class MoveTest {
 					{
 						Point to = from.getApproach(dx, dy);
 
-						if ((from.x == 4 && from.y == 4)
-							&& (to.x == 5 && to.y == 3))
-						{
-							System.out.print("");
-						}
 						if (move.isValidMove(from, to))
 						{
 							++ count;
