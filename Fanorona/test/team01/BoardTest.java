@@ -17,7 +17,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void avaiableMovesTest() {
+	public void availableMovesTest() {
 		int player = Board.WHITE;
 		
 		assertEquals(board.numWhite(), 22);
