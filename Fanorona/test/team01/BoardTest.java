@@ -17,19 +17,25 @@ public class BoardTest {
 	}
 
 	@Test
-	public void test() {
+	public void avaiableMovesTest() {
 		int player = Board.WHITE;
 		
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 22);
+		assertEquals(board.numEmpty(), 1);
 		
 		board.setPosition(new Point(2, 2), Board.EMPTY);
 		board.setPosition(new Point(3, 2), Board.EMPTY);
+
+		assertEquals(board.numWhite(), 21);
+		assertEquals(board.numBlack(), 21);
+		assertEquals(board.numEmpty(), 3);
 		
 		System.out.println(board);
 		
 		int count = 0;
 		
+		System.out.println("available moves");
 		for (Point from : board)
 		{
 			if (board.getPosition(from) == player)
@@ -57,9 +63,10 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void moveApproachUpTest() {
+	public void approachUpTest() {
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 22);
+		assertEquals(board.numEmpty(), 1);
 		
 		Point from = new Point(4, 3);
 		Point to = new Point(4, 2);
@@ -69,15 +76,20 @@ public class BoardTest {
 		
 		assertTrue(move.isValidMove(from, to));
 		assertFalse(move.approach(from, to));
+		
+		assertEquals(board.numWhite(), 22);
+		assertEquals(board.numBlack(), 20);
+		assertEquals(board.numEmpty(), 3);
 
 		System.out.println("after:");
 		System.out.println(board);
 	}
 	
 	@Test
-	public void moveApproachDiagTest() {
+	public void approachDiagTest() {
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 22);
+		assertEquals(board.numEmpty(), 1);
 		
 		Point from = new Point(3, 3);
 		Point to = new Point(4, 2);
@@ -87,6 +99,10 @@ public class BoardTest {
 		
 		assertTrue(move.isValidMove(from, to));
 		assertFalse(move.approach(from, to));
+		
+		assertEquals(board.numWhite(), 22);
+		assertEquals(board.numBlack(), 20);
+		assertEquals(board.numEmpty(), 3);
 
 		System.out.println("after:");
 		System.out.println(board);
@@ -95,9 +111,10 @@ public class BoardTest {
 
 	
 	@Test
-	public void moveApproachSideTest() {
+	public void approachSideTest() {
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 22);
+		assertEquals(board.numEmpty(), 1);
 		
 		Point from = new Point(3, 2);
 		Point to = new Point(4, 2);
@@ -107,6 +124,10 @@ public class BoardTest {
 		
 		assertTrue(move.isValidMove(from, to));
 		assertFalse(move.approach(from, to));
+		
+		assertEquals(board.numWhite(), 22);
+		assertEquals(board.numBlack(), 21);
+		assertEquals(board.numEmpty(), 2);
 
 		System.out.println("after:");
 		System.out.println(board);

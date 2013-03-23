@@ -17,13 +17,17 @@ public class Move {
 		int player = board.getPosition(from);
 		int enemy = player ^ 1;
 
+		// add move to path/history
 		addToPath(from);
+		
+		// move player piece to next position
 		board.setPosition(from, Board.EMPTY);
 		board.setPosition(to, player);
 		
 		from = to;
 		to = to.getApproach(delta);
 		
+		// delete enemy game pieces
 		while (board.isValidPosition(to)
 			&& board.getPosition(to) == enemy)
 		{
@@ -36,6 +40,7 @@ public class Move {
 		{
 			for (int dy = Delta.MIN_DELTA; dy <= Delta.MAX_DELTA; dy++)
 			{
+				// additional captures available?
 				if (isValidMove(from, from.getApproach(dx, dy)))
 					return true;
 			}
@@ -100,11 +105,11 @@ public class Move {
 		
 		if (board.isValidPosition(capture))
 		{
-			int otherplayer = board.getPosition(capture);
+			int enemy = board.getPosition(capture);
 			
 			// other position must have an enemy piece
-			if (otherplayer == Board.EMPTY
-				|| otherplayer == player)
+			if (enemy == Board.EMPTY
+				|| enemy == player)
 			{
 				return false;
 			}

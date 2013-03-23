@@ -87,6 +87,18 @@ public class Board implements Iterable<Point> {
 	
 	public void setPosition(Point pt, int val)
 	{
+		int oldVal = getPosition(pt);
+
+		if (oldVal == WHITE)
+			nWhite--;
+		else if (oldVal == BLACK)
+			nBlack--;
+		
+		if (val == WHITE)
+			nWhite++;
+		else if (val == BLACK)
+			nBlack++;
+		
 		grid[pt.y][pt.x] = val;
 	}
 	
