@@ -92,4 +92,32 @@ public class MoveTest {
 		System.out.println();
 	}
 	
+	@Test
+	public void multiMoveWhite() {
+		assertEquals(board.numEmpty(), 4);
+		
+		System.out.println("before multi move:");
+		System.out.println(board);
+		
+		Point from = new Point(6, 2);
+		Point to = new Point(5, 3);
+		
+		assertTrue(move.isValidMove(from, to));
+		assertTrue(move.capture(from, to, false));
+		assertEquals(board.numEmpty(), 6);
+		
+		System.out.println("after move 1:");
+		System.out.println(board);
+		
+		from = to;
+		to = new Point(5, 4);
+		
+		assertTrue(move.isValidMove(from, to));
+		assertFalse(move.capture(from, to, false));
+		assertEquals(board.numEmpty(), 7);
+		
+		System.out.println("after move 2:");
+		System.out.println(board);
+	}
+	
 }
