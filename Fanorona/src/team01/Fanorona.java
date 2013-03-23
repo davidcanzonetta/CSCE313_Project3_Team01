@@ -15,7 +15,6 @@ public class Fanorona {
 		//Prints board
 		boolean quit = false, move_done=true;
 		int curr_pos_x, curr_pos_y, new_pos_x, new_pos_y, in;
-		Move m = new Move(board);
 		Scanner input=new Scanner(System.in);
 		while(!quit)
 		{
@@ -32,19 +31,8 @@ public class Fanorona {
 				System.out.print("Enter new Y pos: ");
 				new_pos_y = input.nextInt();
 				
-				Point from = new Point(curr_pos_x, curr_pos_y);
-				Point to = new Point(new_pos_x, new_pos_y);
-				if(m.isValidMove(from, to))
-				{
-					move_done = m.capture(from, to, true);
-//					move_done = m.approach(from, to);
-					System.out.println("Valid move");
-					moves++;
-				}
-				else
-				{
-					System.out.println("Not a valid move");
-				}
+				move_done = move_function(curr_pos_x, curr_pos_y, new_pos_x, new_pos_y);
+				quit = max_moves();
 			}
 			move_done = true;
 			while(move_done)
@@ -60,22 +48,10 @@ public class Fanorona {
 				System.out.print("Enter new Y pos: ");
 				new_pos_y = input.nextInt();
 				
-				Point from = new Point(curr_pos_x, curr_pos_y);
-				Point to = new Point(new_pos_x, new_pos_y);
-				if(m.isValidMove(from, to))
-				{
-					move_done = m.capture(from, to, true);
-					//if move_done == false, no more captures
-//					move_done = m.approach(from, to);
-					System.out.println("Valid move");
-					moves++;
-				}
-				else
-				{
-					System.out.println("Not a valid move");
-				}
+				move_done = move_function(curr_pos_x, curr_pos_y, new_pos_x, new_pos_y);
+				quit = max_moves();
 			}
-			quit = max_moves();
+			move_done = true;
 		}
 	}
 	//Returns FALSE if maximum number of moves has been exceeded
@@ -89,7 +65,25 @@ public class Fanorona {
 		else
 			return true;
 	}
-	
+	public static boolean move_function(int x1, int y1, int x2, int y2)
+	{
+		boolean done = true;
+		Move m = new Move(board);
+		Point from = new Point(x1, y1);
+		Point to = new Point(x2, y2);
+		if(m.isValidMove(from, to))
+		{
+			done = m.capture(from, to, true);
+			//if move_done == false, no more captures
+			System.out.println("Valid move");
+			moves++;
+		}
+		else
+		{
+			System.out.println("Not a valid move");
+		}
+		return done;
+	}
 	//Function to move white pieces, returns -1 if invalid move etc.
 	public static int move_white(int curr_pos_x, int curr_pos_y, int new_pos_x, int new_pos_y) {
 //		if(board.isWhite(curr_pos_x, curr_pos_y) && board.isEmpty(new_pos_x, new_pos_y)) {
