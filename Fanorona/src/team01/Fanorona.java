@@ -15,12 +15,12 @@ public class Fanorona {
 		//Prints board
 		boolean quit = false, move_done=true;
 		int curr_pos_x, curr_pos_y, new_pos_x, new_pos_y, in;
-		Move m = new Move(board);
 		Scanner input=new Scanner(System.in);
 		while(!quit)
 		{
 			while(move_done)
 			{
+				Move m = new Move(board);
 				System.out.println("White's turn\n------------\n");
 				System.out.print(board);
 				System.out.print("\nEnter X position of piece to move: ");
@@ -37,7 +37,6 @@ public class Fanorona {
 				if(m.isValidMove(from, to))
 				{
 					move_done = m.capture(from, to, true);
-//					move_done = m.approach(from, to);
 					System.out.println("Valid move");
 					moves++;
 				}
@@ -45,10 +44,12 @@ public class Fanorona {
 				{
 					System.out.println("Not a valid move");
 				}
+				quit = max_moves();
 			}
 			move_done = true;
 			while(move_done)
 			{
+				Move m = new Move(board);
 				System.out.println("Black's turn\n------------");
 				System.out.print(board);
 				System.out.print("\nEnter X position of piece to move: ");
@@ -66,7 +67,6 @@ public class Fanorona {
 				{
 					move_done = m.capture(from, to, true);
 					//if move_done == false, no more captures
-//					move_done = m.approach(from, to);
 					System.out.println("Valid move");
 					moves++;
 				}
@@ -77,6 +77,7 @@ public class Fanorona {
 			}
 			quit = max_moves();
 		}
+		move_done = true;
 	}
 	//Returns FALSE if maximum number of moves has been exceeded
 	public static boolean max_moves()
