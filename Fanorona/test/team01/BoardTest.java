@@ -31,11 +31,11 @@ public class BoardTest {
 		assertEquals(board.numBlack(), 21);
 		assertEquals(board.numEmpty(), 3);
 		
+		System.out.println("available moves:");
 		System.out.println(board);
 		
 		int count = 0;
 		
-		System.out.println("available moves");
 		for (Point from : board)
 		{
 			if (board.getPosition(from) == player)
@@ -64,6 +64,7 @@ public class BoardTest {
 	
 	@Test
 	public void approachUpTest() {
+		// make sure moves/captures update the board properly
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 22);
 		assertEquals(board.numEmpty(), 1);
@@ -87,6 +88,7 @@ public class BoardTest {
 	
 	@Test
 	public void approachDiagTest() {
+		// make sure moves/captures update the board properly
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 22);
 		assertEquals(board.numEmpty(), 1);
@@ -107,11 +109,10 @@ public class BoardTest {
 		System.out.println("after:");
 		System.out.println(board);
 	}
-	
 
-	
 	@Test
 	public void approachSideTest() {
+		// make sure moves/captures update the board properly
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 22);
 		assertEquals(board.numEmpty(), 1);
