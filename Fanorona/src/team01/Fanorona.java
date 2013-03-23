@@ -15,8 +15,7 @@ public class Fanorona {
 		//Prints board
 		//TODO: Implement Move class
 		boolean valid_move = false, quit = false;
-		int curr_pos_x, curr_pos_y, new_pos_x, new_pos_y, in;
-		Move m = new Move(board);
+		int curr_pos_x, curr_pos_y, new_pos_x, new_pos_y, error_check = 0, in;
 		Scanner input=new Scanner(System.in);
 		while(!quit)
 		{
@@ -32,26 +31,22 @@ public class Fanorona {
 				new_pos_x = input.nextInt();
 				System.out.print("Enter new Y pos: ");
 				new_pos_y = input.nextInt();
-				
-				Point from = new Point(curr_pos_x, curr_pos_y);
-				Point to = new Point(new_pos_x, new_pos_y);
-				if(m.isValidMove(from, to))
+				error_check = move_white(curr_pos_x, curr_pos_y, new_pos_x, new_pos_y);
+				if(error_check == 0)
 				{
-					m.approach(from, to);
 					System.out.println("Valid move");
 					moves++;
 					valid_move = true;
 				}
 				else
-				{
 					System.out.println("Not a valid move");
-				}
 			}
 			valid_move = false;
 			while(!valid_move)
 			{
 				System.out.println("Black's turn\n------------");
 				System.out.print(board);
+				System.out.println("\n0 1 2 3 4 5 6 7 8 <- X values");
 				System.out.print("\nEnter X position of piece to move: ");
 				curr_pos_x = input.nextInt();
 				System.out.print("Enter Y position of piece to move: ");
@@ -60,22 +55,16 @@ public class Fanorona {
 				new_pos_x = input.nextInt();
 				System.out.print("Enter new Y pos: ");
 				new_pos_y = input.nextInt();
-				
-				Point from = new Point(curr_pos_x, curr_pos_y);
-				Point to = new Point(new_pos_x, new_pos_y);
-				if(m.isValidMove(from, to))
+				error_check = move_black(curr_pos_x, curr_pos_y, new_pos_x, new_pos_y);
+				if(error_check == 0)
 				{
-					m.approach(from, to);
 					System.out.println("Valid move");
 					moves++;
 					valid_move = true;
 				}
 				else
-				{
 					System.out.println("Not a valid move");
-				}
 			}
-			valid_move = false;
 			quit = max_moves();
 			System.out.print("Enter 1 to keep moving: ");
 			in = input.nextInt();
