@@ -13,13 +13,13 @@ public class Fanorona {
 	public static void main(String[] args) 
 	{
 		//Prints board
-		//TODO: Implement Move class
-		boolean valid_move = false, quit = false;
-		int curr_pos_x, curr_pos_y, new_pos_x, new_pos_y, error_check = 0, in;
+		boolean quit = false, move_done=true;
+		int curr_pos_x, curr_pos_y, new_pos_x, new_pos_y, in;
+		Move m = new Move(board);
 		Scanner input=new Scanner(System.in);
 		while(!quit)
 		{
-			while(!valid_move)
+			while(move_done)
 			{
 				System.out.println("White's turn\n------------\n");
 				System.out.print(board);
@@ -31,22 +31,25 @@ public class Fanorona {
 				new_pos_x = input.nextInt();
 				System.out.print("Enter new Y pos: ");
 				new_pos_y = input.nextInt();
-				error_check = move_white(curr_pos_x, curr_pos_y, new_pos_x, new_pos_y);
-				if(error_check == 0)
+				
+				Point from = new Point(curr_pos_x, curr_pos_y);
+				Point to = new Point(new_pos_x, new_pos_y);
+				if(m.isValidMove(from, to))
 				{
+					move_done = m.approach(from, to);
 					System.out.println("Valid move");
 					moves++;
-					valid_move = true;
 				}
 				else
+				{
 					System.out.println("Not a valid move");
+				}
 			}
-			valid_move = false;
-			while(!valid_move)
+			move_done = true;
+			while(move_done)
 			{
 				System.out.println("Black's turn\n------------");
 				System.out.print(board);
-				System.out.println("\n0 1 2 3 4 5 6 7 8 <- X values");
 				System.out.print("\nEnter X position of piece to move: ");
 				curr_pos_x = input.nextInt();
 				System.out.print("Enter Y position of piece to move: ");
@@ -55,21 +58,21 @@ public class Fanorona {
 				new_pos_x = input.nextInt();
 				System.out.print("Enter new Y pos: ");
 				new_pos_y = input.nextInt();
-				error_check = move_black(curr_pos_x, curr_pos_y, new_pos_x, new_pos_y);
-				if(error_check == 0)
+				
+				Point from = new Point(curr_pos_x, curr_pos_y);
+				Point to = new Point(new_pos_x, new_pos_y);
+				if(m.isValidMove(from, to))
 				{
+					//if move_done == false, no more captures
+					move_done = m.approach(from, to);
 					System.out.println("Valid move");
 					moves++;
-					valid_move = true;
 				}
 				else
+				{
 					System.out.println("Not a valid move");
+				}
 			}
-			quit = max_moves();
-			System.out.print("Enter 1 to keep moving: ");
-			in = input.nextInt();
-			if(in != 1)
-				quit = true;
 			//quit stays false if moves has not exceeded 50
 		}
 	}
