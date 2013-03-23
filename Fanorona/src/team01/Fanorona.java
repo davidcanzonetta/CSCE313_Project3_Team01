@@ -14,7 +14,7 @@ public class Fanorona {
 	{
 		//Prints board
 		boolean quit = true, move_done=true;
-		int curr_pos_x, curr_pos_y, new_pos_x, new_pos_y, in;
+		int curr_pos_x, curr_pos_y, new_pos_x, new_pos_y;
 		Scanner input=new Scanner(System.in);
 		while(quit)
 		{
