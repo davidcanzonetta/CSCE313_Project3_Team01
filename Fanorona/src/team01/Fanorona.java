@@ -53,6 +53,8 @@ public class Fanorona {
 			}
 			move_done = true;
 		}
+		
+		input.close();
 	}
 	//Returns FALSE if maximum number of moves has been exceeded
 	public static boolean max_moves()
