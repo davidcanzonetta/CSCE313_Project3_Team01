@@ -31,8 +31,17 @@ public class Move {
 			to = to.getApproach(delta);
 		}
 		
-		// TODO: check for additional captures
+		// TODO: this type of check should have its own function
+		for (int dx = Delta.MIN_DELTA; dx <= Delta.MAX_DELTA; dx++)
+		{
+			for (int dy = Delta.MIN_DELTA; dy <= Delta.MAX_DELTA; dy++)
+			{
+				if (isValidMove(from, from.getApproach(dx, dy)))
+					return true;
+			}
+		}
 		
+		// no more captures available for current move
 		return false;
 	}
 	

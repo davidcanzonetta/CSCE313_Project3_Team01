@@ -34,6 +34,7 @@ public class BoardTest {
 		{
 			if (board.getPosition(from) == player)
 			{
+				// TODO: possibly add a delta iterator?
 				for (int dx = Delta.MIN_DELTA; dx <= Delta.MAX_DELTA; dx++)
 				{
 					for (int dy = Delta.MIN_DELTA; dy <= Delta.MAX_DELTA; dy++)
@@ -62,12 +63,14 @@ public class BoardTest {
 		
 		Point from = new Point(4, 3);
 		Point to = new Point(4, 2);
-		
+
+		System.out.println("before:");
 		System.out.println(board);
 		
 		assertTrue(move.isValidMove(from, to));
 		assertFalse(move.approach(from, to));
-		
+
+		System.out.println("after:");
 		System.out.println(board);
 	}
 	
@@ -78,12 +81,14 @@ public class BoardTest {
 		
 		Point from = new Point(3, 3);
 		Point to = new Point(4, 2);
-		
+
+		System.out.println("before:");
 		System.out.println(board);
 		
 		assertTrue(move.isValidMove(from, to));
 		assertFalse(move.approach(from, to));
-		
+
+		System.out.println("after:");
 		System.out.println(board);
 	}
 	
@@ -96,12 +101,14 @@ public class BoardTest {
 		
 		Point from = new Point(3, 2);
 		Point to = new Point(4, 2);
-		
+
+		System.out.println("before:");
 		System.out.println(board);
 		
 		assertTrue(move.isValidMove(from, to));
 		assertFalse(move.approach(from, to));
-		
+
+		System.out.println("after:");
 		System.out.println(board);
 	}
 
