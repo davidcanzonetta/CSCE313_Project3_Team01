@@ -37,7 +37,7 @@ public class Fanorona {
 				Point to = new Point(new_pos_x, new_pos_y);
 				if(m.isValidMove(from, to))
 				{
-					m.approach(from, to);
+					m.capture(from, to, true);
 					System.out.println("Valid move");
 					moves++;
 					valid_move = true;
@@ -65,7 +65,7 @@ public class Fanorona {
 				Point to = new Point(new_pos_x, new_pos_y);
 				if(m.isValidMove(from, to))
 				{
-					m.approach(from, to);
+					m.capture(from, to, true);
 					System.out.println("Valid move");
 					moves++;
 					valid_move = true;

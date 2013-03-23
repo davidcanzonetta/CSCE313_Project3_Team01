@@ -11,7 +11,7 @@ public class Move {
 		path = new ArrayList<Point>();
 	}
 	
-	public boolean approach(Point from, Point to)
+	public boolean capture(Point from, Point to, boolean approach)
 	{
 		Delta delta = Delta.getDelta(from, to);
 		int player = board.getPosition(from);
@@ -24,15 +24,17 @@ public class Move {
 		board.setPosition(from, Board.EMPTY);
 		board.setPosition(to, player);
 		
+		Point tmp = from;
 		from = to;
-		to = to.getApproach(delta);
+		
+		to = approach ? to.getApproach(delta) : tmp.getWithdraw(delta);
 		
 		// delete enemy game pieces
 		while (board.isValidPosition(to)
 			&& board.getPosition(to) == enemy)
 		{
 			board.setPosition(to, Board.EMPTY);
-			to = to.getApproach(delta);
+			to = approach ? to.getApproach(delta) : to.getWithdraw(delta);
 		}
 		
 		// TODO: this type of check should have its own function
@@ -49,6 +51,85 @@ public class Move {
 		// no more captures available for current move
 		return false;
 	}
+	
+//	public boolean approach(Point from, Point to)
+//	{
+//		Delta delta = Delta.getDelta(from, to);
+//		int player = board.getPosition(from);
+//		int enemy = player ^ 1;
+//
+//		// add move to path/history
+//		addToPath(from);
+//		
+//		// move player piece to next position
+//		board.setPosition(from, Board.EMPTY);
+//		board.setPosition(to, player);
+//		
+//		from = to;
+//		to = to.getApproach(delta);
+//		
+//		// delete enemy game pieces
+//		while (board.isValidPosition(to)
+//			&& board.getPosition(to) == enemy)
+//		{
+//			board.setPosition(to, Board.EMPTY);
+//			to = to.getApproach(delta);
+//		}
+//		
+//		// TODO: this type of check should have its own function
+//		for (int dx = Delta.MIN_DELTA; dx <= Delta.MAX_DELTA; dx++)
+//		{
+//			for (int dy = Delta.MIN_DELTA; dy <= Delta.MAX_DELTA; dy++)
+//			{
+//				// additional captures available?
+//				if (isValidMove(from, from.getApproach(dx, dy)))
+//					return true;
+//			}
+//		}
+//		
+//		// no more captures available for current move
+//		return false;
+//	}
+//
+//	public boolean withdraw(Point from, Point to)
+//	{
+//		Delta delta = Delta.getDelta(from, to);
+//		int player = board.getPosition(from);
+//		int enemy = player ^ 1;
+//
+//		// add move to path/history
+//		addToPath(from);
+//		
+//		// move player piece to next position
+//		board.setPosition(from, Board.EMPTY);
+//		board.setPosition(to, player);
+//		
+//		Point tmp = from;
+//		from = to;
+//		to = tmp.getWithdraw(delta);
+//		
+//		// delete enemy game pieces
+//		while (board.isValidPosition(to)
+//			&& board.getPosition(to) == enemy)
+//		{
+//			board.setPosition(to, Board.EMPTY);
+//			to = to.getWithdraw(delta);
+//		}
+//		
+//		// TODO: this type of check should have its own function
+//		for (int dx = Delta.MIN_DELTA; dx <= Delta.MAX_DELTA; dx++)
+//		{
+//			for (int dy = Delta.MIN_DELTA; dy <= Delta.MAX_DELTA; dy++)
+//			{
+//				// additional captures available?
+//				if (isValidMove(from, from.getApproach(dx, dy)))
+//					return true;
+//			}
+//		}
+//		
+//		// no more captures available for current move
+//		return false;
+//	}
 	
 	// this code should not have side effects!
 	public boolean isValidMove(Point from, Point to)

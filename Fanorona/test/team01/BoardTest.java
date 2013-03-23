@@ -76,7 +76,7 @@ public class BoardTest {
 		System.out.println(board);
 		
 		assertTrue(move.isValidMove(from, to));
-		assertFalse(move.approach(from, to));
+		assertFalse(move.capture(from, to, true));
 		
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 20);
@@ -100,7 +100,7 @@ public class BoardTest {
 		System.out.println(board);
 		
 		assertTrue(move.isValidMove(from, to));
-		assertFalse(move.approach(from, to));
+		assertFalse(move.capture(from, to, true));
 		
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 20);
@@ -124,7 +124,31 @@ public class BoardTest {
 		System.out.println(board);
 		
 		assertTrue(move.isValidMove(from, to));
-		assertFalse(move.approach(from, to));
+		assertFalse(move.capture(from, to, true));
+		
+		assertEquals(board.numWhite(), 22);
+		assertEquals(board.numBlack(), 21);
+		assertEquals(board.numEmpty(), 2);
+
+		System.out.println("after:");
+		System.out.println(board);
+	}
+	
+	@Test
+	public void withdrawSideTest() {
+		// make sure moves/captures update the board properly
+		assertEquals(board.numWhite(), 22);
+		assertEquals(board.numBlack(), 22);
+		assertEquals(board.numEmpty(), 1);
+		
+		Point from = new Point(3, 2);
+		Point to = new Point(4, 2);
+
+		System.out.println("before:");
+		System.out.println(board);
+		
+		assertTrue(move.isValidMove(from, to));
+		assertFalse(move.capture(from, to, false));
 		
 		assertEquals(board.numWhite(), 22);
 		assertEquals(board.numBlack(), 21);
