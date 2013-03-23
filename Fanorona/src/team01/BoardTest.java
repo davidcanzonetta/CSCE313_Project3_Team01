@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.util.*;
+
 public class BoardTest {
 
 	@Test
@@ -37,6 +39,10 @@ public class BoardTest {
 		Move move = new Move(board);
 		
 		int player = Board.WHITE;
+		List<Integer> fromX = new ArrayList<Integer>();
+		List<Integer> fromY = new ArrayList<Integer>();
+		List<Integer> toX = new ArrayList<Integer>();
+		List<Integer> toY = new ArrayList<Integer>();
 		
 		for (int y1 = 0; y1 < board.getHeight(); y1++)
 		{
@@ -48,14 +54,30 @@ public class BoardTest {
 					{
 						for (int dy = -1; dy <= 1; dy++)
 						{
-							if (move.isValidMove(x1, y1, x1+dx, y1+dy))
+							int x2 = x1 + dx;
+							int y2 = y1 + dy;
+							
+							if (move.isValidMove(x1, y1, x2, y2))
 							{
-								System.out.printf("(%d,%d) -> (%d,%d)\n", x1, y1, x1+dx, y1+dy);
+								fromX.add(x1);
+								fromY.add(y1);
+								toX.add(x2);
+								toY.add(y2);
 							}
 						}
 					}
 				}
 			}
+		}
+		
+		assertEquals(fromX.size(), 4);
+		assertEquals(fromY.size(), 4);
+		assertEquals(toX.size(), 4);
+		assertEquals(toY.size(), 4);
+		
+		for (int i = 0; i < fromX.size(); i++)
+		{
+			System.out.printf("(%d,%d) -> (%d,%d)\n", fromX.get(i), fromY.get(i), toX.get(i), toY.get(i));
 		}
 		System.out.println();
 	}
