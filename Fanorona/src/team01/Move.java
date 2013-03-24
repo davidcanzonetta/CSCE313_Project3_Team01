@@ -30,6 +30,7 @@ public class Move {
 		to = approach ? to.getApproach(delta) : tmp.getWithdraw(delta);
 		
 		// delete enemy game pieces
+		// TODO: delete enemy game pieces for a withdrawal (not displaying on board currently)
 		while (board.isValidPosition(to)
 			&& board.getPosition(to) == enemy)
 		{
