@@ -54,7 +54,7 @@ public class Fanorona extends JPanel{
 	      message.setBounds(0, 400, 600, 30);
 	}
 	
-	private class FanoronaBoard extends JPanel implements ActionListener, MouseListener {
+	private class FanoronaBoard extends JPanel implements ActionListener, MouseListener, KeyListener {
 		Board board;
 		boolean gameInProgress;
 		int currentPlayer;
@@ -364,6 +364,38 @@ public class Fanorona extends JPanel{
      public void mouseClicked(MouseEvent evt) {mousePressed(evt);}
      public void mouseEntered(MouseEvent evt) { }
      public void mouseExited(MouseEvent evt) { }
+     public void keyPressed(KeyEvent event)
+ 	 {
+ 		switch (event.getKeyCode())
+ 		{
+ 				/*
+ 				case KeyEvent.VK_UP:          
+ 									break;
+ 														
+ 				case KeyEvent.VK_DOWN:	 
+                                       break;
+                                                   		
+ 				case KeyEvent.VK_LEFT: 
+ 							          break;			          
+ 							            
+ 				case KeyEvent.VK_RIGHT:
+ 									   break;  
+ 										
+ 				case KeyEvent.VK_ENTER: 				
+ 										break;
+ 				*/						
+ 				case KeyEvent.VK_ESCAPE:
+ 				                         System.exit(0);
+ 				                         break;
+ 				                         
+ 				/*
+ 				case KeyEvent.VK_F5:
+ 				                         break; 
+ 				 */                        
+ 		}	
+ 	}	
+ 	public void keyReleased(KeyEvent event) {}
+ 	public void keyTyped(KeyEvent event) {}
 	
 	} //End FanoronaBoard Class
 	/*
