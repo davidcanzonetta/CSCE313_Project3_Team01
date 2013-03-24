@@ -369,19 +369,19 @@ public class Fanorona extends JPanel{
 	/*
 	public static void main(String[] args) 
 	{
-<<<<<<< HEAD
+
 		//Prints board
 		boolean quit = true, move_done=true;
 		int curr_pos_x, curr_pos_y, new_pos_x, new_pos_y;
 		Scanner input=new Scanner(System.in);
 		while(quit)
-=======
+
 		Board board = new Board(9, 5);
 		Scanner input = new Scanner(System.in);
 		int player = Board.WHITE;
 		
 		while (true)
->>>>>>> refs/remotes/origin/master
+
 		{
 			// TODO: sweep board for available captures
 
@@ -402,8 +402,7 @@ public class Fanorona extends JPanel{
 			
 			if (! board.isValidPosition(from))
 			{
-<<<<<<< HEAD
-				System.out.println("White's turn\n------------\n");
+			    System.out.println("White's turn\n------------\n");
 				System.out.print(board);
 				System.out.print("\nEnter X position of piece to move: ");
 				curr_pos_x = input.nextInt();
@@ -416,16 +415,16 @@ public class Fanorona extends JPanel{
 
 				move_done = move_function(curr_pos_x, curr_pos_y, new_pos_x, new_pos_y);
 				quit = max_moves();
-=======
+
 				System.out.println("Position " + from + " is not valid!");
 				System.out.println("Try again");
 				continue;
->>>>>>> refs/remotes/origin/master
+
 			}
 			
 			if (board.getPosition(from) != player)
 			{
-<<<<<<< HEAD
+
 				System.out.println("Black's turn\n------------");
 				System.out.print(board);
 				System.out.print("\nEnter X position of piece to move: ");
@@ -439,11 +438,11 @@ public class Fanorona extends JPanel{
 
 				move_done = move_function(curr_pos_x, curr_pos_y, new_pos_x, new_pos_y);
 				quit = max_moves();
-=======
+
 				System.out.println("Position " + from + " is not " + playerIdToString(player));
 				System.out.println("Try again");
 				continue;
->>>>>>> refs/remotes/origin/master
+
 			}
 
 			// TODO: handle case where there are no captures available
