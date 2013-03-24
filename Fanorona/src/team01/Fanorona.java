@@ -11,17 +11,15 @@ public class Fanorona {
 	
 	public static void main(String[] args) 
 	{
-		int xFrom, yFrom, xTo, yTo;
-		int player = Board.WHITE;
-		
 		Board board = new Board(9, 5);
 		Scanner input = new Scanner(System.in);
+		int player = Board.WHITE;
 		
 		while (true)
 		{
 			// TODO: sweep board for available captures
-			
-			Point from, to;
+
+			int xFrom, yFrom;
 			
 			// get move from coordinates
 			System.out.println("Player: " + playerIdToString(player));
@@ -32,7 +30,7 @@ public class Fanorona {
 			System.out.print("Enter Y position of piece to move: ");
 			yFrom = input.nextInt();
 			
-			from = new Point(xFrom, yFrom);
+			Point from = new Point(xFrom, yFrom);
 			
 			// TODO: check that position from has captures?
 			
@@ -55,13 +53,15 @@ public class Fanorona {
 			
 			while (true)
 			{
+				int xTo, yTo;
+				
 				// get move to coordinates
 				System.out.print("Enter X position to move " + from + " to: ");
 				xTo = input.nextInt();
 				System.out.print("Enter Y position to move " + from + " to: ");
 				yTo = input.nextInt();
 				
-				to = new Point(xTo, yTo);
+				Point to = new Point(xTo, yTo);
 				
 				if (! move.isValidMove(from, to))
 				{
