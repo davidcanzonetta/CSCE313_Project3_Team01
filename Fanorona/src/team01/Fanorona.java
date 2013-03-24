@@ -35,6 +35,7 @@ public class Fanorona extends JPanel{
 	}
 	
 	public Fanorona() {
+		Board board = new Board(9,5);
 		setLayout(null);
 		setPreferredSize(new Dimension(750, 500)); //width, height
 		setBackground(new Color(105,139,34));  // Olive background
@@ -57,8 +58,9 @@ public class Fanorona extends JPanel{
 	private class FanoronaBoard extends JPanel implements ActionListener, MouseListener, KeyListener {
 		Board board;
 		boolean gameInProgress;
+		boolean pieceSelect = true;
 		int currentPlayer;
-		Point selectedPiece;
+		Point selectedPiece, selectedSpace;
 		Pair[] legalMoves; //An array containing pairs of legal moves
 		int col_space;
 	    int row_space;
@@ -66,26 +68,25 @@ public class Fanorona extends JPanel{
 		FanoronaBoard() {
 			setBackground(Color.BLACK);
 			addMouseListener(this);
-	         resignButton = new JButton("Resign");
-	         resignButton.addActionListener(this);
-	         newGameButton = new JButton("New Game");
-	         newGameButton.addActionListener(this);
-	         message = new JLabel("",JLabel.CENTER);
-	         message.setFont(new  Font("Serif", Font.BOLD, 14));
-	         message.setForeground(Color.white);
-	         board = new Board(9, 5);
-	         doNewGame();
-		}
+	        resignButton = new JButton("Resign");
+	        resignButton.addActionListener(this);
+	        newGameButton = new JButton("New Game");
+	        newGameButton.addActionListener(this);
+	        message = new JLabel("",JLabel.CENTER);
+	        message.setFont(new  Font("Serif", Font.BOLD, 14));
+	        message.setForeground(Color.white);
+	        board = new Board(9, 5);
+	        doNewGame();
+	        }
 		
 		public void actionPerformed(ActionEvent evt) {
-	         Object src = evt.getSource();
-	         if (src == newGameButton)
-	            doNewGame();
-	         else if (src == resignButton)
-	            doResign();
-	      }
-		
-		 void doNewGame() {
+			Object src = evt.getSource();
+			if (src == newGameButton)
+				doNewGame();
+			else if (src == resignButton)
+				doResign();			
+	    }
+		void doNewGame() {
 	         currentPlayer = Board.WHITE;   // White moves first
 	         legalMoves = getLegalMoves(Board.WHITE, board);  // Get White's legal moves.
 	         selectedPiece = new Point(-1,-1);   // Set selected piece to none i.e. -1, -1
@@ -94,12 +95,9 @@ public class Fanorona extends JPanel{
 	         newGameButton.setEnabled(false);
 	         resignButton.setEnabled(true);
 	     //    repaint(); //Is giving weird duplication 
-	         
-	       
 	      }
 		 
-		 public boolean move_function(int x1, int y1, int x2, int y2)
-			{
+		 public boolean move_function(int x1, int y1, int x2, int y2) {
 				boolean done = true;
 				Move m = new Move(board);
 				Point from = new Point(x1, y1);
@@ -117,21 +115,21 @@ public class Fanorona extends JPanel{
 					message.setText("Invalid Move");
 				}
 				return done;
-			}
+		 }
 		 
 		 void doResign() {
 	         if (currentPlayer == Board.WHITE)
 	            gameOver("WHITE resigns.  BLACK wins.");
 	         else
 	            gameOver("BLACK resigns.  WHITE wins.");
-	      }
+		 }
 		 
 		 void gameOver(String str) {
 	         message.setText(str);
 	         newGameButton.setEnabled(true);
 	         resignButton.setEnabled(false);
 	         gameInProgress = false;
-	      }
+	     }
 		 
 		 //Returns a list of legal move pairs for a given player haven't checked validity borrowed from Hayden
 		 public Pair[] getLegalMoves (int player, Board passed_board) {
@@ -185,12 +183,47 @@ public class Fanorona extends JPanel{
 		
 
 	//This doesn't seem to work
+	void doClickSpace(Point p) {
+		Move move = new Move(board);
+		boolean m = true;
+		selectedSpace = p;
+		
+		message.setText("You have picked piece (" + p.x + ", " + p.y + ")" );
+		System.out.println("You have picked piece (" + p.x+ ", "+ p.y + ")");
+		
+		while(m)
+		{
+			if (! move.isValidMove(selectedPiece, selectedSpace))
+			{
+				System.out.println(selectedPiece + " -> " + selectedSpace + " is not a valid move!");
+				System.out.println("Try again");
+				m = false;
+			}
+			
+			++moves;
+			
+			// must have m true or it will always delete piece clicked
+			if (m && ! move.capture(selectedPiece, selectedSpace, move.hasCapture(selectedPiece, selectedSpace, true)))
+			{
+			// no more captures
+				System.out.println("Here");
+				m = false;
+			}
+		
+			System.out.println(board);
+		}
+		
+		pieceSelect = true;
+		
+	}
 	void doClickPiece(Point p) {
 		selectedPiece = p;
-		/*
-		 message.setText("You have picked piece " + p.x +" " + p.y );
-     
-		/*Check to see if any legal moves can be made from clicked piece
+		
+		message.setText("You have picked piece (" + p.x + ", " + p.y +"). Select a space to move to." );
+		System.out.println("You have picked piece (" + p.x + ", " + p.y + "). Select a space to move to.");
+		 
+		pieceSelect = false;
+		 /*Check to see if any legal moves can be made from clicked piece
 		 * if so make the clicked piece their selected piece
 		
 		 
@@ -275,7 +308,7 @@ public class Fanorona extends JPanel{
 		*/
 	}
 	//This works
-	 public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 		 //Draw border
 		 g.setColor(Color.white);
          g.drawRect(0,0,getSize().width-1,getSize().height-1);
@@ -329,39 +362,39 @@ public class Fanorona extends JPanel{
                    }
                    break;
                 }
-                
-                
              }
          }
-         
 	 } //end paintComponent
 	
 	 //This works
-	 public void mousePressed(MouseEvent evt) {
-         if (gameInProgress == false)
-            message.setText("Click the new game button to start a new game.");
-         else {
-        	int x=-1, y=-1;
-            int orig_x = evt.getX()-40;
-            for(int i = 0; i < board.getWidth(); i++) {
-	            if(orig_x >= i*col_space  && orig_x <= (i+1)*col_space ) {
-	            	x = i;
-	            }
-            }
-            int orig_y = evt.getY()-40;
-            for(int i = 0; i < board.getHeight(); i++) {
-            	if(orig_y >= i*row_space  && orig_y <= (i+1)*row_space ) {
-	            	y = i;
-	            }
-            }
-            System.out.print("OX: "+orig_x+"OY: "+orig_y +"\n");
-            System.out.print("X: "+x+"Y: "+y +"\n");
-            Point p = new Point(x, y);
-            doClickPiece(p);    
-         }
-      }
-	 public void mouseReleased(MouseEvent evt) { }
-     public void mouseClicked(MouseEvent evt) {mousePressed(evt);}
+	 public void mousePressed(MouseEvent evt) {}
+	 public void mouseReleased(MouseEvent evt) {}
+     public void mouseClicked(MouseEvent evt) {
+    	 if (gameInProgress == false)
+             message.setText("Click the new game button to start a new game.");
+          else {
+         	int x=-1, y=-1;
+             int orig_x = evt.getX()-40;
+             for(int i = 0; i < board.getWidth(); i++) {
+ 	            if(orig_x >= i*col_space  && orig_x <= (i+1)*col_space ) {
+ 	            	x = i;
+ 	            }
+             }
+             int orig_y = evt.getY()-40;
+             for(int i = 0; i < board.getHeight(); i++) {
+             	if(orig_y >= i*row_space  && orig_y <= (i+1)*row_space ) {
+ 	            	y = i;
+ 	            }
+             }
+             System.out.print("OX: "+orig_x+"OY: "+orig_y +"\n");
+             System.out.print("X: "+x+"Y: "+y +"\n");
+             Point p = new Point(x, y);
+             if(!pieceSelect)
+             	doClickSpace(p);
+             else
+             	doClickPiece(p);
+          }
+     }
      public void mouseEntered(MouseEvent evt) { }
      public void mouseExited(MouseEvent evt) { }
      public void keyPressed(KeyEvent event)
@@ -575,28 +608,5 @@ public class Fanorona extends JPanel{
 	*/
 	
 	//Function to move white pieces, returns -1 if invalid move etc.
-	public static int move_white(int curr_pos_x, int curr_pos_y, int new_pos_x, int new_pos_y) {
-//		if(board.isWhite(curr_pos_x, curr_pos_y) && board.isEmpty(new_pos_x, new_pos_y)) {
-//			board.setPosition(curr_pos_x, curr_pos_y, Board.EMPTY);
-//			board.setPosition(new_pos_x, new_pos_y, Board.WHITE);
-//			return 0; 
-//		} else {
-//			return -1;
-//		}
-		
-		return 0;
-	}
-	
-	//Function to move black pieces, returns -1 if invalid move etc.
-	public static int move_black(int curr_pos_x, int curr_pos_y, int new_pos_x, int new_pos_y) {
-//		if(board.isBlack(curr_pos_x, curr_pos_y) && board.isEmpty(new_pos_x, new_pos_y)) {
-//			board.setPosition(curr_pos_x, curr_pos_y, Board.EMPTY);
-//			board.setPosition(new_pos_x, new_pos_y, Board.BLACK);
-//			return 0; 
-//		} else {
-//			return -1;
-//		}
-		
-		return 0;
-	}
+
 }
