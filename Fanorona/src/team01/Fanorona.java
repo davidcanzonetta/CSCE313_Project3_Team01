@@ -200,6 +200,9 @@ public class Fanorona extends JPanel{
 				m = false;
 			}
 			
+			if(m)
+				++moves;
+			
 			// must have m true or it will always delete piece clicked
 			if (m && ! move.capture(selectedPiece, selectedSpace, move.hasCapture(selectedPiece, selectedSpace, true)))
 			{
@@ -209,10 +212,8 @@ public class Fanorona extends JPanel{
 			}
 			System.out.println(board);
 			
-			if(m){
-				++moves;
-				repaint();
-			}
+//			repaint();
+
 		}
 		pieceSelect = true;
 		
