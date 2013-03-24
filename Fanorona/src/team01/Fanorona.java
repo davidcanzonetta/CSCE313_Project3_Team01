@@ -19,12 +19,12 @@ public class Fanorona {
 		
 		while (true)
 		{
-			// TODO: sweep board for captures
+			// TODO: sweep board for available captures
 			
 			Point from, to;
 			
 			// get move from coordinates
-			System.out.println("Player: " + (player == Board.WHITE ? "white" : "black"));
+			System.out.println("Player: " + playerIdToString(player));
 			System.out.print(board);
 			
 			System.out.print("Enter X position of piece to move: ");
@@ -45,7 +45,7 @@ public class Fanorona {
 			
 			if (board.getPosition(from) != player)
 			{
-				System.out.println("Position " + from + " is not " + (player == Board.WHITE ? "white" : "black"));
+				System.out.println("Position " + from + " is not " + playerIdToString(player));
 				System.out.println("Try again");
 				continue;
 			}
@@ -96,8 +96,18 @@ public class Fanorona {
 		input.close();
 	}
 	
+	private static String playerIdToString(int player)
+	{
+		if (player == Board.WHITE)
+		{
+			return "white";
+		}
+		
+		return "black";
+	}
+	
 	//Returns FALSE if maximum number of moves has been exceeded
-	public static boolean maxMoves()
+	private static boolean maxMoves()
 	{
 		if(moves >= 50)
 		{
