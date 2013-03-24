@@ -54,6 +54,7 @@ public class CommandLine {
 			while (true)
 			{
 				int xTo, yTo;
+				int ans;
 				
 				// get move to coordinates
 				System.out.print("Enter X position to move " + from + " to: ");
@@ -72,8 +73,27 @@ public class CommandLine {
 				
 				++moves;
 				
-				// TODO: check for withdraw/approach ambiguity
-				if (! move.capture(from, to, move.hasCapture(from, to, true)))
+				// checks for withdraw/approach ambiguity
+				if(move.hasCapture(from, to, true) && move.hasCapture(from, to, false))
+				{
+					System.out.println("Ambiguous Capture!");
+					System.out.print("Select 1 for approach or 2 for withdraw: ");
+					ans = input.nextInt();
+					while(ans != 1 && ans != 2){
+						ans = input.nextInt();
+						System.out.print("Select 1 for approach or 2 for withdraw: ");
+					}
+					if(ans == 1)
+					{
+						move.capture(from, to, true);
+					}
+					else
+					{
+						move.capture(from, to, false);
+					}
+					break;
+				}
+				else if (! move.capture(from, to, move.hasCapture(from, to, true)))
 				{
 					// no more captures
 					break;

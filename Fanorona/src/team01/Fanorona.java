@@ -84,7 +84,7 @@ public class Fanorona extends JPanel{
 			if (src == newGameButton)
 				doNewGame();
 			else if (src == resignButton)
-				doResign();			
+				doResign();	
 	    }
 		void doNewGame() {
 	         currentPlayer = Board.WHITE;   // White moves first
