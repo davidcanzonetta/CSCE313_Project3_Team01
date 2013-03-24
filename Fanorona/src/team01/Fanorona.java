@@ -75,7 +75,8 @@ public class Fanorona {
 		Point to = new Point(x2, y2);
 		if(m.isValidMove(from, to))
 		{
-			done = m.capture(from, to, true);
+			// TODO: handle case where approach and withdraw are possible
+			done = m.capture(from, to, m.hasCapture(from, to, true));
 			//if move_done == false, no more captures
 			System.out.println("Valid move");
 			moves++;

@@ -90,7 +90,7 @@ public class Move {
 		return true;
 	}
 	
-	private boolean hasCapture(Point from, Point to, boolean approach)
+	public boolean hasCapture(Point from, Point to, boolean approach)
 	{
 		Point capture;
 		Delta delta = Delta.getDelta(from, to);
