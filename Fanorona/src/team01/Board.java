@@ -45,26 +45,50 @@ public class Board implements Iterable<Point> {
 	{
 		StringBuilder str = new StringBuilder();
 		
+		str.append("  ");
+		for (int i = 0; i < width; i++)
+		{
+			str.append(i + " ");
+		}
+		str.setCharAt(str.length()-1, '\n');
+		
 		for (int i = 0; i < height; i++)
 		{
+			str.append(i + " ");
 			for (int k = 0; k < width; k++)
 			{
 				int x = grid[i][k];
 				
 				if (x == WHITE)
 				{
-					str.append("o ");
+					str.append("O-");
 				}
 				else if (x == BLACK)
 				{
-					str.append("x ");
+					str.append("X-");
 				}
 				else // if (x == EMPTY)
 				{
-					str.append("_ ");
+					str.append("_-");
 				}
 			}
-			str.append('\n');
+			str.setCharAt(str.length()-1, '\n');
+			str.append("  ");
+			if (i < height - 1)
+			{
+				for (int k = 0; k < width; k++)
+				{
+					if (Util.isEven(i + k))
+					{
+						str.append("|\\");
+					}
+					else
+					{
+						str.append("|/");
+					}
+				}
+			}
+			str.setCharAt(str.length()-1, '\n');
 		}
 		
 		return str.toString();
