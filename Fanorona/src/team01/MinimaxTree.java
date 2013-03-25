@@ -19,7 +19,7 @@ public class MinimaxTree {
 	}
 	*/
 	public static int utilityValue(MinimaxNode n) {
-		return (n.data.numWhite() - n.data.numBlack());
+		return (n.data.getWhite() - n.data.getBlack());
 	}
 
 	public static int minimax(MinimaxNode n, int depth) {
