@@ -5,96 +5,93 @@ import java.util.List;
 
 public class Move {
 
-	public Move (Board b)
-	{
-		board = b;
-		path = new ArrayList<Point>();
-	}
-	
-	public boolean capture(Point from, Point to, boolean approach)
-	{
-		Delta delta = Delta.getDelta(from, to);
-		int player = board.getPosition(from);
-		int enemy = player ^ 1;
+	private Board board;
+	private List<Point> path;
+	private Delta last;
 
-		// add move to path/history
-		addToPath(from);
+	public Move(Board board) {
+		super();
+		this.board = board;
+		this.path = new ArrayList<Point>();
+		this.last = new Delta(0, 0);
+	}
+
+	public void capture(Point from, Point to, Delta delta, boolean isApproach) {
+		int player = board.getPoint(from);
+		int enemy = player ^ 1;
 		
-		// move player piece to next position
-		board.setPosition(from, Board.EMPTY);
-		board.setPosition(to, player);
+		// add source to path history
+		path.add(from);
+		last = delta;
 		
-		Point tmp = from;
+		board.setPoint(from, Board.EMPTY);
+		board.setPoint(to, player);
+
+		Point temp = from;
 		from = to;
 		
-		to = approach ? to.getApproach(delta) : tmp.getWithdraw(delta);
-		
-		// delete enemy game pieces
-		while (board.isValidPosition(to)
-			&& board.getPosition(to) == enemy)
+		if (isApproach)
 		{
-			board.setPosition(to, Board.EMPTY);
-			to = approach ? to.getApproach(delta) : to.getWithdraw(delta);
+			to = to.getApproach(delta);
+		}
+		else
+		{
+			to = temp.getWithdraw(delta);
 		}
 		
-		// TODO: this type of check should have its own function
-		for (int dx = Delta.MIN_DELTA; dx <= Delta.MAX_DELTA; dx++)
+		// delete enemy pieces
+		while (board.isValidPoint(to)
+			&& board.getPoint(to) == enemy)
 		{
-			for (int dy = Delta.MIN_DELTA; dy <= Delta.MAX_DELTA; dy++)
+			board.setPoint(to, Board.EMPTY);
+			
+			if (isApproach)
 			{
-				// additional captures available?
-				if (isValidMove(from, from.getApproach(dx, dy)))
-					return true;
+				to = to.getApproach(delta);
+			}
+			else
+			{
+				to = to.getWithdraw(delta);
 			}
 		}
-		
-		// no more captures available for current move
-		return false;
+	}
+
+	public boolean isValidMove(Point from, Point to, Delta delta) {
+		if (! board.isValidPoint(to)) {
+			return false;
+		}
+
+		// destination point empty?
+		if (board.getPoint(to) != Board.EMPTY) {
+			return false;
+		}
+
+		// direction same as previous move?
+		if (delta.equals(last)) {
+			return false;
+		}
+
+		// point already visited?
+		if (path.contains(to)) {
+			return false;
+		}
+
+		return isValidApproach(from, to, delta)
+			|| isValidWithdraw(from, to, delta);
 	}
 	
-	// this code should not have side effects!
-	public boolean isValidMove(Point from, Point to)
-	{
-		// next position in board range?
-		if (! board.isValidPosition(to))
-		{
-			return false;
-		}
-		
-		// next position is empty?
-		if (! board.isEmpty(to))
-		{
-			return false;
-		}
-		
-		// next position already in path?
-		if (findInPath(to))
-		{
-			return false;
-		}
-		
-		// delta/direction of move is legal?
-		if (! isValidDirection(from, to))
-		{
-			return false;
-		}
-		
-		// move will capture other player's piece (approach or withdrawal)?
-		if (! (hasCapture(from, to, true)
-			|| hasCapture(from, to, false)))
-		{
-			return false;
-		}
-		
-		return true;
+	public boolean isValidApproach(Point from, Point to, Delta delta) {
+		return isValidCapture(from, to, delta, true);
 	}
 	
-	public boolean hasCapture(Point from, Point to, boolean approach)
-	{
+	public boolean isValidWithdraw(Point from, Point to, Delta delta) {
+		return isValidCapture(from, to, delta, false);
+	}
+	
+	private boolean isValidCapture(Point from, Point to, Delta delta, boolean isApproach) {
 		Point capture;
-		Delta delta = Delta.getDelta(from, to);
 		
-		if (approach)
+		if (isApproach)
 		{
 			capture = to.getApproach(delta);
 		}
@@ -103,86 +100,16 @@ public class Move {
 			capture = from.getWithdraw(delta);
 		}
 		
-		if (! board.isValidPosition(capture))
-		{
-			return false;
-		}
-
-		int player = board.getPosition(from);
-		int enemy = board.getPosition(capture);
-		
-		// other position must have an enemy piece
-		if (enemy == Board.EMPTY
-			|| enemy == player)
+		if (! board.isValidPoint(capture))
 		{
 			return false;
 		}
 		
-		// move has a capture
-		return true;
-	}
-	
-	// check if point is in path
-	private boolean findInPath(Point next)
-	{
-		for (Point point : path)
-		{
-			if (point.equals(next))
-			{
-				// next point is in path
-				return true;
-			}
-		}
+		int player = board.getPoint(from);
+		int other = board.getPoint(capture);
 		
-		// next point not in path
-		return false;
-	}
-	
-	// add position to path
-	private void addToPath(Point point)
-	{
-		path.add(point);
+		// other point has enemy piece;
+		return other == (player ^ 1);
 	}
 
-	private boolean isValidDirection(Point from, Point to)
-	{
-		Delta delta = Delta.getDelta(from, to);
-		
-		// delta values in range [-1, 1] ?
-		if (! delta.isValid())
-		{
-			return false;
-		}
-		
-		int last = path.size() - 1;
-		
-		// next move has same direction as last move?
-		if (last >= 0)
-		{
-			Point lastmove = path.get (last);
-			Delta lastDelta = Delta.getDelta(lastmove, from);
-			
-			if (delta.equals(lastDelta))
-			{
-				// cannot move in same direction twice in a row
-				return false;
-			}
-		}
-		
-		// handle diagonal moves
-		if (delta.isDiagonal())
-		{
-			// current position can move diagonally?
-			if (! board.isDiagonalPosition(from))
-			{
-				return false;
-			}
-		}
-		
-		// move is valid
-		return true;
-	}
-	
-	private List<Point> path;
-	private Board board;
 }

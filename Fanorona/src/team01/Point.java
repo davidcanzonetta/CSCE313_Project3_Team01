@@ -2,43 +2,61 @@ package team01;
 
 public class Point {
 
+	private int x;
+	private int y;
+
+	public Point(int x, int y) {
+		super();
+		this.x = x;
+		this.y = y;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public Point getApproach(Delta delta)
+	{
+		return new Point(x + delta.getDx(), y + delta.getDy());
+	}
+
+	public Point getWithdraw(Delta delta)
+	{
+		return new Point(x - delta.getDx(), y - delta.getDy());
+	}
+
 	@Override
 	public String toString() {
 		return "(" + x + ", " + y + ")";
 	}
 
-	public Point (int x_, int y_)
-	{
-		x = x_;
-		y = y_;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + x;
+		result = prime * result + y;
+		return result;
 	}
-	
-	Point getApproach (Delta delta)
-	{
-		return getApproach (delta.dx, delta.dy);
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Point other = (Point) obj;
+		if (x != other.x)
+			return false;
+		if (y != other.y)
+			return false;
+		return true;
 	}
-	
-	Point getWithdraw (Delta delta)
-	{
-		return getWithdraw (delta.dx, delta.dy);
-	}
-	
-	Point getApproach (int dx, int dy)
-	{
-		return new Point (x + dx, y + dy);
-	}
-	
-	Point getWithdraw (int dx, int dy)
-	{
-		return new Point (x - dx, y - dy);
-	}
-	
-	public int x;
-	public int y;
-	
-	// not intended to override Object.equals
-	public boolean equals(Point pt)
-	{
-		return (x == pt.x) && (y == pt.y);
-	}
+
 }
