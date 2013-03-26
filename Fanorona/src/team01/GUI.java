@@ -1,10 +1,10 @@
 package team01;
 
-//import java.util.*;
+import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-//import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class GUI extends JPanel{
 	//private static final long serialVersionUID = 7526472295622776147L;  // unique id
@@ -87,6 +87,7 @@ public class GUI extends JPanel{
 	      }
 		
 		 void doNewGame() {
+			 currentPlayer = Board.WHITE;
 	         selectedPiece = new Point(-1,-1);   // Set selected piece to none i.e. -1, -1
 	         //message.setText("WHITE:  Make your move.");
 	         gameInProgress = true;
@@ -117,9 +118,9 @@ public class GUI extends JPanel{
 		 
 		
 	//This doesn't seem to work
-	public Point getPoint() {
-		return selectedPiece;
-     }  // end doClickSquare()
+	//public Point getPoint() {
+		//return selectedPiece;
+     //}  // end doClickSquare()
 	
 	//This works
 	 public void paintComponent(Graphics g) {
@@ -151,28 +152,28 @@ public class GUI extends JPanel{
             	}
              }
          }
-         for (int row = 0; row < board.getHeight(); row++) {
-             for (int col = 0; col < board.getWidth(); col++) {
+         for (int row = 1; row <= board.getHeight(); row++) {
+             for (int col = 1; col <= board.getWidth(); col++) {
                 Point p = new Point(col, row);
                 switch (board.getPoint(p)) {
                 case Board.WHITE:
                    g.setColor(Color.WHITE);
-                   if(col == 0 && row == 0) {
+                   if(col == 1 && row == 1) {
                 	   g.fillOval(25, 25, 35, 35);
                    }
                    else {
-                	   g.fillOval(25+col*col_space, 25+row*row_space, 35, 35);
+                	   g.fillOval(25+(col-1)*col_space, 25+(row-1)*row_space, 35, 35);
                 	   
                    }
                    break;
                    
                 case Board.BLACK:
                    g.setColor(Color.BLACK);
-                   if(col == 0 && row == 0) {
+                   if(col == 1 && row == 1) {
                 	   g.fillOval(25, 25, 35, 35);
                    }
                    else {
-                	   g.fillOval(25+col*col_space, 25+row*row_space, 35, 35);
+                	   g.fillOval(25+(col-1)*col_space, 25+(row-1)*row_space, 35, 35);
                    }
                    break;
                 }
