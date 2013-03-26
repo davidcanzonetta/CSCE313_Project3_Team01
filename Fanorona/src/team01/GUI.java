@@ -51,7 +51,7 @@ public class GUI extends JPanel{
 	      message.setBounds(0, 400, 600, 30);
 	}
 	
-	private class GUIBoard extends JPanel implements ActionListener, MouseListener, UserInput {
+	private class GUIBoard extends JPanel implements ActionListener, MouseListener {//, UserInput {
 		private static final long serialVersionUID = 7;  // unique id
 		Board board;
 		boolean gameInProgress;
@@ -64,18 +64,18 @@ public class GUI extends JPanel{
 		GUIBoard() {
 			setBackground(Color.BLACK);
 			addMouseListener(this);
-	         resignButton = new JButton("Resign");
-	         resignButton.addActionListener(this);
-	         newGameButton = new JButton("New Game");
-	         newGameButton.addActionListener(this);
-	         message = new JLabel("",JLabel.CENTER);
-	         message.setFont(new  Font("Serif", Font.BOLD, 14));
-	         message.setForeground(Color.white);
-	       //  board = new Board(9, 5);
-	         Game fanorona = new Game();
-	         fanorona.play();
-	         board = fanorona.getBoard();
-	         doNewGame();
+	        resignButton = new JButton("Resign");
+	        resignButton.addActionListener(this);
+	        newGameButton = new JButton("New Game");
+	        newGameButton.addActionListener(this);
+	        message = new JLabel("",JLabel.CENTER);
+	        message.setFont(new  Font("Serif", Font.BOLD, 14));
+	        message.setForeground(Color.white);
+//	        board = new Board(9, 5);
+	        Game fanorona = new Game();
+	        fanorona.play();
+	        board = fanorona.getBoard();
+	        doNewGame();
 		}
 		
 		public void actionPerformed(ActionEvent evt) {

@@ -164,7 +164,10 @@ public class Game {
 		// TODO: remove Scanner in favor of more general input source
 		input.close();
 	}
-
+	public Board getBoard()
+	{
+		return board;
+	}
 	private boolean gameOver()
 	{
 		return board.getBlack() == 0 || board.getWhite() == 0;
