@@ -61,6 +61,7 @@ public class Game {
 		System.out.println(board);
 		input.close();
 	}
+
 	public Game(int width, int height)
 	{
 		moves = 0;
