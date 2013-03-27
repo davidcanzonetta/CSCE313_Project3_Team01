@@ -297,6 +297,7 @@ public class Game {
 			System.out.println();
 			
 			System.out.print(board);
+			
 			System.out.print("enter x: ");
 			x = input.nextInt();
 			System.out.print("enter y: ");
