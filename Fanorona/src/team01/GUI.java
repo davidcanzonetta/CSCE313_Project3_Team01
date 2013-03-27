@@ -81,23 +81,23 @@ public class GUI extends JPanel{
 	     
 	     //Set positions and sizes of components
 	     guiBoard.setBounds(55,55,640,340); //x, y, width, height
-	     newGameButton.setBounds(200, 450, 120, 30);
-	     resignButton.setBounds(500, 450, 120, 30);
+	     newGameButton.setBounds(170, 450, 120, 30);
+	     resignButton.setBounds(470, 450, 120, 30);
 	     message.setBounds(0, 400, 600, 30);
-	     row_size1.setBounds(40, 470, 30, 30);
-	     row_size3.setBounds(70, 470, 30, 30);
-	     row_size5.setBounds(100, 470, 30, 30);
-	     row_size7.setBounds(130, 470, 30, 30);
-	     row_size9.setBounds(160, 470, 30, 30);
-	     row_size11.setBounds(190, 470, 30, 30);
-	     row_size13.setBounds(220, 470, 30, 30);
-	     col_size1.setBounds(500, 470, 30, 30);
-	     col_size3.setBounds(530, 470, 30, 30);
-	     col_size5.setBounds(560, 470, 30, 30);
-	     col_size7.setBounds(590, 470, 30, 30);
-	     col_size9.setBounds(620, 470, 30, 30);
-	     col_size11.setBounds(650, 470, 30, 30);
-	     col_size13.setBounds(680, 470, 30, 30);
+	     col_size1.setBounds(40, 470, 30, 30);
+	     col_size3.setBounds(70, 470, 30, 30);
+	     col_size5.setBounds(100, 470, 30, 30);
+	     col_size7.setBounds(130, 470, 30, 30);
+	     col_size9.setBounds(160, 470, 30, 30);
+	     col_size11.setBounds(190, 470, 30, 30);
+	     col_size13.setBounds(220, 470, 30, 30);
+	     row_size1.setBounds(500, 470, 30, 30);
+	     row_size3.setBounds(530, 470, 30, 30);
+	     row_size5.setBounds(560, 470, 30, 30);
+	     row_size7.setBounds(590, 470, 30, 30);
+	     row_size9.setBounds(620, 470, 30, 30);
+	     row_size11.setBounds(650, 470, 30, 30);
+	     row_size13.setBounds(680, 470, 30, 30);
 	     proceed.setBounds(310, 470, 100, 30);
 	}
 	
@@ -112,7 +112,7 @@ public class GUI extends JPanel{
 		//Pair[] legalMoves; //An array containing pairs of legal moves
 		int col_space; //Space between columns on the board
 	    int row_space; //Space between rows on the board
-	    int chosen_num_row=9, chosen_num_col=5; //default values are 9x5 board
+	    int chosen_num_col=9, chosen_num_row=5; //default values are 9x5 board
 	    
 		GUIBoard() {
 			setBackground(Color.BLACK);
@@ -214,6 +214,7 @@ public class GUI extends JPanel{
 			     proceed.setVisible(false);
 			     
 		    	 repaint();
+		    	 doNewGame();
 		     }
 		}
 		
@@ -253,7 +254,7 @@ public class GUI extends JPanel{
 	
 		 //This works
 		 public void paintComponent(Graphics g) {
-			 board = new Board(chosen_num_row, chosen_num_col);
+			 board = new Board(chosen_num_col, chosen_num_row);
 			 //Draw border
 			 if(!menu)
 			 {
@@ -288,24 +289,24 @@ public class GUI extends JPanel{
 					 for (int col = 1; col <= board.getWidth(); col++) {
 						 Point p = new Point(col, row);
 						 switch (board.getPoint(p)) {
-						 case Board.WHITE:
-							 g.setColor(Color.WHITE);
-							 if(col == 1 && row == 1) {
-								 g.fillOval(25, 25, 35, 35);
-							 }
-							 else {
-								 g.fillOval(25+(col-1)*col_space, 25+(row-1)*row_space, 35, 35);
-                	   
-							 }
-							 break;
-                   
 						 case Board.BLACK:
 							 g.setColor(Color.BLACK);
 							 if(col == 1 && row == 1) {
 								 g.fillOval(25, 25, 35, 35);
 							 }
 							 else {
-								 g.fillOval(25+(col-1)*col_space, 25+(row-1)*row_space, 35, 35);
+								 g.fillOval(25+(col-1)*col_space, 25+(chosen_num_row-row)*row_space, 35, 35);
+                	   
+							 }
+							 break;
+                   
+						 case Board.WHITE:
+							 g.setColor(Color.WHITE);
+							 if(col == 1 && row == 5) {
+								 g.fillOval(25, 25, 35, 35);
+							 }
+							 else {
+								 g.fillOval(25+(col-1)*col_space, 25+(chosen_num_row-row)*row_space, 35, 35);
 							 }
 							 break;
 						 } 
@@ -319,10 +320,6 @@ public class GUI extends JPanel{
 			 if (gameInProgress == false)
 				 message.setText("Click the new game button to start a new game.");
 			 else {
-				 if(menu)
-				 {
-					 
-				 }
 				 if(!menu)
 				 {
 					 int x=-1, y=-1;
@@ -341,6 +338,7 @@ public class GUI extends JPanel{
 					 }
 					 System.out.print("OX: "+orig_x+" OY: "+orig_y +"\n");
 					 System.out.print("X: "+x+" Y: "+y +"\n");
+					 //TODO: Don't forget to convert 5-i when passing arguments to game
 					 Point p = new Point(x, y);
 					 selectedPiece = p;
 					 click = true;
