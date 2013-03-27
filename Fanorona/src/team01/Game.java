@@ -73,6 +73,17 @@ public class Game {
 		setupNextMove();
 	}
 
+	public Game(Game game)
+	{
+		this.moves = game.moves;
+		this.maxMoves = game.maxMoves;
+		this.player = game.player ^ 1;
+		
+		this.isClickable = new ArrayList<Point>();
+		this.board = new Board(game.board);
+		setupNextMove();
+	}
+	
 	public List<Point> getClickable()
 	{
 		return isClickable;
