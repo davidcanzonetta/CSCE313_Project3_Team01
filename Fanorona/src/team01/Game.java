@@ -6,170 +6,244 @@ import java.util.Scanner;
 
 public class Game {
 
-//	private static List<Delta> diagonal = new ArrayList<Delta>();
-//	private static List<Delta> orthogonal = new ArrayList<Delta>();
-	
-	private List<Point> isClickable;
+	public List<Point> isClickable;
+
 	private Board board;
+	private Move move;
+	Point from;
+	Point to;
+	Delta delta;
+
 	private int player;
+	private int state;
+	private int moves;
+	private int maxMoves;
 
-	// TODO: remove Scanner in favor of more general input source
-	private Scanner input;
-
-	public Game()
-	{
-		isClickable = new ArrayList<Point>();
-		board = new Board(9, 5);
-		player = Board.WHITE;
-		
-		// TODO: remove Scanner
-		input = new Scanner(System.in);
-	}
+	private static final int NEED_CAPTURE_FROM = 0;
+	private static final int NEED_CAPTURE_TO = 1;
+	private static final int NEED_CAPTURE_RESOLVE = 2;
+	private static final int NEED_FREE_FROM = 3;
+	private static final int NEED_FREE_TO = 4;
 	
-	public static void main(String[] args)
-	{
-		// TODO: should initialize delta lists elsewhere
-//		setupDeltas();
+	public static void main(String[] args) {
+		Game game = new Game(9, 5);
+		Board board = game.getBoard();
+		Scanner input = new Scanner(System.in);
 		
-		Game game = new Game();
-		game.play();
-	}
-	
-	public void play()
-	{
-		final int MAX_MOVES = board.getWidth() * 10;
-		
-		int moves;
-
-		for (moves = 0; moves < MAX_MOVES; moves++)
-		{
-			Move move = new Move(board);
-		
-			if (player == Board.WHITE)
-			{
-				System.out.println("WHITE make your move!");
-			}
-			else
-			{
-				System.out.println("BLACK make your move!");
-			}
-			
-			if (sweepBoardForCaptures(move))
-			{
-				
-				System.out.print("move from? ");
-				Point from = getUserInput();
-				
-				// move the selected piece around the board
-				while (sweepNeighborsForCaptures(move, from))
-				{
-					System.out.print("move to? ");
-					Point to = getUserInput();
-
-					boolean isApproach = false;
-					boolean isAmbiguous = false;
-					Delta delta = new Delta(from, to);
-					
-					if (move.isValidApproach(from, to, delta))
-					{
-						if (move.isValidWithdraw(from, to, delta))
-						{
-							isAmbiguous = true;
-						}
-						else
-						{
-							isApproach = true;
-						}
-					}
-					
-					if (isAmbiguous)
-					{
-						if (! isClickable.isEmpty())
-							isClickable.clear();
-						
-						isClickable.add(to.getApproach(delta));
-						isClickable.add(from.getWithdraw(delta));
-						
-						System.out.print("capture? ");
-						Point capture = getUserInput();
-						isApproach = capture.equals(isClickable.get(0));
-					}
-					
-					move.capture(from, to, delta, isApproach);
-					
-					from = to;
-				}
-			}
-			else // board has no captures
-			{
-				for (Point from : board)
-				{
-					if (board.getPoint(from) == player)
-					{
-						isClickable.add(from);
-					}
-				}
-				
-				System.out.print("free move: ");
-				Point from = getUserInput();
-				isClickable.clear();
-				
-				// valid destinations for selected piece (captures not required)
-				for (Delta delta : Delta.orthogonal)
-				{
-					Point to = from.getApproach(delta);
-
-					if (board.isValidPoint(to)
-						&& board.getPoint(to) == Board.EMPTY)
-					{
-						isClickable.add(to);
-					}
-				}
-				if (board.isDiagonalPoint(from))
-				{
-					for (Delta delta : Delta.diagonal)
-					{
-						Point to = from.getApproach(delta);
-
-						if (board.isValidPoint(to)
-							&& board.getPoint(to) == Board.EMPTY)
-						{
-							isClickable.add(to);
-						}
-					}
-				}
-				
-				System.out.print("move to: ");
-				Point to = getUserInput();
-				board.setPoint(from, Board.EMPTY);
-				board.setPoint(to, player);
-			}
-			
-			if (gameOver())
-			{
-				System.out.println("game over!");
-				System.out.println(board);
+		while (true) {
+			if (game.isTie()) {
+				System.out.println("is tie");
+				break;
+			} else if (game.whiteWins()) {
+				System.out.println("white wins");
+				break;
+			} else if (game.blackWins()) {
+				System.out.println("black wins");
 				break;
 			}
-			//else if ( aiPlayer )
-			//{
-			//AI player updates board here 
-			//}
-			else
-			{
-				player = player ^ 1;
+			
+			System.out.print(board);
+			System.out.print("legal points: ");
+			List<Point> available = game.getClickable();
+			for(Point p : available) {
+				System.out.print(p + " ");
 			}
+			System.out.println();
+			System.out.print("x: ");
+			int x = input.nextInt();
+			System.out.print("y: ");
+			int y = input.nextInt();
+			Point point = new Point(x, y);
+			if (! game.update(point))
+				System.out.println("invalid input");
+			
 		}
-		
-		// TODO: remove Scanner in favor of more general input source
+		System.out.println(board);
 		input.close();
 	}
-
-	private boolean gameOver()
+	public Game(int width, int height)
 	{
-		return board.getBlack() == 0 || board.getWhite() == 0;
+		moves = 0;
+		maxMoves = 10 * width;
+		player = Board.WHITE;
+
+		isClickable = new ArrayList<Point>();
+		board = new Board(width, height);
+		setupNextMove();
 	}
-	
+
+	public List<Point> getClickable()
+	{
+		return isClickable;
+	}
+
+	public Board getBoard()
+	{
+		return board;
+	}
+
+//	public List<Point> getPath()
+//	{
+//		return move.getPath();
+//	}
+
+	public boolean isTie()
+	{
+		return moves == maxMoves;
+	}
+
+	public boolean whiteWins()
+	{
+		return board.getWhite() > 0 && board.getBlack() == 0;
+	}
+
+	public boolean blackWins()
+	{
+		return board.getWhite() == 0 && board.getBlack() > 0;
+	}
+
+	public boolean update(Point point)
+	{
+		switch (state)
+		{
+		case NEED_CAPTURE_FROM:
+			System.out.println("attempting capture from " + point);
+			return updateCaptureFrom(point);
+		case NEED_CAPTURE_TO:
+			System.out.println("attempting capture to " + point);
+			return updateCaptureTo(point);
+		case NEED_CAPTURE_RESOLVE:
+			System.out.println("resolving " + point);
+			return updateCaptureResolve(point);
+		case NEED_FREE_FROM:
+			System.out.println("moving from " + point);
+			return updateFreeFrom(point);
+		case NEED_FREE_TO:
+			System.out.println("moving to " + point);
+			return updateFreeTo(point);
+		}
+
+		// should not be reached if end game conditions
+		// are checked properly
+		return false;
+	}
+
+	private boolean updateCaptureFrom(Point point)
+	{
+		if (! isClickable.contains(point))
+		{
+			return false;
+		}
+
+		from = point;
+		sweepNeighborsForCaptures(move, from);
+		state = NEED_CAPTURE_TO;
+
+		return true;
+	}
+
+	private boolean updateCaptureTo(Point point)
+	{
+		if (! isClickable.contains(point))
+		{
+			return false;
+		}
+
+		to = point;
+		delta = new Delta(from, to);
+
+		boolean isApproach = false;
+
+		if (move.isValidApproach(from, to, delta))
+		{
+			if (move.isValidWithdraw(from, to, delta))
+			{
+				if (! isClickable.isEmpty())
+				{
+					isClickable.clear();
+				}
+
+				isClickable.add(to.getApproach(delta));
+				isClickable.add(from.getWithdraw(delta));
+				state = NEED_CAPTURE_RESOLVE;
+				return true;
+			}
+			else
+			{
+				isApproach = true;
+			}
+		}
+
+		capture(isApproach);
+		return true;
+	}
+
+	private boolean updateCaptureResolve(Point capture)
+	{
+		if (! (isClickable.size() == 2 && isClickable.contains(capture)))
+		{
+			return false;
+		}
+
+		boolean isApproach = capture.equals(isClickable.get(0));
+		capture(isApproach);
+		return true;
+	}
+
+	private boolean updateFreeFrom(Point point)
+	{
+		if (! isClickable.contains(point))
+		{
+			return false;
+		}
+
+		from = point;
+
+		isClickable.clear();
+
+		// valid destinations for selected piece (captures not required)
+		for (Delta delta : Delta.orthogonal)
+		{
+			Point to = from.getApproach(delta);
+
+			if (board.isValidPoint(to)
+				&& board.getPoint(to) == Board.EMPTY)
+			{
+				isClickable.add(to);
+			}
+		}
+		if (board.isDiagonalPoint(from))
+		{
+			for (Delta delta : Delta.diagonal)
+			{
+				Point to = from.getApproach(delta);
+
+				if (board.isValidPoint(to)
+					&& board.getPoint(to) == Board.EMPTY)
+				{
+					isClickable.add(to);
+				}
+			}
+		}
+
+		state = NEED_FREE_TO;
+		return true;
+	}
+
+	private boolean updateFreeTo(Point point)
+	{
+		if (! isClickable.contains(point))
+		{
+			return false;
+		}
+
+		to = point;
+		board.setPoint(from, Board.EMPTY);
+		board.setPoint(to, player);
+		setupNextTurn();
+		return true;
+	}
+
 	private boolean sweepBoardForCaptures(Move move)
 	{
 		if (! isClickable.isEmpty())
@@ -276,64 +350,52 @@ public class Game {
 			}
 		}
 	}
-	
-	private Point getUserInput()
-	{
-		int x = -1;
-		int y = -1;
-		
-		Point point;
-		
-		// TODO: remove Scanner in favor of more general input source
-		while (true)
-		{
-			for (Point p : isClickable)
-			{
-				System.out.print(p + " ");
-			}
-			System.out.println();
-			
-			System.out.print(board);
-			System.out.print("enter x: ");
-			x = input.nextInt();
-			System.out.print("enter y: ");
-			y = input.nextInt();
-			
-			point = new Point(x, y);
-			
-			if (isClickable.contains(point))
-			{
-				break;
-			}
-			
-			System.out.print("invalid input! choose one of ");
-		}
-		
-		return point;
-	}
-	
-//	private static void setupDeltas() {
-//		// initialize valid delta lists at startup
-//		for (int dy = Delta.MIN_DELTA; dy <= Delta.MAX_DELTA; dy++)
-//		{
-//			for (int dx = Delta.MIN_DELTA; dx <= Delta.MAX_DELTA; dx++)
-//			{
-//				Delta delta = new Delta(dx, dy);
-//				
-//				if (delta.isDiagonal())
-//				{
-//					diagonal.add(delta);
-//				}
-//				else
-//				{
-//					// exclude (0, 0)
-//					if (dx != 0 || dy != 0)
-//					{
-//						orthogonal.add(delta);
-//					}
-//				}
-//			}
-//		}
-//	}
 
+	private void capture(boolean isApproach)
+	{
+		move.capture(from, to, delta, isApproach);
+		from = to;
+
+		if (sweepNeighborsForCaptures(move, from))
+		{
+			state = NEED_CAPTURE_TO;
+		}
+		else
+		{
+			setupNextTurn();
+		}
+	}
+
+	private void setupNextTurn()
+	{
+		player = player ^ 1;
+		moves = moves + 1;
+		setupNextMove();
+	}
+
+	private void setupNextMove()
+	{
+		if (player == 0)
+			System.out.println("*****player: WHITE*****");
+		else
+			System.out.println("*****player: BLACK*****");
+		
+		move = new Move(board);
+
+		if (sweepBoardForCaptures(move))
+		{
+			state = NEED_CAPTURE_FROM;
+		}
+		else
+		{
+			for (Point from : board)
+			{
+				if (board.getPoint(from) == player)
+				{
+					isClickable.add(from);
+				}
+			}
+			state = NEED_FREE_FROM;
+		}
+	}
 }
