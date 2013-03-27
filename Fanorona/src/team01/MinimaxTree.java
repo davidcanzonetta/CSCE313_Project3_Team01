@@ -1,7 +1,7 @@
 package team01;
 
 import java.util.List;
-
+import java.util.ArrayList;
 
 
 public class MinimaxTree {
@@ -19,7 +19,7 @@ public class MinimaxTree {
 	}
 	*/
 	public static int utilityValue(MinimaxNode n) {
-		return (n.data.getWhite() - n.data.getBlack());
+		return (n.data.getBoard().getWhite() - n.data.getBoard().getBlack());
 	}
 
 	public static int minimax(MinimaxNode n, int depth) {
@@ -32,6 +32,41 @@ public class MinimaxTree {
 		}
 		return alpha;
 	}
+	
+	public static void aiPlayer(Game initialGame) {
+		generateTree(initialGame);
+		int bestUtilityValue = 0;
+		int bestUtilityIndex = 0;
+		for(int i = 0; i < root.children.size(); i++) {
+			if(utilityValue(root.children.get(i)) > bestUtilityValue) {
+				bestUtilityIndex = i;
+			}
+		}
+		initialGame.board = root.children.get(bestUtilityIndex).data.getBoard();
+	}
+	
+	public static void generateTree(Game initialGame) {
+		root = new MinimaxNode(initialGame);
+		generateChildren(root);
+	}
+	
+	private static int generateChildren(MinimaxNode parent){
+		int moreChildren = 0;
+		for(int i = 0; i < parent.data.isClickable.size(); i++) {
+			MinimaxNode tempChild = new MinimaxNode(parent.data);
+			tempChild.data.update(root.data.isClickable.get(i));
+			//root.addChild(child);
+			for(int j = 0; j < tempChild.data.isClickable.size(); j++){
+				MinimaxNode child = new MinimaxNode(tempChild.data);
+				child.data.update(tempChild.data.isClickable.get(j));
+				parent.addChild(child); //A child after one move 
+				if (child.data.isClickable.size() > 0)
+					moreChildren = 1;
+			}
+		}
+		return moreChildren;
+	}
+	
 	/*
 	 function integer play_minimax(node, depth)
     if node is a terminal node or depth == 0:
@@ -56,23 +91,23 @@ public class MinimaxTree {
 	}
 
 	//Data members
-	private MinimaxNode root;
+	private static MinimaxNode root;
 
 
 	public static class MinimaxNode {
 		//Constructors
-		MinimaxNode(Board nData) {//No parent, No children
-			data = new Board(nData);
-			children = null;
+		MinimaxNode(Game nData) {//No parent, No children
+			data = new Game(nData);
+			children = new ArrayList<MinimaxNode>();
 			parent = null;
 		} 
-		MinimaxNode(Board nData, List<MinimaxNode> nChildren) { //No parent
-			data = new Board(nData);
+		MinimaxNode(Game nData, List<MinimaxNode> nChildren) { //No parent
+			data = new Game(nData);
 			children = nChildren;
 			parent = null;
 		}
-		MinimaxNode(Board nData, List<MinimaxNode> nChildren, MinimaxNode nParent) {
-			data = new Board(nData);
+		MinimaxNode(Game nData, List<MinimaxNode> nChildren, MinimaxNode nParent) {
+			data = new Game(nData);
 			children = nChildren;
 			parent = nParent;
 
@@ -87,6 +122,10 @@ public class MinimaxTree {
 				return depth;
 			}
 		}
+		
+		public void addChild(MinimaxNode child) {
+			children.add(child);
+		}
 		/*
 		public int height(MinimaxNode n) {//Return the height of a node where leafs have height 0
 			if (n == NULL)
@@ -99,7 +138,7 @@ public class MinimaxTree {
 		}
 		*/
 		//Data members
-		private Board data;
+		private Game data;
 		private MinimaxNode parent;
 		private List<MinimaxNode> children;
 
