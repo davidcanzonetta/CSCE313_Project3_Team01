@@ -78,6 +78,7 @@ public class Game {
 		this.moves = game.moves;
 		this.maxMoves = game.maxMoves;
 		this.player = game.player ^ 1;
+		this.state = game.state;
 		
 		this.isClickable = new ArrayList<Point>();
 		this.board = new Board(game.board);
@@ -410,4 +411,48 @@ public class Game {
 			state = NEED_FREE_FROM;
 		}
 	}
+	
+//	void aiPlayer()
+//	{
+//		List<Game> gameList = new ArrayList<Game>();
+//
+//		// assume ai player is black
+//		int oldCount = this.getBoard().getWhite();
+//
+//		for (Point localFrom : this.getClickable())
+//		{
+//			Game level1 = new Game(this);
+//			level1.update(localFrom);
+//			for (Point localTo : level1.getClickable())
+//			{
+//				Game level2 = new Game(level1);
+//				level2.update(localTo);
+//				if (level2.isClickable.isEmpty())
+//				{
+//					gameList.add(level2);
+//				}
+//				else
+//				{
+//					Game level3 = new Game(level2);
+//					for (Point localResolve : level2.getClickable())
+//					{
+//						level2.update(localResolve);
+//						gameList.add(level3);
+//					}
+//				}
+//			}
+//		}
+//
+//		int max = Integer.MIN_VALUE;
+//
+//		for (Game localGame : gameList)
+//		{
+//			int value = oldCount - localGame.getBoard().getWhite();
+//			if (value > max)
+//			{
+//				max = value;
+//				this.board = localGame.getBoard();
+//			}
+//		}
+//	}
 }
