@@ -8,7 +8,7 @@ public class Game {
 
 	public List<Point> isClickable;
 
-	private Board board;
+	public Board board;
 	private Move move;
 	Point from;
 	Point to;
