@@ -53,18 +53,27 @@ public class MinimaxTree {
 	private static int generateChildren(MinimaxNode parent){
 		int moreChildren = 0;
 		for(int i = 0; i < parent.data.isClickable.size(); i++) {
+			//Generate from state
 			MinimaxNode tempChild = new MinimaxNode(parent.data);
 			tempChild.data.update(root.data.isClickable.get(i));
-			//root.addChild(child);
+			//Generate to state which constitutes an entire move, add this node
 			for(int j = 0; j < tempChild.data.isClickable.size(); j++){
 				MinimaxNode child = new MinimaxNode(tempChild.data);
 				child.data.update(tempChild.data.isClickable.get(j));
 				parent.addChild(child); //A child after one move 
-				if (child.data.isClickable.size() > 0)
-					moreChildren = 1;
+				//While there are more moves to take, add the move, same 'from' but new 'to's
+				while (child.data.isClickable.size() > 0) {
+					MinimaxNode grandchild = new MinimaxNode(child.data);
+					for(int k = 0; k < child.data.isClickable.size(); k++) {
+						grandchild.data.update(child.data.isClickable.get(k));
+						child.addChild(grandchild);
+					}
+					child = grandchild;
+				}
 			}
+			
 		}
-		return moreChildren;
+		return 0;
 	}
 	
 	/*
