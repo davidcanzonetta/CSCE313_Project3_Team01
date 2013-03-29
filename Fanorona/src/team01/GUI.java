@@ -85,19 +85,33 @@ public class GUI extends JPanel{
 	     resignButton.setBounds(470, 450, 120, 30);
 	     message.setBounds(0, 400, 600, 30);
 	     col_size1.setBounds(40, 470, 30, 30);
+	     col_size1.setBorder(null);
 	     col_size3.setBounds(70, 470, 30, 30);
+	     col_size3.setBorder(null);
 	     col_size5.setBounds(100, 470, 30, 30);
+	     col_size5.setBorder(null);
 	     col_size7.setBounds(130, 470, 30, 30);
+	     col_size7.setBorder(null);
 	     col_size9.setBounds(160, 470, 30, 30);
+	     col_size9.setBorder(null);
 	     col_size11.setBounds(190, 470, 30, 30);
+	     col_size11.setBorder(null);
 	     col_size13.setBounds(220, 470, 30, 30);
+	     col_size13.setBorder(null);
 	     row_size1.setBounds(500, 470, 30, 30);
+	     row_size1.setBorder(null);
 	     row_size3.setBounds(530, 470, 30, 30);
+	     row_size3.setBorder(null);
 	     row_size5.setBounds(560, 470, 30, 30);
+	     row_size5.setBorder(null);
 	     row_size7.setBounds(590, 470, 30, 30);
+	     row_size7.setBorder(null);
 	     row_size9.setBounds(620, 470, 30, 30);
+	     row_size9.setBorder(null);
 	     row_size11.setBounds(650, 470, 30, 30);
+	     row_size11.setBorder(null);
 	     row_size13.setBounds(680, 470, 30, 30);
+	     row_size13.setBorder(null);
 	     proceed.setBounds(310, 470, 100, 30);
 	}
 	
