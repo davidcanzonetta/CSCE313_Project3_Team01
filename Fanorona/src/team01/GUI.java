@@ -310,7 +310,8 @@ public class GUI extends JPanel{
 								 g.fillOval(25+(col-1)*col_space, 25+(chosen_num_row-row)*row_space, 35, 35);
 							 }
 							 break;
-						 case Board.GRAY:
+						 case Board.WHITE_GRAY:
+						 case Board.BLACK_GRAY:
 							 g.setColor(Color.GRAY);
 							 if(col == 1 && row == 5) {
 								 g.fillOval(25, 25, 35, 35);
