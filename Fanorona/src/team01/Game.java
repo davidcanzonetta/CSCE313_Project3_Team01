@@ -75,14 +75,7 @@ public class Game {
 
 	public Game(Game game)
 	{
-		this.moves = game.moves;
-		this.maxMoves = game.maxMoves;
-		this.player = game.player ^ 1;
-		this.state = game.state;
-		
-		this.isClickable = new ArrayList<Point>();
-		this.board = new Board(game.board);
-		setupNextMove();
+
 	}
 	
 	public List<Point> getClickable()
@@ -120,13 +113,13 @@ public class Game {
 		switch (state)
 		{
 		case NEED_CAPTURE_FROM:
-			System.out.println("attempting capture from " + point);
+			System.out.println("capture from " + point);
 			return updateCaptureFrom(point);
 		case NEED_CAPTURE_TO:
-			System.out.println("attempting capture to " + point);
+			System.out.println("capture to " + point);
 			return updateCaptureTo(point);
 		case NEED_CAPTURE_RESOLVE:
-			System.out.println("resolving " + point);
+			System.out.println("resolve capture " + point);
 			return updateCaptureResolve(point);
 		case NEED_FREE_FROM:
 			System.out.println("moving from " + point);
@@ -389,9 +382,9 @@ public class Game {
 	private void setupNextMove()
 	{
 		if (player == 0)
-			System.out.println("*****player: WHITE*****");
+			System.out.println("*** WHITE ***");
 		else
-			System.out.println("*****player: BLACK*****");
+			System.out.println("*** BLACK ***");
 		
 		move = new Move(board);
 
@@ -410,49 +403,31 @@ public class Game {
 			}
 			state = NEED_FREE_FROM;
 		}
+		
+		if (player == 1 && !(this.isTie() || this.whiteWins() || this.blackWins()))
+		{
+			aiPlayer();
+		}
 	}
 	
-//	void aiPlayer()
-//	{
-//		List<Game> gameList = new ArrayList<Game>();
-//
-//		// assume ai player is black
-//		int oldCount = this.getBoard().getWhite();
-//
-//		for (Point localFrom : this.getClickable())
-//		{
-//			Game level1 = new Game(this);
-//			level1.update(localFrom);
-//			for (Point localTo : level1.getClickable())
-//			{
-//				Game level2 = new Game(level1);
-//				level2.update(localTo);
-//				if (level2.isClickable.isEmpty())
-//				{
-//					gameList.add(level2);
-//				}
-//				else
-//				{
-//					Game level3 = new Game(level2);
-//					for (Point localResolve : level2.getClickable())
-//					{
-//						level2.update(localResolve);
-//						gameList.add(level3);
-//					}
-//				}
-//			}
-//		}
-//
-//		int max = Integer.MIN_VALUE;
-//
-//		for (Game localGame : gameList)
-//		{
-//			int value = oldCount - localGame.getBoard().getWhite();
-//			if (value > max)
-//			{
-//				max = value;
-//				this.board = localGame.getBoard();
-//			}
-//		}
-//	}
+	void aiPlayer()
+	{
+		if (state == NEED_CAPTURE_FROM || state == NEED_FREE_FROM)
+		{
+			Point point = new Point(isClickable.get(0));
+			update(point);
+		}
+		
+		while (state == NEED_CAPTURE_TO || state == NEED_FREE_TO)
+		{
+			Point point = new Point(isClickable.get(0));
+			update(point);
+			
+			if (state == NEED_CAPTURE_RESOLVE)
+			{
+				point = new Point(isClickable.get(0));
+				update(point);
+			}
+		}
+	}
 }
