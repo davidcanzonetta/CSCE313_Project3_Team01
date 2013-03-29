@@ -17,7 +17,8 @@ public class Board implements Iterable<Point> {
 	public static final int WHITE = 0;
 	public static final int BLACK = 1;
 	public static final int EMPTY = 2;
-	public static final int GRAY = 3;
+	public static final int WHITE_GRAY = 3;
+	public static final int BLACK_GRAY = 4;
 
 	public Board(int width, int height) {
 		super();

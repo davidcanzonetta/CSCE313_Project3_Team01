@@ -16,6 +16,17 @@ public class Move {
 		this.last = new Delta(0, 0);
 	}
 
+	public Move(Move other)
+	{
+		this.board = other.board;
+		this.path = new ArrayList<Point>();
+		for (Point point : other.path)
+		{
+			path.add(point);
+		}
+		this.last = new Delta(other.last.getDx(), other.last.getDy());
+	}
+	
 	public void capture(Point from, Point to, Delta delta, boolean isApproach) {
 		int player = board.getPoint(from);
 		int enemy = player ^ 1;
