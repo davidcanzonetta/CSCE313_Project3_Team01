@@ -30,6 +30,8 @@ public class Game {
 		Board board = game.getBoard();
 		Scanner input = new Scanner(System.in);
 		
+		System.out.print(board);
+		
 		while (true) {
 			if (game.isTie()) {
 				System.out.println("is tie");
@@ -42,8 +44,7 @@ public class Game {
 				break;
 			}
 			
-			System.out.print(board);
-			System.out.print("legal points: ");
+			System.out.print("valid captures: ");
 			List<Point> available = game.getClickable();
 			for(Point p : available) {
 				System.out.print(p + " ");
@@ -58,7 +59,9 @@ public class Game {
 				System.out.println("invalid input");
 			
 		}
-		System.out.println(board);
+		
+//		System.out.print(board);
+		
 		input.close();
 	}
 
@@ -110,39 +113,48 @@ public class Game {
 
 	public boolean update(Point point)
 	{
+		boolean result = false;
+		
 		switch (state)
 		{
 		case NEED_CAPTURE_FROM:
-			System.out.println("capture from " + point);
+			System.out.println("start at " + point);
 			return updateCaptureFrom(point);
 		case NEED_CAPTURE_TO:
-			System.out.println("capture to " + point);
+			System.out.println("-> " + point);
 			return updateCaptureTo(point);
 		case NEED_CAPTURE_RESOLVE:
-			System.out.println("resolve capture " + point);
+			System.out.println("capture " + point);
 			return updateCaptureResolve(point);
 		case NEED_FREE_FROM:
-			System.out.println("moving from " + point);
+			System.out.println("start at " + point);
 			return updateFreeFrom(point);
 		case NEED_FREE_TO:
-			System.out.println("moving to " + point);
+			System.out.println("-> " + point);
 			return updateFreeTo(point);
 		}
 
+//		System.out.print (board);
+		
 		// should not be reached if end game conditions
 		// are checked properly
-		return false;
+		return result;
 	}
 
 	private boolean updateCaptureFrom(Point point)
 	{
 		if (! isClickable.contains(point))
 		{
-			return false;
+			// is it a sacrifice move?
+			if (board.getPoint(point) != player)
+			{
+				return false;
+			}
 		}
 
 		from = point;
 		sweepNeighborsForCaptures(move, from);
+		isClickable.add(from);	// for sacrifice moves
 		state = NEED_CAPTURE_TO;
 
 		return true;
@@ -158,6 +170,22 @@ public class Game {
 		to = point;
 		delta = new Delta(from, to);
 
+		// handle sacrifice moves
+		if (from.equals(to))
+		{
+			if (player == Board.WHITE)
+			{
+				board.setPoint(from, Board.WHITE_GRAY);
+			}
+			else
+			{
+				board.setPoint(from, Board.BLACK_GRAY);
+			}
+			System.out.print(board);
+			setupNextTurn();
+			return true;
+		}
+		
 		boolean isApproach = false;
 
 		if (move.isValidApproach(from, to, delta))
@@ -232,6 +260,7 @@ public class Game {
 			}
 		}
 
+		isClickable.add(from);	// for sacrifice moves
 		state = NEED_FREE_TO;
 		return true;
 	}
@@ -244,8 +273,25 @@ public class Game {
 		}
 
 		to = point;
-		board.setPoint(from, Board.EMPTY);
-		board.setPoint(to, player);
+		
+		// handle sacrifice moves
+		if (from.equals(to))
+		{
+			if (player == Board.WHITE)
+			{
+				board.setPoint(from, Board.WHITE_GRAY);
+			}
+			else
+			{
+				board.setPoint(from, Board.BLACK_GRAY);
+			}
+		}
+		else
+		{
+			board.setPoint(from, Board.EMPTY);
+			board.setPoint(to, player);
+		}
+		System.out.print(board);
 		setupNextTurn();
 		return true;
 	}
@@ -362,6 +408,7 @@ public class Game {
 		move.capture(from, to, delta, isApproach);
 		from = to;
 
+		System.out.print(board);
 		if (sweepNeighborsForCaptures(move, from))
 		{
 			state = NEED_CAPTURE_TO;
@@ -388,6 +435,19 @@ public class Game {
 		
 		move = new Move(board);
 
+		// remove sacrifice pieces
+		for (Point point : board)
+		{
+			if (board.getPoint(point) == Board.WHITE_GRAY && player == Board.WHITE)
+			{
+				board.setPoint(point, Board.EMPTY);
+			}
+			else if (board.getPoint(point) == Board.BLACK_GRAY && player == Board.BLACK)
+			{
+				board.setPoint(point, Board.EMPTY);
+			}
+		}
+		
 		if (sweepBoardForCaptures(move))
 		{
 			state = NEED_CAPTURE_FROM;
