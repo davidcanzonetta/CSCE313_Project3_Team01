@@ -342,8 +342,8 @@ public class GUI extends JPanel{
 				 //Highlight all possible moves/movable pieces
 				//Draw a cyan border around all movable pieces
 	            g.setColor(Color.cyan);
-	            for (int i = 0; i < fanorona.isClickable.size(); i++) {
-	            	 g.fillOval(25+(fanorona.isClickable.get(i).getX()-1)*col_space, 25+(chosen_num_row-fanorona.isClickable.get(i).getY())*row_space, 35, 35);
+	            for (int i = 0; i < fanorona.getClickable().size(); i++) {
+	            	 g.fillOval(25+(fanorona.getClickable().get(i).getX()-1)*col_space, 25+(chosen_num_row-fanorona.getClickable().get(i).getY())*row_space, 35, 35);
 	            }
 	            /*If a piece has been selected for movement, draw a white border around selected piece, and draw
 	              green border around each space that can be moved to 
@@ -352,8 +352,8 @@ public class GUI extends JPanel{
 	               g.setColor(Color.white);
 	               g.drawRect(2 + selectedPiece.getX()*20, 2 + selectedPiece.getY()*20, 19, 19);
 	               g.setColor(Color.green);
-	               for (int i = 0; i < fanorona.isClickable.size(); i++) {
-	            	   g.fillOval(25+(fanorona.isClickable.get(i).getX()-1)*col_space, 25+(chosen_num_row-fanorona.isClickable.get(i).getY())*row_space, 35, 35);
+	               for (int i = 0; i < fanorona.getClickable().size(); i++) {
+	            	   g.fillOval(25+(fanorona.getClickable().get(i).getX()-1)*col_space, 25+(chosen_num_row-fanorona.getClickable().get(i).getY())*row_space, 35, 35);
 	               }
                }
 			} //end if(!menu)
