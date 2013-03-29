@@ -35,14 +35,30 @@ public class MinimaxTree {
 	
 	public static void aiPlayer(Game initialGame) {
 		generateTree(initialGame);
-		int bestUtilityValue = 0;
-		int bestUtilityIndex = 0;
+		/*
 		for(int i = 0; i < root.children.size(); i++) {
 			if(utilityValue(root.children.get(i)) > bestUtilityValue) {
 				bestUtilityIndex = i;
 			}
 		}
-		initialGame.board = root.children.get(bestUtilityIndex).data.getBoard();
+		*/
+		initialGame.board = findBestNode(root, root).data.getBoard();
+	}
+	
+	
+	public static MinimaxNode findBestNode(MinimaxNode node, MinimaxNode bestNode) {
+		//process node
+		if(utilityValue(node) >= utilityValue(bestNode)) {
+			bestNode = node;
+		}
+		if(node.children.size() != 0) {
+			for(int i = 0; i < node.children.size(); i++) {
+				bestNode = findBestNode(node.children.get(i), bestNode);
+			}
+			return bestNode;
+		} else {
+			return bestNode;
+		}
 	}
 	
 	public static void generateTree(Game initialGame) {
@@ -51,7 +67,7 @@ public class MinimaxTree {
 	}
 	
 	private static int generateChildren(MinimaxNode parent){
-		int moreChildren = 0;
+		//int moreChildren = 0;
 		for(int i = 0; i < parent.data.isClickable.size(); i++) {
 			//Generate from state
 			MinimaxNode tempChild = new MinimaxNode(parent.data);
@@ -75,6 +91,8 @@ public class MinimaxTree {
 		}
 		return 0;
 	}
+	
+
 	
 	/*
 	 function integer play_minimax(node, depth)
