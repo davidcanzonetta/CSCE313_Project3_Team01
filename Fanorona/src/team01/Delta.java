@@ -27,6 +27,12 @@ public class Delta {
 		this.dy = to.getY() - from.getY();
 	}
 
+	public Delta(Delta delta)
+	{
+		this.dx = delta.dx;
+		this.dy = delta.dy;
+	}
+	
 	boolean isDiagonal() {
 		return Math.abs(dx) + Math.abs(dy) == 2;
 	}
