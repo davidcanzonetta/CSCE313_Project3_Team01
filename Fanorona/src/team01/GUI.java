@@ -113,6 +113,8 @@ public class GUI extends JPanel{
 		int col_space; //Space between columns on the board
 	    int row_space; //Space between rows on the board
 	    int chosen_num_col=9, chosen_num_row=5; //default values are 9x5 board
+	    Game fanorona;
+	    
 	    
 		GUIBoard() {
 			setBackground(Color.BLACK);
@@ -322,7 +324,24 @@ public class GUI extends JPanel{
 						 } 
 					 }
 				 }
-			}
+				 //Highlight all possible moves/movable pieces
+				//Draw a cyan border around all movable pieces
+	            g.setColor(Color.cyan);
+	            for (int i = 0; i < fanorona.isClickable.size(); i++) {
+	            	 g.fillOval(25+(fanorona.isClickable.get(i).getX()-1)*col_space, 25+(chosen_num_row-fanorona.isClickable.get(i).getY())*row_space, 35, 35);
+	            }
+	            /*If a piece has been selected for movement, draw a white border around selected piece, and draw
+	              green border around each space that can be moved to 
+	            */
+	            if (selectedPiece.getX() != -1) { //If there is a selected piece
+	               g.setColor(Color.white);
+	               g.drawRect(2 + selectedPiece.getX()*20, 2 + selectedPiece.getY()*20, 19, 19);
+	               g.setColor(Color.green);
+	               for (int i = 0; i < fanorona.isClickable.size(); i++) {
+	            	   g.fillOval(25+(fanorona.isClickable.get(i).getX()-1)*col_space, 25+(chosen_num_row-fanorona.isClickable.get(i).getY())*row_space, 35, 35);
+	               }
+               }
+			} //end if(!menu)
 		 } //end paintComponent
 	
 		 //This works
