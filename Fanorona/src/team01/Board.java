@@ -86,14 +86,14 @@ public class Board implements Iterable<Point> {
 	public void setPoint(Point p, int value) {
 		int oldVal = getPoint(p);
 
-		if (oldVal == WHITE)
+		if (oldVal == WHITE || oldVal == WHITE_GRAY)
 			white--;
-		else if (oldVal == BLACK)
+		else if (oldVal == BLACK || oldVal == BLACK_GRAY)
 			black--;
 
-		if (value == WHITE)
+		if (value == WHITE || value == WHITE_GRAY)
 			white++;
-		else if (value == BLACK)
+		else if (value == BLACK || value == BLACK_GRAY)
 			black++;
 		
 		grid[p.getY()][p.getX()] = value;
