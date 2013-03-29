@@ -11,11 +11,13 @@ public class Board implements Iterable<Point> {
 	private int height;
 	private int white;
 	private int black;
+	private int gray;
 
 	// board states
 	public static final int WHITE = 0;
 	public static final int BLACK = 1;
 	public static final int EMPTY = 2;
+	public static final int GRAY = 3;
 
 	public Board(int width, int height) {
 		super();
@@ -40,6 +42,7 @@ public class Board implements Iterable<Point> {
 		this.height = board.height;
 		this.white = board.white;
 		this.black = board.black;
+		this.gray = board.gray;
 		
 		this.grid = new int[board.grid.length][];
 		
@@ -64,6 +67,10 @@ public class Board implements Iterable<Point> {
 
 	public int getBlack() {
 		return black;
+	}
+	
+	public int getGray() {
+		return gray;
 	}
 
 	public int getEmpty() {
