@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class Game {
 
-	private List<Point> isClickable;
-	private Board board;
-	private Move move;
+	List<Point> isClickable;
+	Board board;
+	Move move;
 	
 	Point from;
 	Point to;
@@ -127,7 +127,7 @@ public class Game {
 		return board.getWhite() == 0 && board.getBlack() > 0;
 	}
 
-	private boolean update(Point point)
+	public boolean update(Point point)
 	{
 		switch (state)
 		{
