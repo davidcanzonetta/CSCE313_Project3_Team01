@@ -32,15 +32,14 @@ public class Game {
 	}
 	
 	public static void main(String[] args) {
-		Game game = new Game(9, 5);
-		Scanner input = new Scanner(System.in);
-
 		System.out.println("** If game piece can capture enter its position twice to **");
 		System.out.println("** sacrifice it.  If the game piece does not have a      **");
 		System.out.println("** capture it only needs to be entered once, a sacrifice **");
 		System.out.println("** move is done automatically.                           **");
-		System.out.println(game.getBoard());
 		
+		Game game = new Game(9, 5);
+		Scanner input = new Scanner(System.in);
+
 		while (true)
 		{
 			if (game.isTie())
@@ -264,15 +263,6 @@ public class Game {
 
 	private void setupNextMove()
 	{
-		if (player == Board.WHITE)
-		{
-			System.out.println("******** WHITE ********");
-		}
-		else
-		{
-			System.out.println("******** BLACK ********");
-		}
-
 		deleteSacrifices();
 		move = new Move(board);
 
@@ -284,6 +274,16 @@ public class Game {
 		{
 			getPaikaFromPoints();
 			state = NEED_PAIKA_FROM;
+		}
+
+		if (player == Board.WHITE)
+		{
+			System.out.println("******** WHITE ********");
+			System.out.println(board);
+		}
+		else
+		{
+			System.out.println("******** BLACK ********");
 		}
 
 		if (player == 1 && !(isTie() || whiteWins() || blackWins()))
