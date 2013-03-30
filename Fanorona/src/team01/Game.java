@@ -22,11 +22,11 @@ public class Game {
 	private int maxMoves;
 
 	// game states (game manager is a finite state machine)
-	private static final int NEED_CAPTURE_FROM = 0;
-	private static final int NEED_CAPTURE_TO = 1;
+	private static final int NEED_CAPTURE_START = 0;
+	private static final int NEED_CAPTURE_DEST = 1;
 	private static final int NEED_CAPTURE_RESOLVE = 2;
-	private static final int NEED_PAIKA_FROM = 3;
-	private static final int NEED_PAIKA_TO = 4;
+	private static final int NEED_PAIKA_START = 3;
+	private static final int NEED_PAIKA_DEST = 4;
 	private static List<List<Delta>> deltaList = new ArrayList<List<Delta>>();
 	
 	static {
@@ -142,7 +142,7 @@ public class Game {
 	{
 		switch (state)
 		{
-		case NEED_CAPTURE_FROM:
+		case NEED_CAPTURE_START:
 			if (! isClickable.contains(point))
 			{
 				// check for sacrifice move
@@ -158,9 +158,9 @@ public class Game {
 			// get capture points
 			from = point;
 			getCaptureDestPoints(move, from);
-			state = NEED_CAPTURE_TO;
+			state = NEED_CAPTURE_DEST;
 			return true;
-		case NEED_CAPTURE_TO:
+		case NEED_CAPTURE_DEST:
 			if (! isClickable.contains(point))
 			{
 				// check for sacrifice move
@@ -206,7 +206,7 @@ public class Game {
 			// resolve approach or withdraw capture
 			capture(point.equals(isClickable.get(0)));
 			return true;
-		case NEED_PAIKA_FROM:
+		case NEED_PAIKA_START:
 			if (! isClickable.contains(point))
 			{
 				// invalid point
@@ -215,9 +215,9 @@ public class Game {
 			// get valid paika moves
 			from = point;
 			getPaikaDestPoints(from);
-			state = NEED_PAIKA_TO;
+			state = NEED_PAIKA_DEST;
 			return true;
-		case NEED_PAIKA_TO:
+		case NEED_PAIKA_DEST:
 			if (! isClickable.contains(point))
 			{
 				// check for sacrifice move
@@ -252,7 +252,7 @@ public class Game {
 
 		if (getCaptureDestPoints(move, from))
 		{
-			state = NEED_CAPTURE_TO;
+			state = NEED_CAPTURE_DEST;
 		}
 		else
 		{
@@ -276,12 +276,12 @@ public class Game {
 		// available captures?
 		if (getCaptureStartPoints(move))
 		{
-			state = NEED_CAPTURE_FROM;
+			state = NEED_CAPTURE_START;
 		}
 		else
 		{
 			getPaikaStartPoints();
-			state = NEED_PAIKA_FROM;
+			state = NEED_PAIKA_START;
 		}
 
 		// check for end game condition
@@ -465,13 +465,13 @@ public class Game {
 
 	void aiPlayer()
 	{
-		if (state == NEED_CAPTURE_FROM || state == NEED_PAIKA_FROM)
+		if (state == NEED_CAPTURE_START || state == NEED_PAIKA_START)
 		{
 			Point point = new Point(isClickable.get(0));
 			update(point);
 		}
 		
-		while (state == NEED_CAPTURE_TO || state == NEED_PAIKA_TO)
+		while (state == NEED_CAPTURE_DEST || state == NEED_PAIKA_DEST)
 		{
 			Point point = new Point(isClickable.get(0));
 			update(point);
