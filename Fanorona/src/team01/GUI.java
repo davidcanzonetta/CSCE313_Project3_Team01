@@ -30,6 +30,8 @@ public class GUI extends JPanel{
 	private JButton row_size9 = new JButton("9");
 	private JButton row_size11 = new JButton("11");
 	private JButton row_size13 = new JButton("13");
+	private JButton play_vs_AI = new JButton("Play vs. AI");
+	private JButton two_player = new JButton("Two Player Mode");
 	private JButton proceed = new JButton("Continue");
 	                                  
 	   
@@ -73,6 +75,8 @@ public class GUI extends JPanel{
 	     add(row_size9);
 	     add(row_size11);
 	     add(row_size13);
+	     add(play_vs_AI);
+	     add (two_player);
 	     add(proceed);
 	     
 	     //initially you cannot see the newGame and resign buttons
@@ -112,15 +116,17 @@ public class GUI extends JPanel{
 	     //row_size11.setBorder(null);
 	     row_size13.setBounds(680, 470, 30, 30);
 	     //row_size13.setBorder(null);
+	     play_vs_AI.setBounds(200, 0, 100, 30);
+	     two_player.setBounds(400, 0, 100, 30);
 	     proceed.setBounds(310, 470, 100, 30);
-	     //Don't see a need for set border
+	     //Don't see a need for setBorder
 	}
 	
 	private class GUIBoard extends JPanel implements ActionListener, MouseListener, KeyListener{//, UserInput {
 		Color olive = new Color(105, 139, 34);
 		private static final long serialVersionUID = 7;  // unique id
 		Board board;
-		boolean gameInProgress, click = false;
+		boolean gameInProgress, gameMode = true;
 		boolean menu = true;
 		int currentPlayer;
 		Point selectedPiece;
@@ -154,6 +160,9 @@ public class GUI extends JPanel{
 	        row_size9.addActionListener(this);
 	        row_size11.addActionListener(this);
 	        row_size13.addActionListener(this);
+	        
+	        play_vs_AI.addActionListener(this);
+	        two_player.addActionListener(this);
 	        
 	        proceed.addActionListener(this);
 	        
@@ -202,6 +211,10 @@ public class GUI extends JPanel{
 		    	 chosen_num_row = 11;
 		     else if (src == row_size13)
 		    	 chosen_num_row = 13;
+		     else if (src == play_vs_AI)
+		    	 gameMode = true;
+		     else if (src == two_player)
+		    	 gameMode = false;
 		     else if(src == proceed)
 		     {
 		    	 menu = false;
@@ -225,6 +238,8 @@ public class GUI extends JPanel{
 			     row_size9.setVisible(false);
 			     row_size11.setVisible(false);
 			     row_size13.setVisible(false);
+			     play_vs_AI.setVisible(false);
+			     two_player.setVisible(false);
 			     proceed.setVisible(false);
 			     
 			     fanorona = new Game(chosen_num_col, chosen_num_row, false);
@@ -385,7 +400,6 @@ public class GUI extends JPanel{
 					 //TODO: Don't forget to convert 5-i when passing arguments to game
 					 Point p = new Point(x, y);
 					 selectedPiece = p;
-					 click = true;
 				 }
 			 }
 		 }
