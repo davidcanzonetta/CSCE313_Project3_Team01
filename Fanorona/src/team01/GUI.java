@@ -419,6 +419,7 @@ public class GUI extends JPanel{
 					 System.out.println(fanorona.board);
 					 validClick = false;
 					 repaint();
+					 //TODO: Update messages so user knows what is going on
 				 }
 			 }
 		 }
