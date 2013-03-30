@@ -24,7 +24,7 @@ public class Move {
 		{
 			path.add(point);
 		}
-		this.last = new Delta(other.last.getDx(), other.last.getDy());
+		this.last = new Delta(other.last);
 	}
 	
 	public void capture(Point from, Point to, Delta delta, boolean isApproach) {
