@@ -127,7 +127,8 @@ public class GUI extends JPanel{
 		private static final long serialVersionUID = 7;  // unique id
 		Board board;
 		boolean gameInProgress, gameMode = true;
-		boolean menu = true;
+		boolean menu = true, validClick = false;
+		boolean temp_check = false;
 		int currentPlayer;
 		Point selectedPiece;
 		//Pair[] legalMoves; //An array containing pairs of legal moves
@@ -242,7 +243,7 @@ public class GUI extends JPanel{
 			     two_player.setVisible(false);
 			     proceed.setVisible(false);
 			     
-			     fanorona = new Game(chosen_num_col, chosen_num_row, false);
+			     fanorona = new Game(chosen_num_col, chosen_num_row, gameMode);
 			     
 		    	 repaint();
 		    	 doNewGame();
@@ -392,7 +393,13 @@ public class GUI extends JPanel{
 					 for(int i = 0; i <= board.getHeight(); i++) {
 						 if(orig_y >= (i-1)*row_space  && orig_y <= (i)*row_space ) {
 							 //converts clicked y value to grid y value
-							 y = 5-i;
+							 y = chosen_num_row-i;
+						 }
+					 }
+					 for (int i = 0; i < fanorona.isClickable.size(); i++){
+						 if(x == fanorona.isClickable.get(i).getX() && y == fanorona.isClickable.get(i).getY()){
+							 System.out.println("Valid Click!");
+							 validClick = true;
 						 }
 					 }
 					 System.out.print("OX: "+orig_x+" OY: "+orig_y +"\n");
@@ -400,11 +407,21 @@ public class GUI extends JPanel{
 					 //TODO: Don't forget to convert 5-i when passing arguments to game
 					 Point p = new Point(x, y);
 					 selectedPiece = p;
+					 if (validClick){
+						 System.out.println("Calling Update");
+						 if(!fanorona.update(p))
+							 System.out.println("Unsuccessful update");
+					 }
+					 else
+						 System.out.println("Select a valid piece to move");
+					 System.out.println(fanorona.board);
+					 validClick = false;
+//					 repaint();
 				 }
 			 }
 		 }
 		 public void mouseReleased(MouseEvent evt) { }
-		 public void mouseClicked(MouseEvent evt) {mousePressed(evt);}
+		 public void mouseClicked(MouseEvent evt) {/*mousePressed(evt);*/}
 		 public void mouseEntered(MouseEvent evt) { }
 		 public void mouseExited(MouseEvent evt) { }
 		 public void keyPressed(KeyEvent event)

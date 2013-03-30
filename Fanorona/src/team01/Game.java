@@ -238,7 +238,6 @@ public class Game {
 			setupNextTurn();
 			return true;
 		}
-
 		return false;
 	}
 
