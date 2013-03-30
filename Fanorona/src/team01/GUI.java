@@ -23,12 +23,11 @@ public class GUI extends JFrame {
 
 	private int minX;
 	private int minY;
-
 	private int maxX;
 	private int maxY;
 
-	private int screenWidth;
-	private int screenHeight;
+	private int winWidth;
+	private int winHeight;
 	
 	private DrawCanvas canvas;
 	
@@ -36,31 +35,42 @@ public class GUI extends JFrame {
 		game = new Game(9, 5, false);
 		width = game.getBoard().getWidth();
 		height = game.getBoard().getHeight();
-		spacing = 80;
-		radius = spacing / 2 - 8;
+		
+		spacing = 80;				// spacing between board positions
+		radius = spacing / 2 - 8;	// 8 px between game pieces
 		diameter = 2 * radius;
+		
 		minX = spacing;
 		minY = spacing;
 		maxX = width * spacing;
 		maxY = height * spacing;
-		screenWidth = maxX + spacing;
-		screenHeight = maxY + spacing;
+		
+		winWidth = maxX + spacing;
+		winHeight = maxY + spacing;
 		
 		initializeGridLines();
 		
 		canvas = new DrawCanvas();
-		canvas.setPreferredSize(new Dimension(screenWidth, screenHeight));
+		canvas.setPreferredSize(new Dimension(winWidth, winHeight));
 		
 		canvas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int mouseX = e.getX();
 				int mouseY = e.getY();
+
 				int x = (mouseX + radius) / spacing;
 				int y = height - ((mouseY + radius) / spacing) + 1;
+
 				Point point = new Point(x, y);
 				if (game.getBoard().isValidPoint(point))
-					game.update(point);
+				{
+					if (! game.update(point))
+					{
+						System.out.println("!!! INVALID MOVE: " + point);
+						System.out.println();
+					}
+				}
 				
 				repaint();
 			}
@@ -80,8 +90,7 @@ public class GUI extends JFrame {
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintChildren(g);
-			setBackground(Color.green);
-			
+//			setBackground(Color.BLUE);		// TODO: doesn't work
 			drawGridLines(g);
 			drawGamePieces(g);
 		}
@@ -95,23 +104,32 @@ public class GUI extends JFrame {
 		{
 			int type = board.getPoint(point);
 			int x = point.getX() * spacing;
-			int y = screenHeight - (point.getY() * spacing);
+			int y = winHeight - (point.getY() * spacing);
 
+			x -= radius;
+			y -= radius;
+			
 			switch (type)
 			{
 				case Board.WHITE:
 					g.setColor(Color.WHITE);
-					g.fillOval(x - radius, y - radius, diameter, diameter);
+					g.fillOval(x, y, diameter, diameter);
 					break;
 				case Board.BLACK:
 					g.setColor(Color.BLACK);
-					g.fillOval(x - radius, y - radius, diameter, diameter);
+					g.fillOval(x, y, diameter, diameter);
 					break;
 				case Board.WHITE_GRAY:
 				case Board.BLACK_GRAY:
 					g.setColor(Color.GRAY);
 					g.fillOval(x, y, diameter, diameter);
 					break;
+			}
+
+			if (game.getClickable().contains(point))
+			{
+				g.setColor(Color.GREEN);
+				g.drawOval(x, y, diameter, diameter);
 			}
 		}
 	}
