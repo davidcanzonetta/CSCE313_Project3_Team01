@@ -286,42 +286,44 @@ public class GUI extends JPanel{
 	
 		 //This works
 		 public void paintComponent(Graphics g) {
-			 board = new Board(chosen_num_col, chosen_num_row);
+//			 board = new Board(chosen_num_col, chosen_num_row);
 			 //Draw border
 			 if(!menu)
 			 {
+				 g.setColor(olive);
+				 g.fillRect(0, 0, 750, 500);
 				 g.setColor(Color.white);
 				 g.drawRect(0,0,getSize().width-1,getSize().height-1);
 				 g.drawRect(1,1,getSize().width-3,getSize().height-3);
 				 g.setColor(Color.LIGHT_GRAY);
 				 g.drawLine(40, 40, 40, 300); //First col
 				 g.drawLine(40, 40, 600, 40); //First row
-				 col_space = (640 - 80)/(board.getWidth()-1);
-				 row_space = (340 - 80)/(board.getHeight()-1);
+				 col_space = (640 - 80)/(fanorona.board.getWidth()-1);
+				 row_space = (340 - 80)/(fanorona.board.getHeight()-1);
 				 //Draw the 4 partial diagonal lines
 				 g.drawLine(40,340/2,col_space*2+40, 300);
-				 g.drawLine((board.getWidth()-3)*col_space+40, 40, 600, 340/2);
+				 g.drawLine((fanorona.board.getWidth()-3)*col_space+40, 40, 600, 340/2);
 				 g.drawLine(40,340/2,col_space*2+40, 40);
-				 g.drawLine(600, 340/2, (board.getWidth()-3)*col_space+40, 300);
+				 g.drawLine(600, 340/2, (fanorona.board.getWidth()-3)*col_space+40, 300);
 				 //Draw empty board
-				 for (int row = 0; row < board.getHeight(); row++) {
-					 for (int col = 0; col < board.getWidth(); col++) {
+				 for (int row = 0; row < fanorona.board.getHeight(); row++) {
+					 for (int col = 0; col < fanorona.board.getWidth(); col++) {
 						 g.setColor(Color.LIGHT_GRAY);
 						 if (row != 0 && col != 0) {
 							 g.drawLine(col*col_space+40, 40, col*col_space+40, 300); //Draw rest of cols
 							 g.drawLine(40, row*row_space+40, 600, row*row_space+40); //Draw rest of rows
 						 }
-						 if (col % 2 == 0 && col != board.getWidth()-1 && col != board.getWidth()-3) {
+						 if (col % 2 == 0 && col != fanorona.board.getWidth()-1 && col != fanorona.board.getWidth()-3) {
 							 g.drawLine(40+col_space*col, 40, (640/2) + col_space*col, 300); //Draw full diagonal lines
 							 g.drawLine(40+col_space*col, 300, (640/2) + col_space*col, 40);
 						 }
 					 }
 				 }
 				 //Draw game peices
-				 for (int row = 1; row <= board.getHeight(); row++) {
-					 for (int col = 1; col <= board.getWidth(); col++) {
+				 for (int row = 1; row <= fanorona.board.getHeight(); row++) {
+					 for (int col = 1; col <= fanorona.board.getWidth(); col++) {
 						 Point p = new Point(col, row);
-						 switch (board.getPoint(p)) {
+						 switch (fanorona.board.getPoint(p)) {
 						 case Board.BLACK:
 							 g.setColor(Color.BLACK);
 							 if(col == 1 && row == 1) {
@@ -384,13 +386,13 @@ public class GUI extends JPanel{
 				 {
 					 int x=-1, y=-1;
 					 int orig_x = evt.getX()-40;
-					 for(int i = 0; i <= board.getWidth(); i++) {
+					 for(int i = 0; i <= fanorona.board.getWidth(); i++) {
 						 if(orig_x >= i*col_space  && orig_x <= (i+1)*col_space ) {
 							 x = i+1;
 						 }
 					 }	
 					 int orig_y = evt.getY()-40;
-					 for(int i = 0; i <= board.getHeight(); i++) {
+					 for(int i = 0; i <= fanorona.board.getHeight(); i++) {
 						 if(orig_y >= (i-1)*row_space  && orig_y <= (i)*row_space ) {
 							 //converts clicked y value to grid y value
 							 y = chosen_num_row-i;
@@ -416,7 +418,7 @@ public class GUI extends JPanel{
 						 System.out.println("Select a valid piece to move");
 					 System.out.println(fanorona.board);
 					 validClick = false;
-//					 repaint();
+					 repaint();
 				 }
 			 }
 		 }
@@ -430,7 +432,7 @@ public class GUI extends JPanel{
 			{						
 				case KeyEvent.VK_ESCAPE: System.exit(0);
 						                 break;                         
-			}	
+			}
 		 }	
 		 public void keyReleased(KeyEvent event){}
 		 public void keyTyped(KeyEvent event){}
