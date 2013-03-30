@@ -131,19 +131,19 @@ public class Board implements Iterable<Point> {
 				
 				if (x == WHITE)
 				{
-					row.append("O-");
+					row.append("O ");
 				}
 				else if (x == BLACK)
 				{
-					row.append("X-");
+					row.append("X ");
 				}
 				else if (x == WHITE_GRAY || x == BLACK_GRAY)
 				{
-					row.append("S-");
+					row.append("S ");
 				}
 				else // if (x == EMPTY)
 				{
-					row.append("_-");
+					row.append("_ ");
 				}
 			}
 

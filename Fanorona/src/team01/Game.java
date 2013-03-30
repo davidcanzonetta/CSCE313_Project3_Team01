@@ -14,6 +14,8 @@ public class Game {
 	Point to;
 	Delta delta;
 
+	private boolean hasAiPlayer;
+	
 	private int player;
 	private int state;
 	private int moves;
@@ -36,29 +38,30 @@ public class Game {
 		System.out.println("** sacrifice it.  If the game piece does not have a      **");
 		System.out.println("** capture it only needs to be entered once, a sacrifice **");
 		System.out.println("** move is done automatically.                           **");
+		System.out.println();
 		
-		Game game = new Game(9, 5);
+		Game game = new Game(5, 5, false);
 		Scanner input = new Scanner(System.in);
 
 		while (true)
 		{
 			if (game.isTie())
 			{
-				System.out.println("**** is tie");
+				System.out.println("****** IS TIE ******");
 				break;
 			}
 			else if (game.whiteWins())
 			{
-				System.out.println("**** white wins");
+				System.out.println("**** WHITE WINS ****");
 				break;
 			}
 			else if (game.blackWins())
 			{
-				System.out.println("**** black wins");
+				System.out.println("**** BLACK WINS ****");
 				break;
 			}
 			
-			System.out.print("** legal captures: ");
+			System.out.print("** legal moves: ");
 			List<Point> available = game.getClickable();
 			for(Point pt : available) {
 				System.out.print(pt + " ");
@@ -69,6 +72,7 @@ public class Game {
 			int x = input.nextInt();
 			System.out.print(">> y: ");
 			int y = input.nextInt();
+			System.out.println();
 			
 			Point point = new Point(x, y);
 			
@@ -78,14 +82,17 @@ public class Game {
 			}
 		}
 		
+		System.out.println();
+		System.out.print(game.getBoard());
 		input.close();
 	}
 
-	public Game(int width, int height)
+	public Game(int width, int height, boolean hasAiPlayer)
 	{
 		moves = 0;
 		maxMoves = 10 * width;
 		player = Board.WHITE;
+		this.hasAiPlayer = hasAiPlayer;
 
 		isClickable = new ArrayList<Point>();
 		board = new Board(width, height);
@@ -270,19 +277,26 @@ public class Game {
 			state = NEED_PAIKA_FROM;
 		}
 
-		if (player == Board.WHITE)
+		if (!(isTie() || whiteWins() || blackWins()))
 		{
-			System.out.println("******** WHITE ********");
+			if (player == Board.WHITE)
+			{
+				System.out.println("******** WHITE ********");
+			}
+			else
+			{
+				System.out.println("******** BLACK ********");
+			}
+			System.out.println();
 			System.out.println(board);
-		}
-		else
-		{
-			System.out.println("******** BLACK ********");
-		}
-
-		if (player == 1 && !(isTie() || whiteWins() || blackWins()))
-		{
-			aiPlayer();
+	
+			if (hasAiPlayer)
+			{
+				if (player == 1)
+				{
+					aiPlayer();
+				}
+			}
 		}
 	}
 
