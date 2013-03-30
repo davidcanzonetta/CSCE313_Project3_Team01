@@ -12,7 +12,7 @@ public class Server {
 	private Socket clientSocket;
 	private InputStream sockInput;
 	private OutputStream sockOutput;
-	
+
 	public Server(int port) {
 		try {
 			serverSocket = new ServerSocket(port);
@@ -20,14 +20,14 @@ public class Server {
 			System.out.println("could not listen on port: " + port);
 			System.exit(-1);
 		}
-		
+
 		try {
 			clientSocket = serverSocket.accept();
 		} catch (IOException e) {
 			System.out.println("accept failed");
 			System.exit(-1);
 		}
-		
+
 		try {
 			sockInput = clientSocket.getInputStream();
 			sockOutput = clientSocket.getOutputStream();
@@ -36,7 +36,7 @@ public class Server {
 			System.exit(-1);
 		}
 	}
-	
+
 	public void write(String msg) {
 		try {
 			byte[] buf = msg.getBytes();
@@ -46,32 +46,32 @@ public class Server {
 			System.exit(-1);
 		}
 	}
-	
+
 	public String read() {
 		byte[] buf = new byte[1024];
 		int len = 0;
-		
+
 		try {
 			len = sockInput.read(buf, 0, buf.length);
 		} catch (IOException e) {
 			System.out.println("cannot read socket");
 			System.exit(-1);
 		}
-		
+
 		return new String(buf, 0, len);
 	}
-	
+
 	public void close() {
 		try {
-        	sockInput.close();
-        	sockOutput.close();
-    		clientSocket.close();
-    		serverSocket.close();
-        } catch (IOException e) {
-            System.out.println("cannot close socket");
-        }
+			sockInput.close();
+			sockOutput.close();
+			clientSocket.close();
+			serverSocket.close();
+		} catch (IOException e) {
+			System.out.println("cannot close socket");
+		}
 	}
-	
+
 	/**
 	 * @param args
 	 */

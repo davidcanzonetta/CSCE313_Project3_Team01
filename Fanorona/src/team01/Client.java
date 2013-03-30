@@ -11,7 +11,7 @@ public class Client {
 	private Socket clientSocket;
 	private InputStream sockInput;
 	private OutputStream sockOutput;
-	
+
 	public Client(String host, int port) {
 		try {
 			clientSocket = new Socket(host, port);
@@ -19,10 +19,11 @@ public class Client {
 			System.out.println("don't know about host: " + host);
 			System.exit(-1);
 		} catch (IOException e) {
-			System.out.println("couldn't get I/O for the connection to " + host);
+			System.out
+					.println("couldn't get I/O for the connection to " + host);
 			System.exit(-1);
 		}
-		
+
 		try {
 			sockInput = clientSocket.getInputStream();
 			sockOutput = clientSocket.getOutputStream();
@@ -31,7 +32,7 @@ public class Client {
 			System.exit(-1);
 		}
 	}
-	
+
 	public void write(String msg) {
 		try {
 			byte[] buf = msg.getBytes();
@@ -41,31 +42,31 @@ public class Client {
 			System.exit(-1);
 		}
 	}
-	
+
 	public String read() {
 		byte[] buf = new byte[1024];
 		int len = 0;
-		
+
 		try {
 			len = sockInput.read(buf, 0, buf.length);
 		} catch (IOException e) {
 			System.out.println("cannot read socket");
 			System.exit(-1);
 		}
-		
+
 		return new String(buf, 0, len);
 	}
-	
+
 	public void close() {
 		try {
-        	sockInput.close();
-        	sockOutput.close();
-    		clientSocket.close();
-        } catch (IOException e) {
-            System.out.println("cannot close socket");
-        }
+			sockInput.close();
+			sockOutput.close();
+			clientSocket.close();
+		} catch (IOException e) {
+			System.out.println("cannot close socket");
+		}
 	}
-	
+
 	/**
 	 * @param args
 	 */
