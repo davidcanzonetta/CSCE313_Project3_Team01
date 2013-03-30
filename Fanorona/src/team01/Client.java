@@ -19,8 +19,7 @@ public class Client {
 			System.out.println("don't know about host: " + host);
 			System.exit(-1);
 		} catch (IOException e) {
-			System.out
-					.println("couldn't get I/O for the connection to " + host);
+			System.out.println("couldn't get I/O for the connection to " + host);
 			System.exit(-1);
 		}
 

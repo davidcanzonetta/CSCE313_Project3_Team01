@@ -42,7 +42,7 @@ public class Game {
 		System.out.println("** listed.                                               **");
 		System.out.println();
 		
-		Game game = new Game(5, 5, false);
+		Game game = new Game(9, 5, false);
 		Scanner input = new Scanner(System.in);
 
 		while (true)
@@ -157,7 +157,7 @@ public class Game {
 			}
 			// get capture points
 			from = point;
-			getCaptureToPoints(move, from);
+			getCaptureDestPoints(move, from);
 			state = NEED_CAPTURE_TO;
 			return true;
 		case NEED_CAPTURE_TO:
@@ -214,7 +214,7 @@ public class Game {
 			}
 			// get valid paika moves
 			from = point;
-			getPaikaToPoints(from);
+			getPaikaDestPoints(from);
 			state = NEED_PAIKA_TO;
 			return true;
 		case NEED_PAIKA_TO:
@@ -250,7 +250,7 @@ public class Game {
 		
 		System.out.println(board);
 
-		if (getCaptureToPoints(move, from))
+		if (getCaptureDestPoints(move, from))
 		{
 			state = NEED_CAPTURE_TO;
 		}
@@ -274,13 +274,13 @@ public class Game {
 		move = new Move(board);
 
 		// available captures?
-		if (getCaptureFromPoints(move))
+		if (getCaptureStartPoints(move))
 		{
 			state = NEED_CAPTURE_FROM;
 		}
 		else
 		{
-			getPaikaFromPoints();
+			getPaikaStartPoints();
 			state = NEED_PAIKA_FROM;
 		}
 
@@ -310,7 +310,7 @@ public class Game {
 	}
 
 	// get valid capture move starting points
-	private boolean getCaptureFromPoints(Move move)
+	private boolean getCaptureStartPoints(Move move)
 	{
 		isClickable.clear();
 
@@ -318,7 +318,7 @@ public class Game {
 		{
 			if (board.getPoint(src) == player)
 			{
-				getCaptureFromPointsInnerLoop(move, src);
+				getCaptureStartPointsInnerLoop(move, src);
 			}
 		}
 
@@ -326,7 +326,7 @@ public class Game {
 	}
 
 	// prevents valid starting point from be added to isClickable multiple times
-	private void getCaptureFromPointsInnerLoop(Move move, Point src)
+	private void getCaptureStartPointsInnerLoop(Move move, Point src)
 	{
 		// prevents unnecessary checks of diagonal moves
 		int nLists = board.isDiagonalPoint(src) ? 2 : 1;
@@ -347,7 +347,7 @@ public class Game {
 	}
 
 	// get valid capture move destinations
-	private boolean getCaptureToPoints(Move move, Point src)
+	private boolean getCaptureDestPoints(Move move, Point src)
 	{
 		isClickable.clear();
 
@@ -371,7 +371,7 @@ public class Game {
 	}
 
 	// get valid paika move starting points
-	private void getPaikaFromPoints()
+	private void getPaikaStartPoints()
 	{
 		isClickable.clear();
 
@@ -379,13 +379,13 @@ public class Game {
 		{
 			if (board.getPoint(src) == player)
 			{
-				getPaikaFromPointsInnerLoop(move, src);
+				getPaikaStartPointsInnerLoop(move, src);
 			}
 		}
 	}
 
 	// prevents valid paika move points from being added multiple times
-	private void getPaikaFromPointsInnerLoop(Move move, Point src)
+	private void getPaikaStartPointsInnerLoop(Move move, Point src)
 	{
 		// prevents unnecessary checks of diagonal moves
 		int nLists = board.isDiagonalPoint(src) ? 2 : 1;
@@ -406,7 +406,7 @@ public class Game {
 	}
 	
 	// get valid paika move destinations
-	private void getPaikaToPoints(Point src)
+	private void getPaikaDestPoints(Point src)
 	{
 		isClickable.clear();
 
