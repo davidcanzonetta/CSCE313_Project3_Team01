@@ -101,6 +101,9 @@ public class GUI extends JFrame {
 	{
 		Board board = game.getBoard();
 
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.setStroke(new BasicStroke(2));
+		
 		for (Point point : board)
 		{
 			int type = board.getPoint(point);
@@ -113,17 +116,17 @@ public class GUI extends JFrame {
 			switch (type)
 			{
 				case Board.WHITE:
-					g.setColor(Color.WHITE);
-					g.fillOval(x, y, diameter, diameter);
+					g2d.setColor(new Color(240, 255, 255));
+					g2d.fillOval(x, y, diameter, diameter);
 					break;
 				case Board.BLACK:
-					g.setColor(Color.BLACK);
-					g.fillOval(x, y, diameter, diameter);
+					g2d.setColor(Color.BLACK);
+					g2d.fillOval(x, y, diameter, diameter);
 					break;
 				case Board.WHITE_GRAY:
 				case Board.BLACK_GRAY:
-					g.setColor(Color.GRAY);
-					g.fillOval(x, y, diameter, diameter);
+					g2d.setColor(Color.GRAY);
+					g2d.fillOval(x, y, diameter, diameter);
 					break;
 			}
 
