@@ -38,7 +38,8 @@ public class Game {
 		System.out.println("** If game piece can capture enter its position twice to **");
 		System.out.println("** sacrifice it.  If the game piece does not have a      **");
 		System.out.println("** capture it only needs to be entered once, a sacrifice **");
-		System.out.println("** move is done automatically.                           **");
+		System.out.println("** move is done automatically.  Only capture/paika moves **");
+		System.out.println("** listed.                                               **");
 		System.out.println();
 		
 		Game game = new Game(5, 5, false);
