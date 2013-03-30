@@ -138,9 +138,7 @@ public class Game {
 				if (board.getPoint(point) == player)
 				{
 					// add sacrifice to board
-					board.setPoint(point, (player == Board.WHITE) ? Board.WHITE_GRAY : Board.BLACK_GRAY);
-					System.out.println(board);
-					setupNextTurn();
+					sacrifice(point);
 					return true;
 				}
 				// invalid point
@@ -158,9 +156,7 @@ public class Game {
 				if (from.equals(point))
 				{
 					// add sacrifice to board
-					board.setPoint(point, (player == Board.WHITE) ? Board.WHITE_GRAY : Board.BLACK_GRAY);
-					System.out.println(board);
-					setupNextTurn();
+					sacrifice(point);
 					return true;
 				}
 				// invalid point
@@ -217,9 +213,7 @@ public class Game {
 				if (from.equals(point))
 				{
 					// add sacrifice to board
-					board.setPoint(point, (player == Board.WHITE) ? Board.WHITE_GRAY : Board.BLACK_GRAY);
-					System.out.println(board);
-					setupNextTurn();
+					sacrifice(point);
 					return true;
 				}
 				// invalid point
@@ -356,11 +350,30 @@ public class Game {
 		{
 			if (board.getPoint(src) == player)
 			{
-				isClickable.add(src);
+				getPaikaFromPointsInnerLoop(move, src);
 			}
 		}
 	}
 
+	private void getPaikaFromPointsInnerLoop(Move move, Point src)
+	{
+		int nLists = board.isDiagonalPoint(src) ? 2 : 1;
+
+		for (int i = 0; i < nLists; i++)
+		{
+			for (Delta delta : deltaList.get(i))
+			{
+				Point dst = src.getApproach(delta);
+
+				if (board.isValidPoint(dst) && board.getPoint(dst) == Board.EMPTY)
+				{
+					isClickable.add(src);
+					return;
+				}
+			}
+		}
+	}
+	
 	private void getPaikaToPoints(Point src)
 	{
 		isClickable.clear();
@@ -380,6 +393,22 @@ public class Game {
 				}
 			}
 		}
+	}
+
+	private void sacrifice(Point point)
+	{
+		int type;
+		if (player == Board.WHITE)
+		{
+			type = Board.WHITE_GRAY;
+		}
+		else
+		{
+			type = Board.BLACK_GRAY;
+		}
+		board.setPoint(point, type);
+		System.out.println(board);
+		setupNextTurn();
 	}
 
 	private void deleteSacrifices()
