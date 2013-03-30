@@ -14,8 +14,8 @@ public class GUI extends JPanel{
 	//static int moves = 0; //Keep track of number of game moves
 	
 	
-	private JButton newGameButton;  // Button to start a new game
-	private JButton resignButton;   // Button that a player can use to end game
+	private JButton newGameButton = new JButton("Play Again");  // Button to start a new game
+	private JButton resignButton = new JButton("Resign");   // Button that a player can use to end game
 	private JButton col_size1 = new JButton("1");
 	private JButton col_size3 = new JButton("3");
 	private JButton col_size5 = new JButton("5");
@@ -81,38 +81,39 @@ public class GUI extends JPanel{
 	     
 	     //Set positions and sizes of components
 	     guiBoard.setBounds(55,55,640,340); //x, y, width, height
-	     newGameButton.setBounds(170, 450, 120, 30);
-	     resignButton.setBounds(470, 450, 120, 30);
+	     newGameButton.setBounds(170, 430, 120, 30);
+	     resignButton.setBounds(470, 430, 120, 30);
 	     message.setBounds(0, 400, 600, 30);
 	     col_size1.setBounds(40, 470, 30, 30);
-	     col_size1.setBorder(null);
+	     //col_size1.setBorder(null);
 	     col_size3.setBounds(70, 470, 30, 30);
-	     col_size3.setBorder(null);
+	     //col_size3.setBorder(null);
 	     col_size5.setBounds(100, 470, 30, 30);
-	     col_size5.setBorder(null);
+	     //col_size5.setBorder(null);
 	     col_size7.setBounds(130, 470, 30, 30);
-	     col_size7.setBorder(null);
+	     //col_size7.setBorder(null);
 	     col_size9.setBounds(160, 470, 30, 30);
-	     col_size9.setBorder(null);
+	     //col_size9.setBorder(null);
 	     col_size11.setBounds(190, 470, 30, 30);
-	     col_size11.setBorder(null);
+	     //col_size11.setBorder(null);
 	     col_size13.setBounds(220, 470, 30, 30);
-	     col_size13.setBorder(null);
+	     //col_size13.setBorder(null);
 	     row_size1.setBounds(500, 470, 30, 30);
-	     row_size1.setBorder(null);
+	     //row_size1.setBorder(null);
 	     row_size3.setBounds(530, 470, 30, 30);
-	     row_size3.setBorder(null);
+	     //row_size3.setBorder(null);
 	     row_size5.setBounds(560, 470, 30, 30);
-	     row_size5.setBorder(null);
+	     //row_size5.setBorder(null);
 	     row_size7.setBounds(590, 470, 30, 30);
-	     row_size7.setBorder(null);
+	     //row_size7.setBorder(null);
 	     row_size9.setBounds(620, 470, 30, 30);
-	     row_size9.setBorder(null);
+	     //row_size9.setBorder(null);
 	     row_size11.setBounds(650, 470, 30, 30);
-	     row_size11.setBorder(null);
+	     //row_size11.setBorder(null);
 	     row_size13.setBounds(680, 470, 30, 30);
-	     row_size13.setBorder(null);
+	     //row_size13.setBorder(null);
 	     proceed.setBounds(310, 470, 100, 30);
+	     //Don't see a need for set border
 	}
 	
 	private class GUIBoard extends JPanel implements ActionListener, MouseListener, KeyListener{//, UserInput {
@@ -135,9 +136,7 @@ public class GUI extends JPanel{
 			addMouseListener(this);
 			addKeyListener(this);
 			
-	        resignButton = new JButton("Resign");
 	        resignButton.addActionListener(this);
-	        newGameButton = new JButton("New Game");
 	        newGameButton.addActionListener(this);
 	        
 	        col_size1.addActionListener(this);
@@ -156,7 +155,6 @@ public class GUI extends JPanel{
 	        row_size11.addActionListener(this);
 	        row_size13.addActionListener(this);
 	        
-	        proceed = new JButton("Continue");
 	        proceed.addActionListener(this);
 	        
 	        message = new JLabel("",JLabel.CENTER);
@@ -228,6 +226,8 @@ public class GUI extends JPanel{
 			     row_size11.setVisible(false);
 			     row_size13.setVisible(false);
 			     proceed.setVisible(false);
+			     
+			     fanorona = new Game(chosen_num_col, chosen_num_row, false);
 			     
 		    	 repaint();
 		    	 doNewGame();
