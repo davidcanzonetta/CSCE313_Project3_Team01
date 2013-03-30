@@ -66,7 +66,7 @@ public class Game {
 			System.out.print("*** legal moves: ");
 			List<Point> available = game.getClickable();
 			for(Point pt : available) {
-				System.out.print(pt + " ");
+				System.out.printf("(%d, %d) ", pt.getX(), pt.getY());
 			}
 			System.out.println();
 			
