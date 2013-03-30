@@ -32,7 +32,7 @@ public class GUI extends JFrame {
 	private DrawCanvas canvas;
 	
 	public GUI() {
-		setBackground(new Color(105,139,34));  // Olive background
+		setBackground(new Color(47, 79, 79));
 		game = new Game(9, 5, false);
 		width = game.getBoard().getWidth();
 		height = game.getBoard().getHeight();
@@ -139,7 +139,7 @@ public class GUI extends JFrame {
 	{
 //		g.setColor(new Color(221, 218, 236));
 //		g.fillRect(0, 0, winWidth, winHeight);
-//		g.setColor(Color.BLACK);
+		g.setColor(new Color(250, 158, 114));
 		for (Pair pair : gridLines)
 		{
 			Point src = pair.getSrc();
