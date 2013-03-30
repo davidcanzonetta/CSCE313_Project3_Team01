@@ -137,9 +137,9 @@ public class GUI extends JFrame {
 
 	private void drawGridLines(Graphics g)
 	{
-		g.setColor(new Color(221, 218, 236));
-		g.fillRect(0, 0, winWidth, winHeight);
-		g.setColor(Color.BLACK);
+//		g.setColor(new Color(221, 218, 236));
+//		g.fillRect(0, 0, winWidth, winHeight);
+//		g.setColor(Color.BLACK);
 		for (Pair pair : gridLines)
 		{
 			Point src = pair.getSrc();
