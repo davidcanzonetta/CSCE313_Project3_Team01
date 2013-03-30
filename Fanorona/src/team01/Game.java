@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Game {
 
-	List<Point> isClickable;
+	List<Point> isClickable;	// cache of valid moves
 	Board board;
 	Move move;
 	
@@ -47,30 +47,30 @@ public class Game {
 		{
 			if (game.isTie())
 			{
-				System.out.println("****** IS TIE ******");
+				System.out.println("******* IS TIE ********");
 				break;
 			}
 			else if (game.whiteWins())
 			{
-				System.out.println("**** WHITE WINS ****");
+				System.out.println("***** WHITE WINS ******");
 				break;
 			}
 			else if (game.blackWins())
 			{
-				System.out.println("**** BLACK WINS ****");
+				System.out.println("***** BLACK WINS ******");
 				break;
 			}
 			
-			System.out.print("** legal moves: ");
+			System.out.print("*** legal moves: ");
 			List<Point> available = game.getClickable();
 			for(Point pt : available) {
 				System.out.print(pt + " ");
 			}
 			System.out.println();
 			
-			System.out.print(">> x: ");
+			System.out.print(">>> x: ");
 			int x = input.nextInt();
-			System.out.print(">> y: ");
+			System.out.print(">>> y: ");
 			int y = input.nextInt();
 			System.out.println();
 			
@@ -78,7 +78,8 @@ public class Game {
 			
 			if (! game.update(point))
 			{
-				System.out.println("invalid input");
+				System.out.println("!!! INVALID INPUT");
+				System.out.println();
 			}
 		}
 		
@@ -238,6 +239,7 @@ public class Game {
 		return false;
 	}
 
+	// capture pieces and update game state
 	private void capture(boolean isApproach)
 	{
 		move.capture(from, to, delta, isApproach);
@@ -264,9 +266,11 @@ public class Game {
 
 	private void setupNextMove()
 	{
+		// gray pieces removed at each turn
 		deleteSacrifices();
 		move = new Move(board);
 
+		// available captures?
 		if (getCaptureFromPoints(move))
 		{
 			state = NEED_CAPTURE_FROM;
@@ -277,6 +281,7 @@ public class Game {
 			state = NEED_PAIKA_FROM;
 		}
 
+		// check for end game condition
 		if (!(isTie() || whiteWins() || blackWins()))
 		{
 			if (player == Board.WHITE)
@@ -290,6 +295,7 @@ public class Game {
 			System.out.println();
 			System.out.println(board);
 	
+			// ai player's turn
 			if (hasAiPlayer)
 			{
 				if (player == 1)
@@ -300,6 +306,7 @@ public class Game {
 		}
 	}
 
+	// get valid capture move starting points
 	private boolean getCaptureFromPoints(Move move)
 	{
 		isClickable.clear();
@@ -315,8 +322,10 @@ public class Game {
 		return ! isClickable.isEmpty();
 	}
 
+	// prevents valid starting point from be added to isClickable multiple times
 	private void getCaptureFromPointsInnerLoop(Move move, Point src)
 	{
+		// prevents unnecessary checks of diagonal moves
 		int nLists = board.isDiagonalPoint(src) ? 2 : 1;
 
 		for (int i = 0; i < nLists; i++)
@@ -334,10 +343,12 @@ public class Game {
 		}
 	}
 
+	// get valid capture move destinations
 	private boolean getCaptureToPoints(Move move, Point src)
 	{
 		isClickable.clear();
 
+		// prevents unnecessary checks of diagonal moves
 		int nLists = board.isDiagonalPoint(src) ? 2 : 1;
 
 		for (int i = 0; i < nLists; i++)
@@ -356,6 +367,7 @@ public class Game {
 		return ! isClickable.isEmpty();
 	}
 
+	// get valid paika move starting points
 	private void getPaikaFromPoints()
 	{
 		isClickable.clear();
@@ -369,8 +381,10 @@ public class Game {
 		}
 	}
 
+	// prevents valid paika move points from being added multiple times
 	private void getPaikaFromPointsInnerLoop(Move move, Point src)
 	{
+		// prevents unnecessary checks of diagonal moves
 		int nLists = board.isDiagonalPoint(src) ? 2 : 1;
 
 		for (int i = 0; i < nLists; i++)
@@ -388,10 +402,12 @@ public class Game {
 		}
 	}
 	
+	// get valid paika move destinations
 	private void getPaikaToPoints(Point src)
 	{
 		isClickable.clear();
 
+		// prevents unnecessary checks of diagonal moves
 		int nLists = board.isDiagonalPoint(src) ? 2 : 1;
 
 		for (int i = 0; i < nLists; i++)
@@ -409,6 +425,7 @@ public class Game {
 		}
 	}
 
+	// add sacrifice piece for current player
 	private void sacrifice(Point point)
 	{
 		int type;
@@ -425,12 +442,15 @@ public class Game {
 		setupNextTurn();
 	}
 
+	// delete sacrificed pieces at the turn
 	private void deleteSacrifices()
 	{
 		for (Point point : board)
 		{
 			int type = board.getPoint(point);
 
+			// two types of gray pieces
+			// removed type must match current player
 			if ((type == Board.WHITE_GRAY && player == Board.WHITE)
 			|| (type == Board.BLACK_GRAY && player == Board.BLACK))
 			{
