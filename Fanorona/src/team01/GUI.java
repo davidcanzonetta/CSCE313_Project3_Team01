@@ -32,6 +32,7 @@ public class GUI extends JFrame {
 	private DrawCanvas canvas;
 	
 	public GUI() {
+		setBackground(new Color(105,139,34));  // Olive background
 		game = new Game(9, 5, false);
 		width = game.getBoard().getWidth();
 		height = game.getBoard().getHeight();
@@ -128,7 +129,7 @@ public class GUI extends JFrame {
 
 			if (game.getClickable().contains(point))
 			{
-				g.setColor(Color.GREEN);
+				g.setColor(Color.MAGENTA);
 				g.drawOval(x, y, diameter, diameter);
 			}
 		}
