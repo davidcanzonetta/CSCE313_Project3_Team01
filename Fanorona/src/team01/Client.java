@@ -56,6 +56,16 @@ public class Client {
 		return new String(buf, 0, len);
 	}
 	
+	public void close() {
+		try {
+        	sockInput.close();
+        	sockOutput.close();
+    		clientSocket.close();
+        } catch (IOException e) {
+            System.out.println("cannot close socket");
+        }
+	}
+	
 	/**
 	 * @param args
 	 */
