@@ -37,7 +37,7 @@ public class GUI extends JFrame {
 		width = game.getBoard().getWidth();
 		height = game.getBoard().getHeight();
 		
-		spacing = 80;				// spacing between board positions
+		spacing = 80;				// 80 px between board positions
 		radius = spacing / 2 - 8;	// 8 px between game pieces
 		diameter = 2 * radius;
 		
