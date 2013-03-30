@@ -15,12 +15,13 @@ public class Game {
 	Delta delta;
 
 	private boolean hasAiPlayer;
-	
+
 	private int player;
 	private int state;
 	private int moves;
 	private int maxMoves;
 
+	// game states (game manager is a finite state machine)
 	private static final int NEED_CAPTURE_FROM = 0;
 	private static final int NEED_CAPTURE_TO = 1;
 	private static final int NEED_CAPTURE_RESOLVE = 2;
@@ -135,6 +136,7 @@ public class Game {
 		return board.getWhite() == 0 && board.getBlack() > 0;
 	}
 
+	// return true for successful update, false otherwise
 	public boolean update(Point point)
 	{
 		switch (state)
