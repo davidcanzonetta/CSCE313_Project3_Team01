@@ -4,14 +4,19 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class Menu extends JFrame{
+	
 	private int col_size;
 	private int row_size;
+	private boolean aiPlayer;
 	
 	JMenuBar bar=new JMenuBar();
 	
 	public Menu()
 	{
-		//super("Menu Example");
+		//default column, row and ai values
+		col_size = 9;
+		row_size = 5;
+		aiPlayer = true;
 		
 		JMenu file = new JMenu("File");
 		JMenu settings = new JMenu("Settings");
@@ -72,11 +77,116 @@ public class Menu extends JFrame{
 		settings.addSeparator();
 		settings.add(mode);
 		
+		//TODO:Communicate between new game and GUI
+		new_game.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				System.exit(0); 
+			}
+		});
+		
+		col_one.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				col_size = 1; 
+			}
+		});
+		
+		col_three.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				col_size = 3; 
+			}
+		});
+		
+		col_five.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				col_size = 5; 
+			}
+		});
+		
+		col_seven.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				col_size = 7; 
+			}
+		});
+		
+		col_nine.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				col_size = 9; 
+			}
+		});
+		
+		col_eleven.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				col_size = 11; 
+			}
+		});
+		
+		col_thirteen.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				col_size = 13; 
+			}
+		});
+		
+		row_one.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				row_size = 1; 
+			}
+		});
+		
+		row_three.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				row_size = 3; 
+			}
+		});
+		
+		row_five.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				row_size = 5; 
+			}
+		});
+		
+		row_seven.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				row_size = 7; 
+			}
+		});
+		
+		row_nine.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				row_size = 9; 
+			}
+		});
+		
+		row_eleven.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				row_size = 11; 
+			}
+		});
+		
+		row_thirteen.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				row_size = 13; 
+			}
+		});
+		
+		one_player.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				aiPlayer = true;
+			}
+		});
+		
+		two_player.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent e){ 
+				aiPlayer = false;
+			}
+		});
+		
+		
 		exit.addActionListener( new ActionListener(){
-					public void actionPerformed(ActionEvent e){ 
-						System.exit(0); 
-					}
-				});
+			@Override
+			public void actionPerformed(ActionEvent e){ 
+				System.exit(0); 
+			}
+		});
 		
 		setJMenuBar(bar);
 		bar.add(file);
@@ -89,6 +199,18 @@ public class Menu extends JFrame{
 	public JMenuBar get_bar()
 	{
 		return bar;
+	}
+	public int get_col_size()
+	{
+		return col_size;
+	}
+	public int get_row_size()
+	{
+		return row_size;
+	}
+	public Boolean get_aiPlayer()
+	{
+		return aiPlayer;
 	}
 	public static void main(String[] args)
 	{
