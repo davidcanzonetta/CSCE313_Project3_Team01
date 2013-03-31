@@ -158,6 +158,72 @@ public class Game {
 		return false;
 	}
 
+	public boolean approach(Point src, Point dest)
+	{
+		if (state == NEED_CAPTURE_START)
+		{
+			if (! update(src))
+			{
+				return false;
+			}
+		}
+		if (! (state == NEED_CAPTURE_DEST && from.equals(src) && update(dest)))
+		{
+			return false;
+		}
+		if (state == NEED_CAPTURE_RESOLVE)
+		{
+			capture(true);
+		}
+		return true;
+	}
+
+	public boolean withdraw(Point src, Point dest)
+	{
+		if (state == NEED_CAPTURE_START)
+		{
+			if (! update(src))
+			{
+				return false;
+			}
+		}
+		if (! (state == NEED_CAPTURE_DEST && from.equals(src) && update(dest)))
+		{
+			return false;
+		}
+		if (state == NEED_CAPTURE_RESOLVE)
+		{
+			capture(false);
+		}
+		return true;
+	}
+	
+	public boolean paika(Point src, Point dest)
+	{
+		if (! (state == NEED_PAIKA_START && update(src)))
+		{
+			return false;
+		}
+		if (! (state == NEED_PAIKA_DEST && from.equals(src) && update(dest)))
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean sacrifice(Point point)
+	{
+		// check for sacrifice move
+		if (board.getPoint(point) == player)
+		{
+			// add sacrifice to board
+			addSacrifice(point);
+			return true;
+		}
+		// invalid point
+		return false;
+	}
+	
 	// capture pieces and update game state
 	private void capture(boolean isApproach)
 	{
@@ -184,7 +250,7 @@ public class Game {
 			if (board.getPoint(point) == player)
 			{
 				// add sacrifice to board
-				sacrifice(point);
+				addSacrifice(point);
 				return true;
 			}
 			// invalid point
@@ -205,7 +271,7 @@ public class Game {
 			if (from.equals(point))
 			{
 				// add sacrifice to board
-				sacrifice(point);
+				addSacrifice(point);
 				return true;
 			}
 			// invalid point
@@ -271,7 +337,7 @@ public class Game {
 			if (from.equals(point))
 			{
 				// add sacrifice to board
-				sacrifice(point);
+				addSacrifice(point);
 				return true;
 			}
 			// invalid point
@@ -455,7 +521,7 @@ public class Game {
 	}
 
 	// add sacrifice piece for current player
-	private void sacrifice(Point point)
+	private void addSacrifice(Point point)
 	{
 		int type;
 		if (player == Board.WHITE)
