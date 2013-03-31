@@ -17,15 +17,12 @@ public class Menu extends JFrame{
 		JMenu settings = new JMenu("Settings");
 		file.setMnemonic('C');
 		JMenu colSubMenu = new JMenu("Column Size");
-		colSubMenu.setMnemonic(KeyEvent.VK_C);
 		JMenu rowSubMenu = new JMenu("Row Size");
-		colSubMenu.setMnemonic(KeyEvent.VK_R);
 		JMenu mode = new JMenu("Mode");
-		mode.setMnemonic(KeyEvent.VK_M);
 		JMenuItem new_game = new JMenuItem("New Game");
-		new_game.setMnemonic(KeyEvent.VK_N);
+		new_game.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		JMenuItem exit = new JMenuItem("Exit");
-		exit.setMnemonic(KeyEvent.VK_E);
+		exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 		
 		//Column size objects
 		JMenuItem col_one = new JMenuItem("1");
