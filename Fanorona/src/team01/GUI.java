@@ -31,11 +31,11 @@ public class GUI extends JFrame {
 	
 	private DrawCanvas canvas;
 	
-	public GUI() {
+	public GUI(int width, int height, boolean aiPlayer, int player) {
 		setBackground(new Color(47, 79, 79));
-		game = new Game(9, 5, true, Board.BLACK);
-		width = game.getBoard().getWidth();
-		height = game.getBoard().getHeight();
+		game = new Game(width, height, aiPlayer, player);
+		this.width = game.getBoard().getWidth();
+		this.height = game.getBoard().getHeight();
 		
 		spacing = 80;				// 80 px between board positions
 		radius = spacing / 2 - 8;	// 8 px between game pieces
@@ -61,7 +61,7 @@ public class GUI extends JFrame {
 				int mouseY = e.getY();
 
 				int x = (mouseX + radius) / spacing;
-				int y = height - ((mouseY + radius) / spacing) + 1;
+				int y = game.getBoard().getHeight() - ((mouseY + radius) / spacing) + 1;
 
 				Point point = new Point(x, y);
 				if (game.getBoard().isValidPoint(point))
@@ -71,6 +71,22 @@ public class GUI extends JFrame {
 						System.out.println("!!! INVALID MOVE: " + point);
 						System.out.println();
 					}
+				}
+				
+				if (game.isTie())
+				{
+					System.out.println("Tie");
+					setTitle("Tie");
+				}
+				else if (game.whiteWins())
+				{
+					System.out.println("White wins");
+					setTitle("White wins");
+				}
+				else if (game.blackWins())
+				{
+					System.out.println("Black wins");
+					setTitle("Black wins");
 				}
 				
 				repaint();
@@ -91,7 +107,6 @@ public class GUI extends JFrame {
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintChildren(g);
-//			setBackground(Color.BLUE);		// TODO: doesn't work
 			drawGridLines(g);
 			drawGamePieces(g);
 		}
@@ -240,7 +255,11 @@ public class GUI extends JFrame {
 			@Override
 			public void run()
 			{
-				new GUI();
+				int width = 9;
+				int height = 5;
+				boolean aiPlayer = true;
+				int player = Board.WHITE;
+				new GUI(width, height, aiPlayer, player);
 			}
 		});
 	}
