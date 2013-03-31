@@ -33,7 +33,7 @@ public class GUI extends JFrame {
 	
 	public GUI() {
 		setBackground(new Color(47, 79, 79));
-		game = new Game(9, 5, false, Board.WHITE);
+		game = new Game(9, 5, true, Board.BLACK);
 		width = game.getBoard().getWidth();
 		height = game.getBoard().getHeight();
 		

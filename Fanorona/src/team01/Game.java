@@ -145,100 +145,15 @@ public class Game {
 		switch (state)
 		{
 		case NEED_CAPTURE_START:
-			if (! isClickable.contains(point))
-			{
-				// check for sacrifice move
-				if (board.getPoint(point) == player)
-				{
-					// add sacrifice to board
-					sacrifice(point);
-					return true;
-				}
-				// invalid point
-				return false;
-			}
-			// get capture points
-			from = point;
-			getCaptureDestPoints(move, from);
-			state = NEED_CAPTURE_DEST;
-			return true;
+			return needCaptureStart(point);
 		case NEED_CAPTURE_DEST:
-			if (! isClickable.contains(point))
-			{
-				// check for sacrifice move
-				if (from.equals(point))
-				{
-					// add sacrifice to board
-					sacrifice(point);
-					return true;
-				}
-				// invalid point
-				return false;
-			}
-			// update the board
-			to = point;
-			delta = new Delta(from, to);
-			if (move.isValidApproach(from, to, delta))
-			{
-				if (move.isValidWithdraw(from, to, delta))
-				{
-					// approach or withdraw?
-					isClickable.clear();
-					isClickable.add(to.getApproach(delta));
-					isClickable.add(from.getWithdraw(delta));
-					state = NEED_CAPTURE_RESOLVE;
-					return true;
-				}
-				else
-				{
-					// approach
-					capture(true);
-					return true;
-				}
-			}
-			// withdraw
-			capture(false);
-			return true;
+			return needCaptureDest(point);
 		case NEED_CAPTURE_RESOLVE:
-			if (! isClickable.contains(point))
-			{
-				// invalid point
-				return false;
-			}
-			// resolve approach or withdraw capture
-			capture(point.equals(isClickable.get(0)));
-			return true;
+			return needCaptureResolve(point);
 		case NEED_PAIKA_START:
-			if (! isClickable.contains(point))
-			{
-				// invalid point
-				return false;
-			}
-			// get valid paika moves
-			from = point;
-			getPaikaDestPoints(from);
-			state = NEED_PAIKA_DEST;
-			return true;
+			return needPaikaStart(point);
 		case NEED_PAIKA_DEST:
-			if (! isClickable.contains(point))
-			{
-				// check for sacrifice move
-				if (from.equals(point))
-				{
-					// add sacrifice to board
-					sacrifice(point);
-					return true;
-				}
-				// invalid point
-				return false;
-			}
-			// paika move
-			to = point;
-			board.setPoint(from, Board.EMPTY);
-			board.setPoint(to, player);
-			System.out.println(board);
-			setupNextTurn();
-			return true;
+			return needPaikaDest(point);
 		}
 		return false;
 	}
@@ -261,6 +176,116 @@ public class Game {
 		}
 	}
 
+	private boolean needCaptureStart(Point point)
+	{
+		if (! isClickable.contains(point))
+		{
+			// check for sacrifice move
+			if (board.getPoint(point) == player)
+			{
+				// add sacrifice to board
+				sacrifice(point);
+				return true;
+			}
+			// invalid point
+			return false;
+		}
+		// get capture points
+		from = point;
+		getCaptureDestPoints(move, from);
+		state = NEED_CAPTURE_DEST;
+		return true;
+	}
+	
+	private boolean needCaptureDest(Point point)
+	{
+		if (! isClickable.contains(point))
+		{
+			// check for sacrifice move
+			if (from.equals(point))
+			{
+				// add sacrifice to board
+				sacrifice(point);
+				return true;
+			}
+			// invalid point
+			return false;
+		}
+		// update the board
+		to = point;
+		delta = new Delta(from, to);
+		if (move.isValidApproach(from, to, delta))
+		{
+			if (move.isValidWithdraw(from, to, delta))
+			{
+				// approach or withdraw?
+				isClickable.clear();
+				isClickable.add(to.getApproach(delta));
+				isClickable.add(from.getWithdraw(delta));
+				state = NEED_CAPTURE_RESOLVE;
+				return true;
+			}
+			else
+			{
+				// approach
+				capture(true);
+				return true;
+			}
+		}
+		// withdraw
+		capture(false);
+		return true;
+	}
+
+	private boolean needCaptureResolve(Point point)
+	{
+		if (! isClickable.contains(point))
+		{
+			// invalid point
+			return false;
+		}
+		// resolve approach or withdraw capture
+		capture(point.equals(isClickable.get(0)));
+		return true;
+	}
+	
+	private boolean needPaikaStart(Point point)
+	{
+		if (! isClickable.contains(point))
+		{
+			// invalid point
+			return false;
+		}
+		// get valid paika moves
+		from = point;
+		getPaikaDestPoints(from);
+		state = NEED_PAIKA_DEST;
+		return true;
+	}
+	
+	private boolean needPaikaDest(Point point)
+	{
+		if (! isClickable.contains(point))
+		{
+			// check for sacrifice move
+			if (from.equals(point))
+			{
+				// add sacrifice to board
+				sacrifice(point);
+				return true;
+			}
+			// invalid point
+			return false;
+		}
+		// paika move
+		to = point;
+		board.setPoint(from, Board.EMPTY);
+		board.setPoint(to, player);
+		System.out.println(board);
+		setupNextTurn();
+		return true;
+	}
+	
 	private void setupNextTurn()
 	{
 		player ^= 1;
