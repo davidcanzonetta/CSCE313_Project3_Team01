@@ -5,8 +5,6 @@ import java.util.Scanner;
 
 public class Protocol {
 
-
-	
 	static private final int STATE_ERROR = -1;
 	static private final int STATE_READY = 1;
 	static private final int STATE_WELCOME = 2;
@@ -55,11 +53,19 @@ public class Protocol {
 				if (state == STATE_READY)
 				{
 					if (player == Board.WHITE)
+					{
 						state = STATE_GET_MOVE;
+					}
 					else
+					{
 						state = STATE_MAKE_MOVE;
+					}
+					return;
 				}
 			}
+			
+			state = STATE_ERROR;
+			return;
 		}
 		catch (InputMismatchException e)
 		{
