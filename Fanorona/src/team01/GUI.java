@@ -124,7 +124,6 @@ public class GUI extends JFrame {
 			super.paintChildren(g);
 			drawGridLines(g);
 			drawGamePieces(g);
-			Menu menu = new Menu();
 		}
 	}
 	
