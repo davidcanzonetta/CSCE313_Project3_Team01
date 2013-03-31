@@ -91,12 +91,12 @@ public class Game {
 		input.close();
 	}
 
-	public Game(int width, int height, boolean hasAiPlayer, int aiPlayer)
+	public Game(int width, int height, boolean hasAiPlayer, int player)
 	{
 		moves = 0;
 		maxMoves = 10 * width;
-		this.player = Board.WHITE;
-		this.aiPlayer = aiPlayer;
+		this.player = Board.WHITE;	// WHITE always goes first
+		this.aiPlayer = player ^ 1;	// ai player
 		this.hasAiPlayer = hasAiPlayer;
 
 		isClickable = new ArrayList<Point>();
