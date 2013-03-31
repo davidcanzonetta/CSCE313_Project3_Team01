@@ -17,7 +17,8 @@ public class Game {
 	private boolean hasAiPlayer;
 
 	private int aiPlayer;
-	private int player;
+	private int humanPlayer;
+	private int currentPlayer;
 	private int state;
 	private int moves;
 	private int maxMoves;
@@ -95,18 +96,14 @@ public class Game {
 	{
 		moves = 0;
 		maxMoves = 10 * width;
-		this.player = Board.WHITE;	// WHITE always goes first
-		this.aiPlayer = player ^ 1;	// ai player
+		this.currentPlayer = Board.WHITE;	// WHITE always goes first
+		this.humanPlayer = player;
+		this.aiPlayer = humanPlayer ^ 1;	// ai player
 		this.hasAiPlayer = hasAiPlayer;
 
 		isClickable = new ArrayList<Point>();
 		board = new Board(width, height);
 		setupNextMove();
-	}
-
-	public Game(Game game)
-	{
-
 	}
 
 	public List<Point> getClickable()
@@ -124,6 +121,14 @@ public class Game {
 //		return move.getPath();
 //	}
 
+	public void reset()
+	{
+		currentPlayer = Board.WHITE;
+		isClickable = new ArrayList<Point>();
+		board = new Board(board.getWidth(), board.getHeight());
+		setupNextMove();
+	}
+	
 	public boolean isTie()
 	{
 		return moves == maxMoves;
@@ -140,7 +145,7 @@ public class Game {
 	}
 
 	public int currentPlayer() {
-		return player;
+		return currentPlayer;
 	}
 	// return true for successful update, false otherwise
 	public boolean update(Point point)
@@ -217,7 +222,7 @@ public class Game {
 	public boolean sacrifice(Point point)
 	{
 		// check for sacrifice move
-		if (board.getPoint(point) == player)
+		if (board.getPoint(point) == currentPlayer)
 		{
 			// add sacrifice to board
 			addSacrifice(point);
@@ -250,7 +255,7 @@ public class Game {
 		if (! isClickable.contains(point))
 		{
 			// check for sacrifice move
-			if (board.getPoint(point) == player)
+			if (board.getPoint(point) == currentPlayer)
 			{
 				// add sacrifice to board
 				addSacrifice(point);
@@ -349,7 +354,7 @@ public class Game {
 		// paika move
 		to = point;
 		board.setPoint(from, Board.EMPTY);
-		board.setPoint(to, player);
+		board.setPoint(to, currentPlayer);
 		System.out.println(board);
 		setupNextTurn();
 		return true;
@@ -357,7 +362,7 @@ public class Game {
 	
 	private void setupNextTurn()
 	{
-		player ^= 1;
+		currentPlayer ^= 1;
 		moves += 1;
 		setupNextMove();
 	}
@@ -382,7 +387,7 @@ public class Game {
 		// check for end game condition
 		if (!(isTie() || whiteWins() || blackWins()))
 		{
-			if (player == Board.WHITE)
+			if (currentPlayer == Board.WHITE)
 			{
 				System.out.println("******** WHITE ********");
 			}
@@ -396,7 +401,7 @@ public class Game {
 			// ai player's turn
 			if (hasAiPlayer)
 			{
-				if (player == aiPlayer)
+				if (currentPlayer == aiPlayer)
 				{
 					aiPlayer();
 				}
@@ -411,7 +416,7 @@ public class Game {
 
 		for (Point src : board)
 		{
-			if (board.getPoint(src) == player)
+			if (board.getPoint(src) == currentPlayer)
 			{
 				getCaptureStartPointsInnerLoop(move, src);
 			}
@@ -472,7 +477,7 @@ public class Game {
 
 		for (Point src : board)
 		{
-			if (board.getPoint(src) == player)
+			if (board.getPoint(src) == currentPlayer)
 			{
 				getPaikaStartPointsInnerLoop(move, src);
 			}
@@ -527,7 +532,7 @@ public class Game {
 	private void addSacrifice(Point point)
 	{
 		int type;
-		if (player == Board.WHITE)
+		if (currentPlayer == Board.WHITE)
 		{
 			type = Board.WHITE_GRAY;
 		}
@@ -549,8 +554,8 @@ public class Game {
 
 			// two types of gray pieces
 			// removed type must match current player
-			if ((type == Board.WHITE_GRAY && player == Board.WHITE)
-			|| (type == Board.BLACK_GRAY && player == Board.BLACK))
+			if ((type == Board.WHITE_GRAY && currentPlayer == Board.WHITE)
+			|| (type == Board.BLACK_GRAY && currentPlayer == Board.BLACK))
 			{
 				board.setPoint(point, Board.EMPTY);
 				return;

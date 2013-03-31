@@ -57,6 +57,14 @@ public class GUI extends JFrame {
 		canvas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (game.isTie() || game.whiteWins() || game.blackWins())
+				{
+					game.reset();
+					setTitle("Fanorona");
+					repaint();
+					return;
+				}
+				
 				int mouseX = e.getX();
 				int mouseY = e.getY();
 
