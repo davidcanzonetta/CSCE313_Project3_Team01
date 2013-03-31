@@ -22,6 +22,9 @@ public class Protocol {
 	private int player;
 	private int time;
 	private int state;
+	private int fromPos;
+	private int toPos;
+	private int pos; //Sacrifice moves
 	
 	private void info(String msg)
 	{
@@ -104,23 +107,27 @@ public class Protocol {
 				state = STATE_TIE;
 			else if(scanner.next() == "A") { //Advance capture move 
 				//Store positions
+				state = STATE_GET_MOVE;
 				int from = Integer.parseInt(scanner.next());
 				int to = Integer.parseInt(scanner.next());
 				
 			}
 			else if(scanner.next() == "W") { //Withdraw capture move 
 				//Store positions
-				int from = Integer.parseInt(scanner.next());
-				int to = Integer.parseInt(scanner.next());
+				state = STATE_GET_MOVE;
+				fromPos = Integer.parseInt(scanner.next());
+				toPos = Integer.parseInt(scanner.next());
 			}
 			else if(scanner.next() == "P") { //Paika Move
 				//Store positions
-				int from = Integer.parseInt(scanner.next());
-				int to = Integer.parseInt(scanner.next());
+				state = STATE_GET_MOVE;
+				fromPos = Integer.parseInt(scanner.next());
+				toPos = Integer.parseInt(scanner.next());
 			}
 			else if(scanner.next() == "S") { //Sacrifice Move
+				state = STATE_GET_MOVE;
 				//Store position
-				int pos = Integer.parseInt(scanner.next());
+				pos = Integer.parseInt(scanner.next());
 			}
 			else
 				state = STATE_ERROR;
