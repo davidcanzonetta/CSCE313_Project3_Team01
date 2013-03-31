@@ -16,6 +16,7 @@ public class Game {
 
 	private boolean hasAiPlayer;
 
+	private int aiPlayer;
 	private int player;
 	private int state;
 	private int moves;
@@ -42,7 +43,7 @@ public class Game {
 		System.out.println("** listed.                                               **");
 		System.out.println();
 		
-		Game game = new Game(9, 5, false, Board.WHITE);
+		Game game = new Game(9, 5, true, Board.WHITE);
 		Scanner input = new Scanner(System.in);
 
 		while (true)
@@ -90,11 +91,12 @@ public class Game {
 		input.close();
 	}
 
-	public Game(int width, int height, boolean hasAiPlayer, int player)
+	public Game(int width, int height, boolean hasAiPlayer, int aiPlayer)
 	{
 		moves = 0;
 		maxMoves = 10 * width;
-		this.player = player;
+		this.player = Board.WHITE;
+		this.aiPlayer = aiPlayer;
 		this.hasAiPlayer = hasAiPlayer;
 
 		isClickable = new ArrayList<Point>();
@@ -300,7 +302,7 @@ public class Game {
 			// ai player's turn
 			if (hasAiPlayer)
 			{
-				if (player == 1)
+				if (player == aiPlayer)
 				{
 					aiPlayer();
 				}
