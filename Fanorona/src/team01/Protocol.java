@@ -102,8 +102,29 @@ public class Protocol {
 				state = STATE_WINNER;
 			else if (ack.equals("TIE"))
 				state = STATE_TIE;
+			else if(scanner.next() == "A") { //Advance capture move 
+				//Store positions
+				int from = Integer.parseInt(scanner.next());
+				int to = Integer.parseInt(scanner.next());
+				
+			}
+			else if(scanner.next() == "W") { //Withdraw capture move 
+				//Store positions
+				int from = Integer.parseInt(scanner.next());
+				int to = Integer.parseInt(scanner.next());
+			}
+			else if(scanner.next() == "P") { //Paika Move
+				//Store positions
+				int from = Integer.parseInt(scanner.next());
+				int to = Integer.parseInt(scanner.next());
+			}
+			else if(scanner.next() == "S") { //Sacrifice Move
+				//Store position
+				int pos = Integer.parseInt(scanner.next());
+			}
 			else
 				state = STATE_ERROR;
+				
 		}
 		catch (InputMismatchException e)
 		{
