@@ -139,6 +139,9 @@ public class Game {
 		return board.getWhite() == 0 && board.getBlack() > 0;
 	}
 
+	public int currentPlayer() {
+		return player;
+	}
 	// return true for successful update, false otherwise
 	public boolean update(Point point)
 	{

@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.*;
 
 public class Server {
 
@@ -71,12 +72,36 @@ public class Server {
 			System.out.println("cannot close socket");
 		}
 	}
+	
+	public String gameInfo(Game game) {
+		String col = String.valueOf(game.board.getWidth());
+		String row = String.valueOf(game.board.getHeight());
+		int playerNum = game.currentPlayer();
+		String player;
+		if (playerNum == 0) {
+			player = "W";
+		} else {
+			player = "B";
+		}
+		// TODO: implement timer and return time
+		String time = " ";
+		String command = col + " " + row + " " + player + " " + time;
+		return command;
+	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		int port = 2001; 
+		Server server = new Server(port);
+		server.write("WELCOME");
+		//Give the client game info
+		String s = server.read();
+		
+		
+		
 	}
 
 }
