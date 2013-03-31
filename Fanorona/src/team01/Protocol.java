@@ -23,11 +23,11 @@ public class Protocol {
 	private int height;
 	private int player;
 	private int time;
-
-	private int info(String msg)
+	private int state;
+	
+	private void info(String msg)
 	{
 		Scanner scanner = new Scanner (msg);
-		int state = STATE_ERROR;
 
 		try
 		{
@@ -46,6 +46,7 @@ public class Protocol {
 						&& (3 <= height && height <= 13))
 					{
 						state = STATE_READY;
+						return;
 					}
 				}
 			}
@@ -62,21 +63,18 @@ public class Protocol {
 		}
 		catch (InputMismatchException e)
 		{
-			//
+			state = STATE_ERROR;
 		}
 		finally
 		{
 			scanner.close();
 		}
-
-		return state;
 	}
 	
 
-	private int acknowledge(String msg)
+	private void acknowledge(String msg)
 	{
 		Scanner scanner = new Scanner (msg);
-		int state = STATE_ERROR;
 
 		try
 		{
@@ -98,16 +96,16 @@ public class Protocol {
 				state = STATE_WINNER;
 			else if (ack.equals("TIE"))
 				state = STATE_TIE;
+			else
+				state = STATE_ERROR;
 		}
 		catch (InputMismatchException e)
 		{
-			//
+			state = STATE_ERROR;
 		}
 		finally
 		{
 			scanner.close();
 		}
-
-		return state;
 	}
 }
