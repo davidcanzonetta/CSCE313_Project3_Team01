@@ -98,6 +98,11 @@ public class Move {
 	public boolean isValidWithdraw(Point from, Point to, Delta delta) {
 		return isValidCapture(from, to, delta, false);
 	}
+
+	public void resetBoard(Board board)
+	{
+		this.board = board;
+	}
 	
 	private boolean isValidCapture(Point from, Point to, Delta delta, boolean isApproach) {
 		Point capture;

@@ -106,6 +106,31 @@ public class Game {
 		setupNextMove();
 	}
 
+	public Game(Game other)
+	{
+		this.board = new Board(other.board);
+		this.isClickable = new ArrayList<Point>();	// cache of valid moves
+		for (Point point : other.isClickable)
+		{
+			this.isClickable.add(point);
+		}
+		
+		this.move = new Move(other.move);
+		this.move.resetBoard(this.board);
+		
+		this.from = new Point(other.from);
+		this.to = new Point(other.to);
+		this.delta = new Delta(other.delta);
+
+		this.hasAiPlayer = other.hasAiPlayer;
+		this.aiPlayer = other.aiPlayer;
+		this.humanPlayer = other.humanPlayer;
+		this.currentPlayer = other.currentPlayer;
+		this.state = other.state;
+		this.moves = other.moves;
+		this.maxMoves = other.maxMoves;
+	}
+	
 	public List<Point> getClickable()
 	{
 		return isClickable;
