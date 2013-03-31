@@ -37,6 +37,13 @@ public class GUI extends JFrame {
 		this.width = game.getBoard().getWidth();
 		this.height = game.getBoard().getHeight();
 		
+		//create menu
+		JMenuBar b;
+		Menu menu = new Menu();
+		b = menu.get_bar();
+		setJMenuBar(b);
+		b.setVisible(true);
+		
 		spacing = 80;				// 80 px between board positions
 		radius = spacing / 2 - 8;	// 8 px between game pieces
 		diameter = 2 * radius;
@@ -117,6 +124,7 @@ public class GUI extends JFrame {
 			super.paintChildren(g);
 			drawGridLines(g);
 			drawGamePieces(g);
+			Menu menu = new Menu();
 		}
 	}
 	
