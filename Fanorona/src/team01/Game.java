@@ -42,7 +42,7 @@ public class Game {
 		System.out.println("** listed.                                               **");
 		System.out.println();
 		
-		Game game = new Game(9, 5, false);
+		Game game = new Game(9, 5, false, Board.WHITE);
 		Scanner input = new Scanner(System.in);
 
 		while (true)
@@ -90,11 +90,11 @@ public class Game {
 		input.close();
 	}
 
-	public Game(int width, int height, boolean hasAiPlayer)
+	public Game(int width, int height, boolean hasAiPlayer, int player)
 	{
 		moves = 0;
 		maxMoves = 10 * width;
-		player = Board.WHITE;
+		this.player = player;
 		this.hasAiPlayer = hasAiPlayer;
 
 		isClickable = new ArrayList<Point>();
