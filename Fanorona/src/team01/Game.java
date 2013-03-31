@@ -42,7 +42,7 @@ public class Game {
 		System.out.println("** move is done automatically.  Only capture/paika moves **");
 		System.out.println("** listed.                                               **");
 		System.out.println();
-		
+
 		Game game = new Game(9, 5, true, Board.WHITE);
 		Scanner input = new Scanner(System.in);
 
