@@ -72,6 +72,7 @@ public class Game {
 			}
 			System.out.println();
 			
+//			Countdown c = new Countdown(10);			
 			System.out.print(">>> x: ");
 			int x = input.nextInt();
 			System.out.print(">>> y: ");
@@ -85,6 +86,8 @@ public class Game {
 				System.out.println("!!! INVALID INPUT");
 				System.out.println();
 			}
+//			If timer has not yet run out, terminate the timer
+//			c.terminate();			
 		}
 		
 		System.out.println();
