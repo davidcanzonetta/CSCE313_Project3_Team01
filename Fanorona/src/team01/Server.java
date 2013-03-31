@@ -94,7 +94,7 @@ public class Server {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int port = 2001; 
+		int port = 4343; 
 		Server server = new Server(port);
 		server.write("WELCOME");
 		//Give the client game info
