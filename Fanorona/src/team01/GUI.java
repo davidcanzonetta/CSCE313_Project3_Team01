@@ -46,13 +46,13 @@ public class GUI extends JFrame {
 		setJMenuBar(b);
 		b.setVisible(true);
 		
-		width = menu.get_col_size();
-		height = menu.get_row_size();
+//		width = menu.get_col_size();
+//		height = menu.get_row_size();
 		aiPlayer = menu.get_aiPlayer();
 		gameInProgress = menu.get_gameStart();
 		game = new Game(width, height, aiPlayer, player);
-	//	this.width = game.getBoard().getWidth();
-	//	this.height = game.getBoard().getHeight();
+		this.width = game.getBoard().getWidth();
+		this.height = game.getBoard().getHeight();
 			
 		
 		spacing = 80;				// 80 px between board positions
