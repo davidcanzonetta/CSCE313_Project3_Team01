@@ -2,6 +2,7 @@ package team01;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
@@ -14,6 +15,8 @@ public class Game {
 	Point to;
 	Delta delta;
 
+	static Random rng = new Random(1539321897);
+	
 	private boolean hasAiPlayer;
 
 	private int aiPlayer;
@@ -23,7 +26,7 @@ public class Game {
 	private int moves;
 	private int maxMoves;
 	
-	String message;
+	String moveLog;
 
 	// game states (game manager is a finite state machine)
 	private static final int NEED_CAPTURE_START = 0;
@@ -268,10 +271,10 @@ public class Game {
 	{
 		move.capture(from, to, delta, isApproach);
 		
-		if (! message.isEmpty()) {
-			message = message + " + ";
+		if (! moveLog.isEmpty()) {
+			moveLog = moveLog + " + ";
 		}
-		message = message + (isApproach ? "A " : "W ") + from + " " + to;
+		moveLog = moveLog + (isApproach ? "A " : "W ") + from + " " + to;
 
 		from = to;
 		
@@ -400,7 +403,7 @@ public class Game {
 		board.setPoint(from, Board.EMPTY);
 		board.setPoint(to, currentPlayer);
 		
-		message = "P " + from + " " + to;
+		moveLog = "P " + from + " " + to;
 		
 		System.out.println(board);
 		setupNextTurn();
@@ -411,14 +414,14 @@ public class Game {
 	{
 		currentPlayer ^= 1;
 		moves += 1;
-		System.out.println(message);
+		System.out.println(moveLog);
 		System.out.println();
 		setupNextMove();
 	}
 
 	private void setupNextMove()
 	{
-		message = "";
+		moveLog = "";
 		
 		// gray pieces removed at each turn
 		deleteSacrifices();
@@ -593,7 +596,7 @@ public class Game {
 		}
 		board.setPoint(point, type);
 		
-		message = "S " + point;
+		moveLog = "S " + point;
 		
 		System.out.println(board);
 		setupNextTurn();
@@ -619,21 +622,25 @@ public class Game {
 
 	void aiPlayer()
 	{
+		
 		if (state == NEED_CAPTURE_START || state == NEED_PAIKA_START)
 		{
-			Point point = new Point(isClickable.get(0));
+			int N = isClickable.size();
+			Point point = new Point(isClickable.get(Math.abs(rng.nextInt()) % N));
 			update(point);
 		}
 		
 		while (state == NEED_CAPTURE_DEST || state == NEED_PAIKA_DEST)
 		{
-			Point point = new Point(isClickable.get(0));
+			int N = isClickable.size();
+			Point point = new Point(isClickable.get(Math.abs(rng.nextInt()) % N));
 			update(point);
 			
 			if (state == NEED_CAPTURE_RESOLVE)
 			{
-				point = new Point(isClickable.get(0));
-				update(point);
+				int N2 = isClickable.size();
+				Point point2 = new Point(isClickable.get(Math.abs(rng.nextInt()) % N2));
+				update(point2);
 			}
 		}
 	}
