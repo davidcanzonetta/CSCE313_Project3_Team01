@@ -33,7 +33,7 @@ public class Game {
 	private int maxMoves;
 	private boolean isClient;
 	private boolean isServer;
-	private int moveTime;
+	private long moveTime;
 	
 	String moveLog;
 
@@ -109,7 +109,7 @@ public class Game {
 		input.close();
 	}
 
-	public Game(int width, int height, boolean hasAiPlayer, int player, char mode, int time)
+	public Game(int width, int height, boolean hasAiPlayer, int player, int mode, long time)
 	{
 		moves = 0;
 		maxMoves = 10 * width;
@@ -117,16 +117,16 @@ public class Game {
 		this.humanPlayer = player;
 		this.aiPlayer = humanPlayer ^ 1;	// ai player
 		this.hasAiPlayer = hasAiPlayer;
-		if (mode == 'L') {
-			this.isServer = false;
-			this.isClient = false;
-		} else if (mode == 'C') {
-			this.isClient = true;
-			this.isServer = false;
-		} else if (mode == 'S') {
-			this.isClient = false;
-			this.isServer = true;
-		}
+//		if (mode == 'L') {
+//			this.isServer = false;
+//			this.isClient = false;
+//		} else if (mode == 'C') {
+//			this.isClient = true;
+//			this.isServer = false;
+//		} else if (mode == 'S') {
+//			this.isClient = false;
+//			this.isServer = true;
+//		}
 		this.moveTime = time;
 		isClickable = new ArrayList<Point>();
 		board = new Board(width, height);

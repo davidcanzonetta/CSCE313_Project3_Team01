@@ -14,7 +14,7 @@ public class GUI extends JFrame {
 
 	private final Game game;
 	
-	public static String mode;
+	public static int mode;
 	public static boolean aiPlayer;
 	public static int player;
 	public static int width;
@@ -48,7 +48,7 @@ public class GUI extends JFrame {
 //		setJMenuBar(b);
 //		b.setVisible(true);
 		
-		game = new Game(width, height, aiPlayer, player, 'L', 0);
+		game = new Game(width, height, aiPlayer, player, mode, timeout);
 		
 		spacing = 80;				// 80 px between board positions
 		radius = spacing / 2 - 8;	// 8 px between game pieces
@@ -312,7 +312,7 @@ public class GUI extends JFrame {
 			System.exit(-1);
 		}
 		
-		GUI.mode = args[0];
+		GUI.mode = Integer.parseInt(args[0]);
 		GUI.aiPlayer = args[1].equals("A");
 		GUI.player = args[2].equals("W") ? Board.WHITE : Board.BLACK;
 		GUI.width = Integer.parseInt(args[3]);
