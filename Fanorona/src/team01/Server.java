@@ -73,21 +73,7 @@ public class Server {
 		}
 	}
 	
-	public String gameInfo(Game game) {
-		String col = String.valueOf(game.board.getWidth());
-		String row = String.valueOf(game.board.getHeight());
-		int playerNum = game.currentPlayer();
-		String player;
-		if (playerNum == 0) {
-			player = "W";
-		} else {
-			player = "B";
-		}
-		// TODO: implement timer and return time
-		String time = " ";
-		String command = col + " " + row + " " + player + " " + time;
-		return command;
-	}
+	
 
 	/**
 	 * @param args
