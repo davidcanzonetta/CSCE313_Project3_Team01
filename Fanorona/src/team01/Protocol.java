@@ -95,7 +95,7 @@ public class Protocol {
 		} else {
 			player = "B";
 		}
-//		String time = time;
+		//String time = time;
 		String command = col + " " + row + " " + player + " " + time;
 		return command;
 	}
