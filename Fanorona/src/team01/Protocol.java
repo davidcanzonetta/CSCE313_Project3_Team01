@@ -26,7 +26,12 @@ public class Protocol {
 	private int toPos;
 	private int pos; //Sacrifice moves
 	
-	private void info(String msg)
+	public int getState(){
+		return state;
+	}
+	
+	//Used to receive info command
+	public void info(String msg)
 	{
 		Scanner scanner = new Scanner (msg);
 
@@ -79,9 +84,24 @@ public class Protocol {
 			scanner.close();
 		}
 	}
+	//Used to give info command information
+	public String gameInfo(Game game) {
+		String col = String.valueOf(game.board.getWidth());
+		String row = String.valueOf(game.board.getHeight());
+		int playerNum = game.currentPlayer();
+		String player;
+		if (playerNum == 0) {
+			player = "W";
+		} else {
+			player = "B";
+		}
+		String time = time;
+		String command = col + " " + row + " " + player + " " + time;
+		return command;
+	}
 	
-
-	private void acknowledge(String msg)
+	//Receive commands
+	public void acknowledge(String msg)
 	{
 		Scanner scanner = new Scanner (msg);
 
@@ -91,6 +111,8 @@ public class Protocol {
 
 			if (ack.equals("WELCOME"))
 				state = STATE_WELCOME;
+			else if (ack.equals("INFO"))
+				info(msg);
 			else if (ack.equals("READY"))
 				state = STATE_READY;
 			else if (ack.equals("OK"))
