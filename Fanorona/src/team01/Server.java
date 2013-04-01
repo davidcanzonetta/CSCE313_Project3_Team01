@@ -7,7 +7,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 
-public class Server {
+import javax.swing.SwingUtilities;
+
+public class Server extends Thread {
 
 	private ServerSocket serverSocket;
 	private Socket clientSocket;
@@ -82,12 +84,28 @@ public class Server {
 		// TODO Auto-generated method stub
 		int port = 4343; 
 		Server server = new Server(port);
-		server.write("WELCOME");
-		//Give the client game info
-		String s = server.read();
-		
-		
-		
+		Protocol protocol = new Protocol();
+		try {
+			/*
+			Game game ;
+			server.write("WELCOME");
+			server.write(protocol.gameInfo(game));
+			String reply = server.read();
+			protocol.acknowledge(reply);
+			
+			if (protocol.getState() == 1) {//Ready state
+				server.write("BEGIN");
+			*/	
+			while(true){
+				int width = 9;
+				int height = 5;
+				boolean hasAI = true;
+				Game game = new Game(width,height, hasAI, 0);
+				
+			}
+		} finally {
+			server.close();
+		}	
 	}
 
 }

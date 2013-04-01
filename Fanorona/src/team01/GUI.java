@@ -29,9 +29,13 @@ public class GUI extends JFrame {
 	private int winWidth;
 	private int winHeight;
 	
+	private boolean gameInProgress;
 	private DrawCanvas canvas;
 	
+	
+	
 	public GUI(int width, int height, boolean aiPlayer, int player) {
+		gameInProgress = false;
 		setBackground(new Color(47, 79, 79));
 		game = new Game(width, height, aiPlayer, player);
 		this.width = game.getBoard().getWidth();
@@ -43,6 +47,8 @@ public class GUI extends JFrame {
 		b = menu.get_bar();
 		setJMenuBar(b);
 		b.setVisible(true);
+
+			
 		
 		spacing = 80;				// 80 px between board positions
 		radius = spacing / 2 - 8;	// 8 px between game pieces
@@ -121,12 +127,34 @@ public class GUI extends JFrame {
 	class DrawCanvas extends JPanel {
 		@Override
 		public void paintComponent(Graphics g) {
+			if(gameInProgress) {
+				super.paintChildren(g);
+				drawGridLines(g);
+				drawGamePieces(g); 
+			} else {
+				drawStartScreen(g);
+			}
+		}
+	}
+	
+	/*
+	class DrawStartScreen extends JPanel {
+		@Override
+		public void paintComponent(Graphics g) {
 			super.paintChildren(g);
 			drawGridLines(g);
 			drawGamePieces(g);
 		}
 	}
-	
+	*/
+	private void drawStartScreen(Graphics g) {
+		String s1 = "Welcome to Fanorona";
+		String s2 = "Please use the dropdown menu above to select preferences, then start a new game.";
+		g.setColor(Color.white);
+		g.drawString(s1, 50, winHeight/2);
+		g.drawString(s2, 50, winHeight/2+50);
+		
+	}
 	private void drawGamePieces(Graphics g)
 	{
 		Board board = game.getBoard();
@@ -270,11 +298,8 @@ public class GUI extends JFrame {
 			@Override
 			public void run()
 			{
-				//int width = menu.get_col_size();
 				int width = 9;
-				//int height = menu.get_row_size();
 				int height = 5;
-				//boolean aiPlayer = get_aiPlayer();
 				boolean aiPlayer = true;
 				int player = Board.WHITE;
 				new GUI(width, height, aiPlayer, player);

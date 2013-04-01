@@ -26,8 +26,12 @@ public class Protocol {
 	private int toPos;
 	private int pos; //Sacrifice moves
 	
+	public int getState(){
+		return state;
+	}
+	
 	//Used to receive info command
-	private void info(String msg)
+	public void info(String msg)
 	{
 		Scanner scanner = new Scanner (msg);
 
@@ -97,7 +101,7 @@ public class Protocol {
 	}
 	
 	//Receive commands
-	private void acknowledge(String msg)
+	public void acknowledge(String msg)
 	{
 		Scanner scanner = new Scanner (msg);
 

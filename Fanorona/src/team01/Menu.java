@@ -208,7 +208,7 @@ public class Menu extends JFrame{
 	{
 		return row_size;
 	}
-	public Boolean get_aiPlayer()
+	public boolean get_aiPlayer()
 	{
 		return aiPlayer;
 	}
