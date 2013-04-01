@@ -8,6 +8,7 @@ public class Menu extends JFrame{
 	private int col_size;
 	private int row_size;
 	private boolean aiPlayer;
+	private boolean gameStart;
 	
 	JMenuBar bar=new JMenuBar();
 	
@@ -17,6 +18,7 @@ public class Menu extends JFrame{
 		col_size = 9;
 		row_size = 5;
 		aiPlayer = true;
+		gameStart = false;
 		
 		JMenu file = new JMenu("File");
 		JMenu settings = new JMenu("Settings");
@@ -80,7 +82,8 @@ public class Menu extends JFrame{
 		//TODO:Communicate between new game and GUI
 		new_game.addActionListener( new ActionListener(){
 			public void actionPerformed(ActionEvent e){ 
-				System.exit(0); 
+				gameStart = true;
+				//System.exit(0); 
 			}
 		});
 		
@@ -211,6 +214,10 @@ public class Menu extends JFrame{
 	public boolean get_aiPlayer()
 	{
 		return aiPlayer;
+	}
+	public boolean get_gameStart()
+	{
+		return gameStart;
 	}
 	public static void main(String[] args)
 	{

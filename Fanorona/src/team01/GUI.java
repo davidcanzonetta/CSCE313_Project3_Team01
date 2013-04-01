@@ -35,11 +35,9 @@ public class GUI extends JFrame {
 	
 	
 	public GUI(int width, int height, boolean aiPlayer, int player) {
-		gameInProgress = false;
+		//gameInProgress = false;
 		setBackground(new Color(47, 79, 79));
-		game = new Game(width, height, aiPlayer, player);
-		this.width = game.getBoard().getWidth();
-		this.height = game.getBoard().getHeight();
+		
 		
 		//create menu
 		JMenuBar b;
@@ -47,7 +45,14 @@ public class GUI extends JFrame {
 		b = menu.get_bar();
 		setJMenuBar(b);
 		b.setVisible(true);
-
+		
+		width = menu.get_col_size();
+		height = menu.get_row_size();
+		aiPlayer = menu.get_aiPlayer();
+		gameInProgress = menu.get_gameStart();
+		game = new Game(width, height, aiPlayer, player);
+	//	this.width = game.getBoard().getWidth();
+	//	this.height = game.getBoard().getHeight();
 			
 		
 		spacing = 80;				// 80 px between board positions
@@ -127,13 +132,13 @@ public class GUI extends JFrame {
 	class DrawCanvas extends JPanel {
 		@Override
 		public void paintComponent(Graphics g) {
-			if(gameInProgress) {
+			//if(gameInProgress) {
 				super.paintChildren(g);
 				drawGridLines(g);
 				drawGamePieces(g); 
-			} else {
-				drawStartScreen(g);
-			}
+			//} else {
+			//	drawStartScreen(g);
+			//}
 		}
 	}
 	
@@ -145,6 +150,14 @@ public class GUI extends JFrame {
 			drawGridLines(g);
 			drawGamePieces(g);
 		}
+	}
+	*/
+	/*
+	private void changePanel(JPanel panel) {
+		getContentPane().removeAll();
+	    getContentPane().add(panel, BorderLayout.CENTER);
+	    getContentPane().doLayout();
+	    update(getGraphics());
 	}
 	*/
 	private void drawStartScreen(Graphics g) {
