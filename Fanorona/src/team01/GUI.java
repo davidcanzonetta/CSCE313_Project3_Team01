@@ -35,7 +35,7 @@ public class GUI extends JFrame {
 	
 	
 	
-	public GUI(int width, int height, boolean aiPlayer, int player) {
+	public GUI(int width, int height, boolean aiPlayer, int player, char mode, int time) {
 		//gameInProgress = false;
 		setBackground(new Color(47, 79, 79));
 		
@@ -51,7 +51,7 @@ public class GUI extends JFrame {
 //		height = menu.get_row_size();
 		aiPlayer = menu.get_aiPlayer();
 		gameInProgress = menu.get_gameStart();
-		game = new Game(width, height, aiPlayer, Board.WHITE);
+		game = new Game(width, height, aiPlayer, Board.WHITE, mode, time);
 		this.width = game.getBoard().getWidth();
 		this.height = game.getBoard().getHeight();
 			

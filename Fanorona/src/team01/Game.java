@@ -31,6 +31,9 @@ public class Game {
 	private int state;
 	private int moves;
 	private int maxMoves;
+	private boolean isClient;
+	private boolean isServer;
+	private int moveTime;
 	
 	String moveLog;
 
@@ -55,7 +58,7 @@ public class Game {
 		System.out.println("** listed.                                               **");
 		System.out.println();
 
-		Game game = new Game(9, 5, true, Board.WHITE);
+		Game game = new Game(9, 5, true, Board.WHITE, 'L', 0);
 		Scanner input = new Scanner(System.in);
 
 		while (true)
@@ -106,7 +109,7 @@ public class Game {
 		input.close();
 	}
 
-	public Game(int width, int height, boolean hasAiPlayer, int player)
+	public Game(int width, int height, boolean hasAiPlayer, int player, char mode, int time)
 	{
 		moves = 0;
 		maxMoves = 10 * width;
@@ -114,7 +117,17 @@ public class Game {
 		this.humanPlayer = player;
 		this.aiPlayer = humanPlayer ^ 1;	// ai player
 		this.hasAiPlayer = hasAiPlayer;
-
+		if (mode == 'L') {
+			this.isServer = false;
+			this.isClient = false;
+		} else if (mode == 'C') {
+			this.isClient = true;
+			this.isServer = false;
+		} else if (mode == 'S') {
+			this.isClient = false;
+			this.isServer = true;
+		}
+		this.moveTime = time;
 		isClickable = new ArrayList<Point>();
 		board = new Board(width, height);
 		setupNextMove();
