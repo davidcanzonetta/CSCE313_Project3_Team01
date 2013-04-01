@@ -22,6 +22,8 @@ public class Game {
 	private int state;
 	private int moves;
 	private int maxMoves;
+	
+	String message;
 
 	// game states (game manager is a finite state machine)
 	private static final int NEED_CAPTURE_START = 0;
@@ -265,6 +267,12 @@ public class Game {
 	private void capture(boolean isApproach)
 	{
 		move.capture(from, to, delta, isApproach);
+		
+		if (! message.isEmpty()) {
+			message = message + " + ";
+		}
+		message = message + (isApproach ? "A " : "W ") + from + " " + to;
+
 		from = to;
 		
 		System.out.println(board);
@@ -391,6 +399,9 @@ public class Game {
 		to = point;
 		board.setPoint(from, Board.EMPTY);
 		board.setPoint(to, currentPlayer);
+		
+		message = "P " + from + " " + to;
+		
 		System.out.println(board);
 		setupNextTurn();
 		return true;
@@ -400,11 +411,15 @@ public class Game {
 	{
 		currentPlayer ^= 1;
 		moves += 1;
+		System.out.println(message);
+		System.out.println();
 		setupNextMove();
 	}
 
 	private void setupNextMove()
 	{
+		message = "";
+		
 		// gray pieces removed at each turn
 		deleteSacrifices();
 		move = new Move(board);
@@ -577,6 +592,9 @@ public class Game {
 			type = Board.BLACK_GRAY;
 		}
 		board.setPoint(point, type);
+		
+		message = "S " + point;
+		
 		System.out.println(board);
 		setupNextTurn();
 	}
