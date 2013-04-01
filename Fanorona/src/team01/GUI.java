@@ -30,6 +30,7 @@ public class GUI extends JFrame {
 	private int winHeight;
 	
 	private boolean gameInProgress;
+	private boolean aiPlayer;
 	private DrawCanvas canvas;
 	
 	
@@ -41,7 +42,7 @@ public class GUI extends JFrame {
 		
 		//create menu
 		JMenuBar b;
-		Menu menu = new Menu();
+		final Menu menu = new Menu();
 		b = menu.get_bar();
 		setJMenuBar(b);
 		b.setVisible(true);
@@ -50,7 +51,7 @@ public class GUI extends JFrame {
 //		height = menu.get_row_size();
 		aiPlayer = menu.get_aiPlayer();
 		gameInProgress = menu.get_gameStart();
-		game = new Game(width, height, aiPlayer, player);
+		game = new Game(width, height, aiPlayer, Board.WHITE);
 		this.width = game.getBoard().getWidth();
 		this.height = game.getBoard().getHeight();
 			
@@ -75,6 +76,14 @@ public class GUI extends JFrame {
 		canvas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(menu.get_gameStart())
+				{
+					menu.reset_gameStart();
+					game.reset();
+					setTitle("Fanorona");
+					repaint();
+					return;
+				}
 				if (game.isTie() || game.whiteWins() || game.blackWins())
 				{
 					game.reset();

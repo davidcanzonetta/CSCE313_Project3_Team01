@@ -82,8 +82,8 @@ public class Menu extends JFrame{
 		//TODO:Communicate between new game and GUI
 		new_game.addActionListener( new ActionListener(){
 			public void actionPerformed(ActionEvent e){ 
+				System.out.println("Click screen to start new game");
 				gameStart = true;
-				//System.exit(0); 
 			}
 		});
 		
@@ -218,6 +218,10 @@ public class Menu extends JFrame{
 	public boolean get_gameStart()
 	{
 		return gameStart;
+	}
+	public void reset_gameStart()
+	{
+		gameStart = false;
 	}
 	public static void main(String[] args)
 	{
