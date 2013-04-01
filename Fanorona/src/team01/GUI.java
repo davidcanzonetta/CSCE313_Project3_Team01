@@ -46,10 +46,6 @@ public class GUI extends JFrame {
 		b = menu.get_bar();
 		setJMenuBar(b);
 		b.setVisible(true);
-		
-//		width = menu.get_col_size();
-//		height = menu.get_row_size();
-		aiPlayer = menu.get_aiPlayer();
 		gameInProgress = menu.get_gameStart();
 		game = new Game(width, height, aiPlayer, Board.WHITE, mode, time);
 		this.width = game.getBoard().getWidth();
@@ -324,7 +320,9 @@ public class GUI extends JFrame {
 				int height = 5;
 				boolean aiPlayer = true;
 				int player = Board.WHITE;
-				new GUI(width, height, aiPlayer, player);
+				char mode = 'L';
+				int time = 0;
+				new GUI(width, height, aiPlayer, player, mode, time);
 			}
 		});
 	}
