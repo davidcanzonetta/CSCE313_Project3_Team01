@@ -154,6 +154,7 @@ public class Game {
 		currentPlayer = Board.WHITE;
 		isClickable = new ArrayList<Point>();
 		board = new Board(board.getWidth(), board.getHeight());
+		moves = 0;
 		setupNextMove();
 	}
 	
@@ -304,7 +305,7 @@ public class Game {
 		if (! isClickable.contains(point))
 		{
 			// check for sacrifice move
-			if (from.equals(point))
+			if (from.equals(point) && move.isPathEmpty())
 			{
 				// add sacrifice to board
 				addSacrifice(point);
@@ -355,6 +356,13 @@ public class Game {
 	{
 		if (! isClickable.contains(point))
 		{
+			// check for sacrifice move
+			if (board.getPoint(point) == currentPlayer)
+			{
+				// add sacrifice to board
+				addSacrifice(point);
+				return true;
+			}
 			// invalid point
 			return false;
 		}

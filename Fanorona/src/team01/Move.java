@@ -104,6 +104,10 @@ public class Move {
 		this.board = board;
 	}
 	
+	public boolean isPathEmpty() {
+		return path.isEmpty();
+	}
+	
 	private boolean isValidCapture(Point from, Point to, Delta delta, boolean isApproach) {
 		Point capture;
 		
