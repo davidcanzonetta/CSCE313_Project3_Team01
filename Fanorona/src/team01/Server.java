@@ -82,30 +82,10 @@ public class Server extends Thread {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		/*
 		int port = 4343; 
 		Server server = new Server(port);
-		Protocol protocol = new Protocol();
-		try {
-			/*
-			Game game ;
-			server.write("WELCOME");
-			server.write(protocol.gameInfo(game));
-			String reply = server.read();
-			protocol.acknowledge(reply);
-			
-			if (protocol.getState() == 1) {//Ready state
-				server.write("BEGIN");
-			*/	
-			while(true){
-				int width = 9;
-				int height = 5;
-				boolean hasAI = true;
-				Game game = new Game(width,height, hasAI, 0);
-				
-			}
-		} finally {
-			server.close();
-		}	
+		*/
 	}
 
 }
