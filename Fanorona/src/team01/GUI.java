@@ -3,7 +3,6 @@ package team01;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class GUI extends JFrame {
 	private final Game game;
 	
 	public static int mode;
-	public static boolean aiPlayer;
+	public static boolean singlePlayer;
 	public static int player;
 	public static int width;
 	public static int height;
@@ -24,60 +23,34 @@ public class GUI extends JFrame {
 	private int spacing;
 	private int radius;
 	private int diameter;
-
 	private int minX;
 	private int minY;
 	private int maxX;
 	private int maxY;
-
 	private int winWidth;
 	private int winHeight;
-	
 	private DrawCanvas canvas;
 	
-	
-	
 	public GUI() {
-		//gameInProgress = false;
 		setBackground(new Color(47, 79, 79));
 		
-		//create menu
-//		JMenuBar b;
-//		final Menu menu = new Menu();
-//		b = menu.get_bar();
-//		setJMenuBar(b);
-//		b.setVisible(true);
-		
-		game = new Game(width, height, aiPlayer, player, mode, timeout);
-		
+		game = new Game(width, height, singlePlayer, player);
 		spacing = 80;				// 80 px between board positions
 		radius = spacing / 2 - 8;	// 8 px between game pieces
 		diameter = 2 * radius;
-		
 		minX = spacing;
 		minY = spacing;
 		maxX = width * spacing;
 		maxY = height * spacing;
-		
 		winWidth = maxX + spacing;
 		winHeight = maxY + spacing;
 		
 		initializeGridLines();
-		
 		canvas = new DrawCanvas();
 		canvas.setPreferredSize(new Dimension(winWidth, winHeight));
-		
 		canvas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				if(menu.get_gameStart())
-//				{
-//					menu.reset_gameStart();
-//					game.reset();
-//					setTitle("Fanorona");
-//					repaint();
-//					return;
-//				}
 				if (game.isTie() || game.whiteWins() || game.blackWins())
 				{
 					game.reset();
@@ -140,33 +113,7 @@ public class GUI extends JFrame {
 			drawGamePieces(g);
 		}
 	}
-	
-	/*
-	class DrawStartScreen extends JPanel {
-		@Override
-		public void paintComponent(Graphics g) {
-			super.paintChildren(g);
-			drawGridLines(g);
-			drawGamePieces(g);
-		}
-	}
-	*/
-	/*
-	private void changePanel(JPanel panel) {
-		getContentPane().removeAll();
-	    getContentPane().add(panel, BorderLayout.CENTER);
-	    getContentPane().doLayout();
-	    update(getGraphics());
-	}
-	*/
-//	private void drawStartScreen(Graphics g) {
-//		String s1 = "Welcome to Fanorona";
-//		String s2 = "Please use the dropdown menu above to select preferences, then start a new game.";
-//		g.setColor(Color.white);
-//		g.drawString(s1, 50, winHeight/2);
-//		g.drawString(s2, 50, winHeight/2+50);
-//		
-//	}
+
 	private void drawGamePieces(Graphics g)
 	{
 		Board board = game.getBoard();
@@ -210,8 +157,6 @@ public class GUI extends JFrame {
 
 	private void drawGridLines(Graphics g)
 	{
-//		g.setColor(new Color(221, 218, 236));
-//		g.fillRect(0, 0, winWidth, winHeight);
 		g.setColor(new Color(250, 158, 114));
 		for (Pair pair : gridLines)
 		{
@@ -313,7 +258,7 @@ public class GUI extends JFrame {
 		}
 		
 		GUI.mode = Integer.parseInt(args[0]);
-		GUI.aiPlayer = args[1].equals("A");
+		GUI.singlePlayer = args[1].equals("A");
 		GUI.player = args[2].equals("W") ? Board.WHITE : Board.BLACK;
 		GUI.width = Integer.parseInt(args[3]);
 		GUI.height = Integer.parseInt(args[4]);

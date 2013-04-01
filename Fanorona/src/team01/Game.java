@@ -3,39 +3,25 @@ package team01;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
+//import java.util.Scanner;
 
 public class Game {
 
 	List<Point> isClickable;	// cache of valid moves
 	Board board;
 	Move move;
-	
 	Point from;
 	Point to;
 	Delta delta;
-
-	static Random rng = new Random(1539321897);
+	String moveLog;
 	
-	private boolean hasAiPlayer;
-
-	private int aiPlayer;
+	private boolean singlePlayer;
+	private int machinePlayer;
 	private int humanPlayer;
 	private int currentPlayer;
 	private int state;
 	private int moves;
 	private int maxMoves;
-	private boolean isClient;
-	private boolean isServer;
-	private long moveTime;
-	
-	String moveLog;
 
 	// game states (game manager is a finite state machine)
 	private static final int NEED_CAPTURE_START = 0;
@@ -44,90 +30,76 @@ public class Game {
 	private static final int NEED_PAIKA_START = 3;
 	private static final int NEED_PAIKA_DEST = 4;
 	private static List<List<Delta>> deltaList = new ArrayList<List<Delta>>();
-	
+	static Random r = new Random(1539321897);
 	static {
 		deltaList.add(Delta.orthogonal);
 		deltaList.add(Delta.diagonal);
 	}
 	
-	public static void main(String[] args) {
-		System.out.println("** If game piece can capture enter its position twice to **");
-		System.out.println("** sacrifice it.  If the game piece does not have a      **");
-		System.out.println("** capture it only needs to be entered once, a sacrifice **");
-		System.out.println("** move is done automatically.  Only capture/paika moves **");
-		System.out.println("** listed.                                               **");
-		System.out.println();
+//	public static void main(String[] args) {
+//		System.out.println("** If game piece can capture enter its position twice to **");
+//		System.out.println("** sacrifice it.  If the game piece does not have a      **");
+//		System.out.println("** capture it only needs to be entered once, a sacrifice **");
+//		System.out.println("** move is done automatically.  Only capture/paika moves **");
+//		System.out.println("** listed.                                               **");
+//		System.out.println();
+//
+//		Game game = new Game(9, 5, true, Board.WHITE);
+//		Scanner input = new Scanner(System.in);
+//
+//		while (true)
+//		{
+//			if (game.isTie())
+//			{
+//				System.out.println("******* IS TIE ********");
+//				break;
+//			}
+//			else if (game.whiteWins())
+//			{
+//				System.out.println("***** WHITE WINS ******");
+//				break;
+//			}
+//			else if (game.blackWins())
+//			{
+//				System.out.println("***** BLACK WINS ******");
+//				break;
+//			}
+//			
+//			System.out.print("*** legal moves: ");
+//			List<Point> available = game.getClickable();
+//			for(Point pt : available) {
+//				System.out.printf("(%d, %d) ", pt.getX(), pt.getY());
+//			}
+//			System.out.println();
+//						
+//			System.out.print(">>> x: ");
+//			int x = input.nextInt();
+//			System.out.print(">>> y: ");
+//			int y = input.nextInt();
+//			System.out.println();
+//			
+//			Point point = new Point(x, y);
+//			
+//			if (! game.update(point))
+//			{
+//				System.out.println("!!! INVALID INPUT");
+//				System.out.println();
+//			}	
+//		}
+//		
+//		System.out.println();
+//		System.out.print(game.getBoard());
+//		input.close();
+//	}
 
-		Game game = new Game(9, 5, true, Board.WHITE, 'L', 0);
-		Scanner input = new Scanner(System.in);
-
-		while (true)
-		{
-			if (game.isTie())
-			{
-				System.out.println("******* IS TIE ********");
-				break;
-			}
-			else if (game.whiteWins())
-			{
-				System.out.println("***** WHITE WINS ******");
-				break;
-			}
-			else if (game.blackWins())
-			{
-				System.out.println("***** BLACK WINS ******");
-				break;
-			}
-			
-			System.out.print("*** legal moves: ");
-			List<Point> available = game.getClickable();
-			for(Point pt : available) {
-				System.out.printf("(%d, %d) ", pt.getX(), pt.getY());
-			}
-			System.out.println();
-			
-//			Countdown c = new Countdown(10);			
-			System.out.print(">>> x: ");
-			int x = input.nextInt();
-			System.out.print(">>> y: ");
-			int y = input.nextInt();
-			System.out.println();
-			
-			Point point = new Point(x, y);
-			
-			if (! game.update(point))
-			{
-				System.out.println("!!! INVALID INPUT");
-				System.out.println();
-			}
-//			If timer has not yet run out, terminate the timer
-//			c.terminate();			
-		}
-		
-		System.out.println();
-		System.out.print(game.getBoard());
-		input.close();
-	}
-
-	public Game(int width, int height, boolean hasAiPlayer, int player, int mode, long time)
+	public Game(int width, int height, boolean hasAiPlayer, int player)
 	{
 		moves = 0;
 		maxMoves = 10 * width;
 		this.currentPlayer = Board.WHITE;	// WHITE always goes first
 		this.humanPlayer = player;
-		this.aiPlayer = humanPlayer ^ 1;	// ai player
-		this.hasAiPlayer = hasAiPlayer;
-//		if (mode == 'L') {
-//			this.isServer = false;
-//			this.isClient = false;
-//		} else if (mode == 'C') {
-//			this.isClient = true;
-//			this.isServer = false;
-//		} else if (mode == 'S') {
-//			this.isClient = false;
-//			this.isServer = true;
-//		}
-		this.moveTime = time;
+		this.machinePlayer = humanPlayer ^ 1;
+		this.singlePlayer = hasAiPlayer;
 		isClickable = new ArrayList<Point>();
 		board = new Board(width, height);
 		setupNextMove();
@@ -149,8 +121,8 @@ public class Game {
 		this.to = new Point(other.to);
 		this.delta = new Delta(other.delta);
 
-		this.hasAiPlayer = other.hasAiPlayer;
-		this.aiPlayer = other.aiPlayer;
+		this.singlePlayer = other.singlePlayer;
+		this.machinePlayer = other.machinePlayer;
 		this.humanPlayer = other.humanPlayer;
 		this.currentPlayer = other.currentPlayer;
 		this.state = other.state;
@@ -472,11 +444,11 @@ public class Game {
 			System.out.println(board);
 	
 			// ai player's turn
-			if (hasAiPlayer)
+			if (singlePlayer)
 			{
-				if (currentPlayer == aiPlayer)
+				if (currentPlayer == machinePlayer)
 				{
-					aiPlayer();
+					handleStateTransition();
 				}
 			}
 		}
@@ -639,26 +611,25 @@ public class Game {
 		}
 	}
 
-	void aiPlayer()
+	void handleStateTransition()
 	{
-		
 		if (state == NEED_CAPTURE_START || state == NEED_PAIKA_START)
 		{
 			int N = isClickable.size();
-			Point point = new Point(isClickable.get(Math.abs(rng.nextInt()) % N));
+			Point point = new Point(isClickable.get(Math.abs(r.nextInt()) % N));
 			update(point);
 		}
 		
 		while (state == NEED_CAPTURE_DEST || state == NEED_PAIKA_DEST)
 		{
 			int N = isClickable.size();
-			Point point = new Point(isClickable.get(Math.abs(rng.nextInt()) % N));
+			Point point = new Point(isClickable.get(Math.abs(r.nextInt()) % N));
 			update(point);
 			
 			if (state == NEED_CAPTURE_RESOLVE)
 			{
 				int N2 = isClickable.size();
-				Point point2 = new Point(isClickable.get(Math.abs(rng.nextInt()) % N2));
+				Point point2 = new Point(isClickable.get(Math.abs(r.nextInt()) % N2));
 				update(point2);
 			}
 		}
