@@ -96,7 +96,7 @@ public class Protocol {
 		return command;
 	}
 	
-	//Recieve commands
+	//Receive commands
 	private void acknowledge(String msg)
 	{
 		Scanner scanner = new Scanner (msg);

@@ -270,8 +270,11 @@ public class GUI extends JFrame {
 			@Override
 			public void run()
 			{
+				//int width = menu.get_col_size();
 				int width = 9;
+				//int height = menu.get_row_size();
 				int height = 5;
+				//boolean aiPlayer = get_aiPlayer();
 				boolean aiPlayer = true;
 				int player = Board.WHITE;
 				new GUI(width, height, aiPlayer, player);
