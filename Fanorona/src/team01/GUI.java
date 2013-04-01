@@ -48,7 +48,7 @@ public class GUI extends JFrame {
 //		setJMenuBar(b);
 //		b.setVisible(true);
 		
-		game = new Game(width, height, aiPlayer, player);
+		game = new Game(width, height, aiPlayer, player, 'L', 0);
 		
 		spacing = 80;				// 80 px between board positions
 		radius = spacing / 2 - 8;	// 8 px between game pieces

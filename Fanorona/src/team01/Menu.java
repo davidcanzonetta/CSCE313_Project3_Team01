@@ -4,10 +4,11 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class Menu extends JFrame{
-	
+	/*
 	private int col_size;
 	private int row_size;
 	private boolean aiPlayer;
+	*/
 	private boolean gameStart;
 	
 	JMenuBar bar=new JMenuBar();
@@ -15,23 +16,26 @@ public class Menu extends JFrame{
 	public Menu()
 	{
 		//default column, row and ai values
+		/*
 		col_size = 9;
 		row_size = 5;
 		aiPlayer = true;
+		*/
 		gameStart = false;
 		
 		JMenu file = new JMenu("File");
-		JMenu settings = new JMenu("Settings");
+		//JMenu settings = new JMenu("Settings");
 		file.setMnemonic('C');
-		JMenu colSubMenu = new JMenu("Column Size");
-		JMenu rowSubMenu = new JMenu("Row Size");
-		JMenu mode = new JMenu("Mode");
+		//JMenu colSubMenu = new JMenu("Column Size");
+		//JMenu rowSubMenu = new JMenu("Row Size");
+		//JMenu mode = new JMenu("Mode");
 		JMenuItem new_game = new JMenuItem("New Game");
 		new_game.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		JMenuItem exit = new JMenuItem("Exit");
 		exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 		
 		//Column size objects
+		/*
 		JMenuItem col_one = new JMenuItem("1");
 		colSubMenu.add(col_one);
 		JMenuItem col_three = new JMenuItem("3");
@@ -68,17 +72,18 @@ public class Menu extends JFrame{
 		mode.add(one_player);
 		JMenuItem two_player = new JMenuItem("Two Player");
 		mode.add(two_player);
-	
+		 */
 		//File layout
 		file.add(new_game);
 		file.add(exit);
 		
 		//settings layout
+		/*
 		settings.add(colSubMenu);
 		settings.add(rowSubMenu);
 		settings.addSeparator();
 		settings.add(mode);
-		
+		*/
 		//TODO:Communicate between new game and GUI
 		new_game.addActionListener( new ActionListener(){
 			public void actionPerformed(ActionEvent e){ 
@@ -86,7 +91,7 @@ public class Menu extends JFrame{
 				gameStart = true;
 			}
 		});
-		
+		/*
 		col_one.addActionListener( new ActionListener(){
 			public void actionPerformed(ActionEvent e){ 
 				col_size = 1; 
@@ -183,7 +188,7 @@ public class Menu extends JFrame{
 			}
 		});
 		
-		
+		*/
 		exit.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){ 
@@ -193,16 +198,18 @@ public class Menu extends JFrame{
 		
 		setJMenuBar(bar);
 		bar.add(file);
-		bar.add(settings);
+		//bar.add(settings);
 		
 		//getContentPane();
 		//setSize(750,45);
 		//setVisible(true);
 	}
+	
 	public JMenuBar get_bar()
 	{
 		return bar;
 	}
+	/*
 	public int get_col_size()
 	{
 		return col_size;
@@ -215,6 +222,7 @@ public class Menu extends JFrame{
 	{
 		return aiPlayer;
 	}
+	*/
 	public boolean get_gameStart()
 	{
 		return gameStart;
@@ -223,6 +231,7 @@ public class Menu extends JFrame{
 	{
 		gameStart = false;
 	}
+	
 	public static void main(String[] args)
 	{
 		Menu app = new Menu();
