@@ -13,7 +13,11 @@ public class Local {
 			System.exit(-1);
 		}
 
-		// setup local options
+		// command line options
+		// singlePlayer: 1 or 2
+		// player: W or B
+		// width: 3-13
+		// height: 3-13
 		GUI.singlePlayer = Integer.parseInt(args[0]) == 1;
 		GUI.player = args[1].equals("W") ? Board.WHITE : Board.BLACK;
 		GUI.width = Integer.parseInt(args[2]);
