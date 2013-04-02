@@ -3,11 +3,13 @@ package team01;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class ClientMain {
+@SuppressWarnings("serial")
+public class ClientMain extends GUI {
 
 	static int port;
 	static String host;
 	static long timeout;
+	static Client client;
 
 	public static void main (String[] args)
 	{
@@ -15,7 +17,7 @@ public class ClientMain {
 		host = args[1];
 		port = Integer.parseInt(args[2]);
 
-		Client client = new Client(host, port);
+		client = new Client(host, port);
 
 		String info = client.read();
 		processInfo(info);
@@ -57,4 +59,91 @@ public class ClientMain {
 		}
 	}
 
+	private void processMove(Scanner scanner)
+	{
+		String type = scanner.next();
+		
+		if (type.equals("A"))
+		{
+			if (! game.approach(
+				new Point(scanner.nextInt(), scanner.nextInt()),
+				new Point(scanner.nextInt(), scanner.nextInt())))
+			{
+				client.write("ILLEGAL");
+				client.write("LOSER");
+				client.close();
+				System.exit(-1);
+			}
+			if (scanner.hasNext())
+			{
+				if (scanner.next().equals("+"))
+				{
+					processMove(scanner);
+				}
+				else
+				{
+					client.write("ILLEGAL");
+					client.write("LOSER");
+					client.close();
+					System.exit(-1);
+				}
+			}
+		}
+		else if (type.equals("W"))
+		{
+			if (! game.withdraw(
+				new Point(scanner.nextInt(), scanner.nextInt()),
+				new Point(scanner.nextInt(), scanner.nextInt())))
+			{
+				client.write("ILLEGAL");
+				client.write("LOSER");
+				client.close();
+				System.exit(-1);
+			}
+			if (scanner.hasNext())
+			{
+				if (scanner.next().equals("+"))
+				{
+					processMove(scanner);
+				}
+				else
+				{
+					client.write("ILLEGAL");
+					client.write("LOSER");
+					client.close();
+					System.exit(-1);
+				}
+			}
+		}
+		else if (type.equals("P"))
+		{
+			if (! game.paika(
+				new Point(scanner.nextInt(), scanner.nextInt()),
+				new Point(scanner.nextInt(), scanner.nextInt())))
+			{
+				client.write("ILLEGAL");
+				client.write("LOSER");
+				client.close();
+				System.exit(-1);
+			}
+		}
+		else if (type.equals("S"))
+		{
+			if (! game.sacrifice(
+				new Point(scanner.nextInt(), scanner.nextInt())))
+			{
+				client.write("ILLEGAL");
+				client.write("LOSER");
+				client.close();
+				System.exit(-1);
+			}
+		}
+		else
+		{
+				client.write("ILLEGAL");
+				client.write("LOSER");
+				client.close();
+				System.exit(-1);
+		}
+	}
 }
