@@ -1,6 +1,5 @@
 package team01;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class ServerMain {

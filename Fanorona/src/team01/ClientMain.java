@@ -1,7 +1,6 @@
 package team01;
 
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 public class ClientMain {
@@ -30,9 +29,7 @@ public class ClientMain {
 		{
 			System.out.println("fail");
 			System.exit(-1);
-		}
-		// TODO: game play
-		
+		}		
 
 		Scanner input = new Scanner(System.in);
 		
@@ -55,7 +52,7 @@ public class ClientMain {
 			}
 			
 			if (game.currentPlayer() == player) {
-						
+
 				System.out.print(">>> x: ");
 				int x = input.nextInt();
 				System.out.print(">>> y: ");
