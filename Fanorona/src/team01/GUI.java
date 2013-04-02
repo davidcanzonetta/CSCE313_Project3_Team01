@@ -10,7 +10,7 @@ public class GUI extends JFrame {
 	
 	private List<Pair> gridLines = new ArrayList<Pair>();
 
-	protected final Game game;
+	protected Game game;
 	
 	public static int mode;
 	public static boolean singlePlayer;

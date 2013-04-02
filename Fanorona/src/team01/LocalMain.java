@@ -10,9 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
-public class Local extends GUI {
+public class LocalMain extends GUI {
 
-	public Local() {
+	public LocalMain() {
 		super();
 		canvas = new DrawCanvas();
 		canvas.setPreferredSize(new Dimension(winWidth, winHeight));
@@ -72,6 +72,7 @@ public class Local extends GUI {
 		setTitle("Fanorona");
 		setVisible(true);
 	}
+	
 	/**
 	 * @param args
 	 */
@@ -95,7 +96,7 @@ public class Local extends GUI {
 			@Override
 			public void run()
 			{
-				new Local();
+				new LocalMain();
 			}
 		});
 	}
