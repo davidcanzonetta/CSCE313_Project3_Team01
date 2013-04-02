@@ -65,16 +65,4 @@ public class Client {
 			System.out.println("cannot close socket");
 		}
 	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		String host = "Client";
-		int port = 4343;
-		Client client = new Client(host, port);
-		
-	}
-
 }
