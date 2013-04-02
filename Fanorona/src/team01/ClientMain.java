@@ -17,17 +17,16 @@ public class ClientMain {
 
 		Client client = new Client(host, port);
 
-		if (! client.read().equals("WELCOME"))
-		{
-			client.write("ILLEGAL");
-			System.exit(-1);
-		}
-
 		String info = client.read();
 		processInfo(info);
 		client.write("READY");
 
-		// TODO: start the gui
+		// TODO: start the GUI
+		
+		// USED FOR DEBUGGING PURPOSES ONLY
+		System.out.println(GUI.width + " " + GUI.height + " " + timeout);
+		
+		client.close();
 	}
 
 	private static void processInfo(String info)
@@ -38,7 +37,7 @@ public class ClientMain {
 		{
 			String header = scanner.next();
 
-			if (! header.equals("INFO"))
+			if (! header.equals("WELCOMEINFO"))
 			{
 				System.exit(-1);
 			}

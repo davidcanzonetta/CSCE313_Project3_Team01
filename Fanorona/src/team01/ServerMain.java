@@ -18,8 +18,7 @@ public class ServerMain {
 		String otherPlayer = GUI.player == Board.WHITE ? "B" : "W";
 		
 		Server server = new Server(port);
-		server.write("WELCOME");
-		server.write("INFO " + GUI.width + " " + GUI.height + " " + otherPlayer + " " + time);
+		server.write("WELCOMEINFO " + GUI.width + " " + GUI.height + " " + otherPlayer + " " + time);
 		if (! server.read().equals("READY"))
 		{
 			server.write("ILLEGAL");
@@ -28,6 +27,11 @@ public class ServerMain {
 		server.write("BEGIN");
 
 		// TODO: start the GUI
+		
+		// USED FOR DEBUGGING PURPOSES ONLY
+		System.out.println("SUCCESS!!!");
+		
+		server.close();
 	}
 
 }
