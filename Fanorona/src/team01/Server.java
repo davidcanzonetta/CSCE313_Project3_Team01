@@ -5,11 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.*;
 
-import javax.swing.SwingUtilities;
-
-public class Server extends Thread {
+public class Server {
 
 	private ServerSocket serverSocket;
 	private Socket clientSocket;
@@ -73,19 +70,6 @@ public class Server extends Thread {
 		} catch (IOException e) {
 			System.out.println("cannot close socket");
 		}
-	}
-	
-	
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		/*
-		int port = 4343; 
-		Server server = new Server(port);
-		*/
 	}
 
 }
