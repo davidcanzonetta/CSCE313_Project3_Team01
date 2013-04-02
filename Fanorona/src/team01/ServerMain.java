@@ -58,12 +58,6 @@ public class ServerMain {
 			}
 			
 			if (game.currentPlayer() == player) {
-				System.out.print("*** legal moves: ");
-				List<Point> available = game.getClickable();
-				for(Point pt : available) {
-					System.out.printf("(%d, %d) ", pt.getX(), pt.getY());
-				}
-				System.out.println();
 
 				System.out.print(">>> x: ");
 				int x = input.nextInt();
@@ -81,11 +75,12 @@ public class ServerMain {
 				if (game.currentPlayer() != player)
 				{
 					server.write(game.moveLog);
+					System.out.println("*** " + server.read());
 					game.moveLog = "";
 				}
 			} else {
 				String message = server.read();
-//				client.write("OK");
+				server.write("OK");
 				Scanner scanner = new Scanner(message);
 				processMove(scanner);
 				scanner.close();

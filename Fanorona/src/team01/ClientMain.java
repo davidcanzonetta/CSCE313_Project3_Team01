@@ -55,12 +55,6 @@ public class ClientMain {
 			}
 			
 			if (game.currentPlayer() == player) {
-				System.out.print("*** legal moves: ");
-				List<Point> available = game.getClickable();
-				for(Point pt : available) {
-					System.out.printf("(%d, %d) ", pt.getX(), pt.getY());
-				}
-				System.out.println();
 						
 				System.out.print(">>> x: ");
 				int x = input.nextInt();
@@ -77,13 +71,13 @@ public class ClientMain {
 				}
 				if (game.currentPlayer() != player)
 				{
-					System.out.println("***** " + game.moveLog);
 					client.write(game.moveLog);
+					System.out.println("*** " + client.read());
 					game.moveLog = "";
 				}
 			} else {
 				String message = client.read();
-//				client.write("OK");
+				client.write("OK");
 				Scanner scanner = new Scanner(message);
 				processMove(scanner);
 				scanner.close();
@@ -95,7 +89,6 @@ public class ClientMain {
 
 	private static void processInfo(String info)
 	{
-//		System.out.print("????");
 		Scanner scanner = new Scanner(info);
 
 		try
