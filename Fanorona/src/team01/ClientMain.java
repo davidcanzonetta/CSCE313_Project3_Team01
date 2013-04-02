@@ -77,6 +77,7 @@ public class ClientMain {
 				}
 				if (game.currentPlayer() != player)
 				{
+					System.out.println("***** " + game.moveLog);
 					client.write(game.moveLog);
 					game.moveLog = "";
 				}
@@ -86,6 +87,7 @@ public class ClientMain {
 				Scanner scanner = new Scanner(message);
 				processMove(scanner);
 				scanner.close();
+				game.moveLog = "";
 			}
 		}
 		input.close();

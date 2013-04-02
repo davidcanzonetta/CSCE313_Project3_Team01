@@ -37,7 +37,6 @@ public class ServerMain {
 		server.write("BEGIN");
 
 		game = new Game(width, height, !singlePlayer, player);
-
 		Scanner input = new Scanner(System.in);
 		
 		while (true)
@@ -65,7 +64,7 @@ public class ServerMain {
 					System.out.printf("(%d, %d) ", pt.getX(), pt.getY());
 				}
 				System.out.println();
-						
+
 				System.out.print(">>> x: ");
 				int x = input.nextInt();
 				System.out.print(">>> y: ");
@@ -90,6 +89,7 @@ public class ServerMain {
 				Scanner scanner = new Scanner(message);
 				processMove(scanner);
 				scanner.close();
+				game.moveLog = "";
 			}
 		}
 		input.close();
