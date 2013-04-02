@@ -1,7 +1,6 @@
 package team01;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ public class GUI extends JFrame {
 	
 	private List<Pair> gridLines = new ArrayList<Pair>();
 
-	private final Game game;
+	protected final Game game;
 	
 	public static int mode;
 	public static boolean singlePlayer;
@@ -20,16 +19,16 @@ public class GUI extends JFrame {
 	public static int height;
 	public static long timeout;
 
-	private int spacing;
-	private int radius;
-	private int diameter;
-	private int minX;
-	private int minY;
-	private int maxX;
-	private int maxY;
-	private int winWidth;
-	private int winHeight;
-	private DrawCanvas canvas;
+	protected int spacing;
+	protected int radius;
+	protected int diameter;
+	protected int minX;
+	protected int minY;
+	protected int maxX;
+	protected int maxY;
+	protected int winWidth;
+	protected int winHeight;
+	protected DrawCanvas canvas;
 	
 	public GUI() {
 		setBackground(new Color(47, 79, 79));
@@ -46,63 +45,6 @@ public class GUI extends JFrame {
 		winHeight = maxY + spacing;
 		
 		initializeGridLines();
-		canvas = new DrawCanvas();
-		canvas.setPreferredSize(new Dimension(winWidth, winHeight));
-		canvas.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (game.isTie() || game.whiteWins() || game.blackWins())
-				{
-					game.reset();
-					setTitle("Fanorona");
-					repaint();
-					return;
-				}
-				
-				int mouseX = e.getX();
-				int mouseY = e.getY();
-
-				int x = (mouseX + radius) / spacing;
-				int y = game.getBoard().getHeight() - ((mouseY + radius) / spacing) + 1;
-
-				Point point = new Point(x, y);
-				if (game.getBoard().isValidPoint(point))
-				{
-					if (! game.update(point))
-					{
-						System.out.println("!!! INVALID MOVE: " + point);
-						System.out.println();
-					}
-				}
-				
-				if (game.isTie())
-				{
-					System.out.println("Tie");
-					setTitle("Tie");
-				}
-				else if (game.whiteWins())
-				{
-					System.out.println("White wins");
-					setTitle("White wins");
-				}
-				else if (game.blackWins())
-				{
-					System.out.println("Black wins");
-					setTitle("Black wins");
-				}
-				
-				repaint();
-			}
-		});
-		
-		Container cp = getContentPane();
-		cp.setLayout(new BorderLayout());
-		cp.add(canvas, BorderLayout.CENTER);
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		pack();
-		setTitle("Fanorona");
-		setVisible(true);
 	}
 	
 	class DrawCanvas extends JPanel {
