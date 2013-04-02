@@ -12,8 +12,8 @@ public class ClientMain {
 	public static void main (String[] args)
 	{
 		GUI.singlePlayer = Integer.parseInt(args[0]) == 1;
-		port = Integer.parseInt(args[1]);
-		host = args[2];
+		host = args[1];
+		port = Integer.parseInt(args[2]);
 
 		Client client = new Client(host, port);
 

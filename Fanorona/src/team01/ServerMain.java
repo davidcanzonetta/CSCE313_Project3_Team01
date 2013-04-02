@@ -2,6 +2,9 @@ package team01;
 
 public class ServerMain {
 
+	static long time;
+	static int port;
+	
 	/**
 	 * @param args
 	 */
@@ -10,12 +13,14 @@ public class ServerMain {
 		GUI.player = args[1].equals("W") ? Board.WHITE : Board.BLACK;
 		GUI.width = Integer.parseInt(args[2]);
 		GUI.height = Integer.parseInt(args[3]);
-		long time = Long.parseLong(args[4]);
-		int port = Integer.parseInt(args[5]);
+		time = Long.parseLong(args[4]);
+		port = Integer.parseInt(args[5]);
 
+		String otherPlayer = GUI.player == Board.WHITE ? "B" : "W";
+		
 		Server server = new Server(port);
 		server.write("WELCOME");
-		server.write("INFO " + GUI.width + " " + GUI.height + " " + args[1] + " " + time);
+		server.write("INFO " + GUI.width + " " + GUI.height + " " + otherPlayer + " " + time);
 		if (! server.read().equals("READY"))
 		{
 			server.write("ILLEGAL");
