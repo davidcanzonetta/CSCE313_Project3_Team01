@@ -18,7 +18,7 @@ public class ServerMain {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		singlePlayer = Integer.parseInt(args[0]) == 1;
+		singlePlayer = Integer.parseInt(args[0]) != 1;
 		player = args[1].equals("W") ? Board.WHITE : Board.BLACK;
 		width = Integer.parseInt(args[2]);
 		height = Integer.parseInt(args[3]);
@@ -35,7 +35,7 @@ public class ServerMain {
 		}
 		server.write("BEGIN");
 
-		game = new Game(width, height, !singlePlayer, player);
+		game = new Game(width, height, singlePlayer, player);
 		Scanner input = new Scanner(System.in);
 		
 		while (true)

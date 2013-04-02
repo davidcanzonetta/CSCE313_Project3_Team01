@@ -15,7 +15,7 @@ public class ClientMain {
 	
 	public static void main (String[] args)
 	{
-		singlePlayer = Integer.parseInt(args[0]) == 1;
+		singlePlayer = Integer.parseInt(args[0]) != 1;
 		String host = args[1];
 		int port = Integer.parseInt(args[2]);
 
@@ -23,7 +23,7 @@ public class ClientMain {
 		String info = client.read();
 		processInfo(info);
 		client.write("READY");
-		game = new Game(width, height, !singlePlayer, player ^ 1);
+		game = new Game(width, height, singlePlayer, player ^ 1);
 		
 		if (! client.read().equals("BEGIN"))
 		{
