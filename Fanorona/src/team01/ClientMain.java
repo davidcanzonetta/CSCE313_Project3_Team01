@@ -1,34 +1,32 @@
 package team01;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
-@SuppressWarnings("serial")
-public class ClientMain extends GUI {
+public class ClientMain {
 
-	static int port;
-	static String host;
+	static int width;
+	static int height;
+	static int player;
+	static boolean singlePlayer;
 	static long timeout;
 	static Client client;
-
+	static Game game;
+	
 	public static void main (String[] args)
 	{
-		GUI.singlePlayer = Integer.parseInt(args[0]) == 1;
-		host = args[1];
-		port = Integer.parseInt(args[2]);
+		singlePlayer = Integer.parseInt(args[0]) == 1;
+		String host = args[1];
+		int port = Integer.parseInt(args[2]);
 
 		client = new Client(host, port);
-
 		String info = client.read();
 		processInfo(info);
 		client.write("READY");
-
-		// TODO: start the GUI
+		game = new Game(width, height, !singlePlayer, player ^ 1);
 		
-		// USED FOR DEBUGGING PURPOSES ONLY
-		System.out.println(GUI.width + " " + GUI.height + " " + timeout);
-		
-		client.close();
+		// TODO: game play
 	}
 
 	private static void processInfo(String info)
@@ -44,9 +42,9 @@ public class ClientMain extends GUI {
 				System.exit(-1);
 			}
 
-			GUI.width = scanner.nextInt();
-			GUI.height = scanner.nextInt();
-			GUI.player = scanner.next().equals("W") ? Board.WHITE : Board.BLACK;
+			width = scanner.nextInt();
+			height = scanner.nextInt();
+			player = scanner.next().equals("W") ? Board.WHITE : Board.BLACK;
 			timeout = scanner.nextLong();
 		}
 		catch (InputMismatchException e)
@@ -59,7 +57,7 @@ public class ClientMain extends GUI {
 		}
 	}
 
-	private void processMove(Scanner scanner)
+	private static void processMove(Scanner scanner)
 	{
 		String type = scanner.next();
 		

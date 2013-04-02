@@ -94,6 +94,7 @@ public class Game {
 
 	public Game(int width, int height, boolean hasAiPlayer, int player)
 	{
+		moveLog = "";
 		moves = 0;
 		maxMoves = 10 * width;
 		this.currentPlayer = Board.WHITE;	// WHITE always goes first
