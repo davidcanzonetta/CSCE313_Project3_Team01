@@ -643,7 +643,7 @@ public class Game {
 	{
 		
 		if (state == NEED_CAPTURE_START || state == NEED_PAIKA_START)
-		{
+		{	
 			int N = isClickable.size();
 			Point point = new Point(isClickable.get(Math.abs(rng.nextInt()) % N));
 			update(point);

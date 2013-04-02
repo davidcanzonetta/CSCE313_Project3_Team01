@@ -21,7 +21,10 @@ public class MinimaxTree {
 	public static int utilityValue(MinimaxNode n) {
 		return (n.data.getBoard().getWhite() - n.data.getBoard().getBlack());
 	}
-
+	public static int utilityValue(Game g) {
+		return (g.getBoard().getWhite() - g.getBoard().getBlack());
+	}
+	/*
 	public static int minimax(MinimaxNode n, int depth) {
 		if(depth <= 0 || n.children.size() == 0) {
 			return utilityValue(n);
@@ -32,17 +35,97 @@ public class MinimaxTree {
 		}
 		return alpha;
 	}
-	
-	public static void aiPlayer(Game initialGame) {
-		generateTree(initialGame);
-		/*
-		for(int i = 0; i < root.children.size(); i++) {
-			if(utilityValue(root.children.get(i)) > bestUtilityValue) {
-				bestUtilityIndex = i;
+	*/
+	private static int chosen_score;
+	private static Pair chosen_move;
+	public static void initialMinimax(Game g, int depth, int max_depth) {
+		int best_score = 0;
+		Pair best_move = null;
+		Game game = new Game(g);
+		if(depth == max_depth) {
+			chosen_score = utilityValue(game);
+		} else {
+			//Generate moves
+			List<Point> froms = game.getClickable();
+			List<Pair> moves = new ArrayList<Pair>();;
+			for(int i = 0; i < froms.size(); i++) {
+				Game tmp = new Game(game);
+				tmp.update(froms.get(i));
+				List<Point> tos = tmp.getClickable();
+				for (int j = 0; j < tos.size(); j++) {
+					Pair p = new Pair(froms.get(i),tos.get(j));
+					moves.add(p);
+				}
 			}
+			if (moves.size() == 0) {
+				chosen_score = utilityValue(game);
+			}
+			else {
+				for(int i = 1; i < moves.size(); i++) {
+					best_score = 99999;
+					Game tmp = new Game(game);
+					tmp.update(moves.get(i).getSrc());
+					tmp.update(moves.get(i).getDest());
+					initialMinimax(tmp, depth+1, max_depth);
+					if(chosen_score > best_score) {
+						best_score = chosen_score;
+						best_move = moves.get(i);
+					}//end if
+				}//end for
+				chosen_score = best_score;
+				chosen_move = best_move;
+			}//end if
+		}//end if
+	}//end
+	
+	public static void minimax(Game g, int depth, int max_depth, Point from) {
+		int best_score = 0;
+		Pair best_move = null;
+		Game game = new Game(g);
+		if(depth == max_depth) {
+			chosen_score = utilityValue(game);
+		} else {
+			//Generate moves
+			List<Pair> moves = new ArrayList<Pair>();;
+			List<Point> tos = game.getClickable();
+			for (int j = 0; j < tos.size(); j++) {
+				Pair p = new Pair(from,tos.get(j));
+				moves.add(p);
+			}
+			if (moves.size() == 0) {
+				chosen_score = utilityValue(game);
+			}
+			else {
+				for(int i = 1; i < moves.size(); i++) {
+					best_score = 99999;
+					Game tmp = new Game(game);
+					tmp.update(moves.get(i).getSrc());
+					tmp.update(moves.get(i).getDest());
+					minimax(tmp, depth+1, max_depth, from);
+					if(chosen_score > best_score) {
+						best_score = chosen_score;
+						best_move = moves.get(i);
+					}//end if
+				}//end for
+				chosen_score = best_score;
+				chosen_move = best_move;
+			}//end if
+		}//end if
+	}//end
+	
+	public static Pair aiPlayer(Game initialGame, Point from , boolean initial) {
+		if(initial) {
+			initialMinimax(initialGame,0,1);
+			return chosen_move;
+		} else {
+			minimax(initialGame,0,1,from);
+			return chosen_move;
 		}
-		*/
+		
+		/*
+		generateTree(initialGame);
 		initialGame.board = findBestNode(root, root).data.getBoard();
+		*/
 	}
 	
 	
