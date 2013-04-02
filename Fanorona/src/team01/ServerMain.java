@@ -83,10 +83,10 @@ public class ServerMain {
 */
 			
 			if (game.currentPlayer() == player) {
-				boolean time_check = true;
 				
 				long start = System.currentTimeMillis();
-				long end = start + time;
+				long end = start + timeout;
+				
 //				Countdown c = new Countdown(time);
 				System.out.print(">>> x: ");
 				int x = input.nextInt();
@@ -94,7 +94,8 @@ public class ServerMain {
 				int y = input.nextInt();
 				System.out.println();
 				
-				if(System.currentTimeMillis() > end)
+				//No timer if time = 0
+				if(System.currentTimeMillis() > end && time != 0)
 				{
 //					System.out.println("\nTIME\nLOSER);
 					server.write("TIME");

@@ -62,9 +62,10 @@ public class ClientMain {
 				int y = input.nextInt();
 				System.out.println();
 				
-				if(System.currentTimeMillis() > end)
+				//No timer if timeout = 0
+				if(System.currentTimeMillis() > end && timeout != 0)
 				{
-//					System.out.println("\nTIME\nLOSER);
+					System.out.println("\nTIME\nLOSER");
 					client.write("TIME");
 					client.write("LOSER");
 					client.close();
