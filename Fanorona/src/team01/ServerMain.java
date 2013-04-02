@@ -15,7 +15,6 @@ public class ServerMain {
 		GUI.height = Integer.parseInt(args[3]);
 		time = Long.parseLong(args[4]);
 		port = Integer.parseInt(args[5]);
-
 		String otherPlayer = GUI.player == Board.WHITE ? "B" : "W";
 		
 		Server server = new Server(port);
