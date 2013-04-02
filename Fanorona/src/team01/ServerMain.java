@@ -43,29 +43,68 @@ public class ServerMain {
 			if (game.isTie())
 			{
 //				System.out.println("******* IS TIE ********");
+//				server.write("TIE");
 				break;
 			}
 			else if (game.whiteWins())
 			{
 //				System.out.println("***** WHITE WINS ******");
-				break;
+//				if(player == 0)
+//					server.write("WINNER");
+//				else
+//					server.write("LOSER");
+//				If the server is white, and white wins, would the server write WINNER or LOSER?
+//				It's writing what the client will read, so should it output WINNER and write LOSER?
+//				break;
 			}
 			else if (game.blackWins())
 			{
 //				System.out.println("***** BLACK WINS ******");
-				break;
+//				if(player == 1)
+//					server.write("WINNER");
+//				else
+//					server.write("LOSER");
+//				break;
 			}
 			
-			if (game.currentPlayer() == player) {
+/*
+			Another possible solution?
+			
+			if(server.read() == "TIE")
+			{
+				System.out.println("TIE");
+				break;
+			}
+			else if(server.read() == "LOSER")
+			{
+				System.out.println("LOSER");
+			}
 
+*/
+			
+			if (game.currentPlayer() == player) {
+				boolean time_check = true;
+				
+				long start = System.currentTimeMillis();
+				long end = start + time;
+//				Countdown c = new Countdown(time);
 				System.out.print(">>> x: ");
 				int x = input.nextInt();
 				System.out.print(">>> y: ");
 				int y = input.nextInt();
 				System.out.println();
 				
-				Point point = new Point(x, y);
+				if(System.currentTimeMillis() > end)
+				{
+//					System.out.println("\nTIME\nLOSER);
+					server.write("TIME");
+					server.write("LOSER");
+					server.close();
+					System.exit(-1);
+				}
 				
+				Point point = new Point(x, y);
+//				c.terminate();			
 				if (! game.update(point))
 				{
 					System.out.println("!!! INVALID INPUT");

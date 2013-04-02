@@ -52,12 +52,24 @@ public class ClientMain {
 			}
 			
 			if (game.currentPlayer() == player) {
-
+				
+				long start = System.currentTimeMillis();
+				long end = start + timeout;
+//				Countdown c = new Countdown(timeout);
 				System.out.print(">>> x: ");
 				int x = input.nextInt();
 				System.out.print(">>> y: ");
 				int y = input.nextInt();
 				System.out.println();
+				
+				if(System.currentTimeMillis() > end)
+				{
+//					System.out.println("\nTIME\nLOSER);
+					client.write("TIME");
+					client.write("LOSER");
+					client.close();
+					System.exit(-1);
+				}
 				
 				Point point = new Point(x, y);
 				

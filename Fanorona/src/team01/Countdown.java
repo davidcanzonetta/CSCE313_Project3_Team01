@@ -14,17 +14,21 @@ import java.util.TimerTask;
 
 */
 
-public class Countdown {
+public class Countdown{
 	Timer timer;
 	
-	public Countdown(int seconds){
+	public Countdown(long seconds){
 		timer = new Timer();
-		timer.schedule(new Time(), seconds*1000);
+		//No time limit when input is 0
+		if(seconds == 0)
+			timer.cancel();
+		else
+			timer.schedule(new Time(), seconds);
 	}
 	
 	class Time extends TimerTask{
 		public void run(){
-			System.out.println("Time's up!");
+			System.out.println("\nTIME");
 			timer.cancel();
 		}
 	}
