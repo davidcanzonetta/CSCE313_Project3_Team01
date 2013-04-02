@@ -26,11 +26,74 @@ public class ClientMain {
 		client.write("READY");
 		game = new Game(width, height, !singlePlayer, player ^ 1);
 		
+		if (! client.read().equals("BEGIN"))
+		{
+			System.out.println("fail");
+			System.exit(-1);
+		}
 		// TODO: game play
+		
+
+		Scanner input = new Scanner(System.in);
+		
+		while (true)
+		{
+			if (game.isTie())
+			{
+//				System.out.println("******* IS TIE ********");
+				break;
+			}
+			else if (game.whiteWins())
+			{
+//				System.out.println("***** WHITE WINS ******");
+				break;
+			}
+			else if (game.blackWins())
+			{
+//				System.out.println("***** BLACK WINS ******");
+				break;
+			}
+			
+			if (game.currentPlayer() == player) {
+				System.out.print("*** legal moves: ");
+				List<Point> available = game.getClickable();
+				for(Point pt : available) {
+					System.out.printf("(%d, %d) ", pt.getX(), pt.getY());
+				}
+				System.out.println();
+						
+				System.out.print(">>> x: ");
+				int x = input.nextInt();
+				System.out.print(">>> y: ");
+				int y = input.nextInt();
+				System.out.println();
+				
+				Point point = new Point(x, y);
+				
+				if (! game.update(point))
+				{
+					System.out.println("!!! INVALID INPUT");
+					System.out.println();
+				}
+				if (game.currentPlayer() != player)
+				{
+					client.write(game.moveLog);
+					game.moveLog = "";
+				}
+			} else {
+				String message = client.read();
+//				client.write("OK");
+				Scanner scanner = new Scanner(message);
+				processMove(scanner);
+				scanner.close();
+			}
+		}
+		input.close();
 	}
 
 	private static void processInfo(String info)
 	{
+//		System.out.print("????");
 		Scanner scanner = new Scanner(info);
 
 		try

@@ -413,7 +413,7 @@ public class Game {
 
 	private void setupNextMove()
 	{
-		moveLog = "";
+//		moveLog = "";
 		
 		// gray pieces removed at each turn
 		deleteSacrifices();
