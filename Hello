@@ -1,0 +1,36 @@
+Shoes.app :title => "Reddit Alert",
+          :width => 600,
+          :height => 400  do
+
+  #background white...firebrick  #for background color
+  background 'reddit_background.jpg'
+
+  stack(:margin => 10){  #Like menus on C++ FLTK
+
+    background white
+
+    flow do                      #flow is like a box, where each element is kept horizontaly
+      para "Account Name     " #:stroke =>firebrick
+
+      @account_name = edit_line  #edit_line is the box where we can input a text,
+                                 # account_name will contain the text inputed
+
+                                 #To grab values in box, use .text, ie. account_name = @account_name.text
+    end
+
+    flow do
+      para "Password             "  #:stroke =>firebrick
+
+      @password = edit_line(:secret => true) #secret will make text imputed be secret
+    end
+
+    flow do
+      @push = button "Log In"   #@push is the variable name
+
+      @push.click{              #if the button is clicked
+
+        alert "Login Button clicked"
+      }
+    end
+   }
+end
