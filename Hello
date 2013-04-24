@@ -1,0 +1,46 @@
+Shoes.app :title => "Reddit Alert",
+          :width => 600,
+          :height => 400  do
+
+  #background white...firebrick  #for background color
+  background 'reddit_background.jpg'
+
+  log_in_stack = stack(:width => 450, :height => 120, :displace_top => 140, :displace_left => 75){      #Like menus on C++ FLTK
+
+
+    background white #background for this menu
+    border black, :strokewidth => 5
+
+    flow :displace_top => 5, :displace_left => 5 do #flow is like a box, where each element is kept horizontally, displace top to make room for border
+      para "Account Name     "
+      @account_name = edit_line  #edit_line is the box where we can input a text,
+    end                        # account_name will contain the text input
+                               #To grab values in box, use .text, ie. account_name = @account_name.text
+    flow :displace_top => 5, :displace_left => 5 do
+      para "Password             "  #:stroke =>firebrick
+      @password = edit_line(:secret => true) #secret will make text imputed be secret
+    end
+
+    flow :displace_top => 5, :displace_left => 200 do
+      @push = button "Log In"   #@push is the variable name
+
+      #executes this when log in button is clicked
+      @push.click{
+        # This may get too crazy having a stack within a stack
+        newsfeed_title = stack(:height => 40, :width => 600, :align => "center"){
+          background gainsboro
+
+          flow do
+            para "YOUR REDDIT NEWSFEED",
+                 :font => "Retro Cafe",  # font can be changed to whatever looks best
+                 :align => "center",
+                 :size => "x-large"
+          end
+
+        }
+        log_in_stack.clear
+        #alert "Login Button clicked\nAccount Name: " + @account_name.text()  # how to display account name
+      }
+    end
+  }
+end
