@@ -1,6 +1,9 @@
-Shoes.app :title => "Reddit Alert",
+#require "lib/ruby_reddit_api.rb"
+
+Shoes.app :title => "Reddit Newsfeed",
           :width => 600,
-          :height => 400  do
+          :height => 400 do
+
 
   #background white...firebrick  #for background color
   background 'reddit_background.jpg'
@@ -36,7 +39,14 @@ Shoes.app :title => "Reddit Alert",
                  :align => "center",
                  :size => "x-large"
           end
+        }
+        facebook_login = stack(:height => 50, :width => 175, :displace_top => -160, :displace_left => 425){
+          background white
+          border black, :strokewidth => 2
 
+          flow do
+            para "Facebook Login Will Go Here"
+          end
         }
         log_in_stack.clear
         #alert "Login Button clicked\nAccount Name: " + @account_name.text()  # how to display account name
@@ -44,3 +54,4 @@ Shoes.app :title => "Reddit Alert",
     end
   }
 end
+
