@@ -5,32 +5,42 @@ Shoes.app :title => "Reddit Alert",
   #background white...firebrick  #for background color
   background 'reddit_background.jpg'
 
-  stack(:margin => 10){  #Like menus on C++ FLTK
+  log_in_stack = stack(:width => 450, :height => 120, :displace_top => 140, :displace_left => 75){      #Like menus on C++ FLTK
 
-    background white
 
-    flow do                      #flow is like a box, where each element is kept horizontaly
-      para "Account Name     " #:stroke =>firebrick
+    background white #background for this menu
+    border black, :strokewidth => 5
 
+    flow :displace_top => 5, :displace_left => 5 do #flow is like a box, where each element is kept horizontally, displace top to make room for border
+      para "Account Name     "
       @account_name = edit_line  #edit_line is the box where we can input a text,
-                                 # account_name will contain the text inputed
-
-                                 #To grab values in box, use .text, ie. account_name = @account_name.text
-    end
-
-    flow do
+    end                        # account_name will contain the text input
+                               #To grab values in box, use .text, ie. account_name = @account_name.text
+    flow :displace_top => 5, :displace_left => 5 do
       para "Password             "  #:stroke =>firebrick
-
       @password = edit_line(:secret => true) #secret will make text imputed be secret
     end
 
-    flow do
+    flow :displace_top => 5, :displace_left => 200 do
       @push = button "Log In"   #@push is the variable name
 
-      @push.click{              #if the button is clicked
+      #executes this when log in button is clicked
+      @push.click{
+        # This may get too crazy having a stack within a stack
+        newsfeed_title = stack(:height => 40, :width => 600, :align => "center"){
+          background gainsboro
 
-        alert "Login Button clicked"
+          flow do
+            para "YOUR REDDIT NEWSFEED",
+                 :font => "Retro Cafe",  # font can be changed to whatever looks best
+                 :align => "center",
+                 :size => "x-large"
+          end
+
+        }
+        log_in_stack.clear
+        #alert "Login Button clicked\nAccount Name: " + @account_name.text()  # how to display account name
       }
     end
-   }
+  }
 end
