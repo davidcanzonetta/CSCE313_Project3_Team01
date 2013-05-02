@@ -1,9 +1,11 @@
 require 'json'
 require 'open-uri'
+require 'uri'
+require 'launchy'
 
 class Reddit #(change name)
 
-  include GladeGUI
+	include GladeGUI
 
 	@@title = Array.new
   @@link = Array.new
@@ -40,6 +42,28 @@ class Reddit #(change name)
 	end	
 
 	def linkbutton1__clicked(*argv)
-
+		Launchy.open(@@link[0])
 	end
+	def linkbutton2__clicked(*argv)
+		Launchy.open(@@link[1])
+	end
+	def linkbutton3__clicked(*argv)
+		Launchy.open(@@link[2]])
+	end
+	def linkbutton4__clicked(*argv)
+		Launchy.open(@@link[3])
+	end
+	def linkbutton5__clicked(*argv)
+		Launchy.open(@@link[4])
+	end
+	def linkbutton6__clicked(*argv)
+		Launchy.open(@@link[5])
+	end
+	def linkbutton7__clicked(*argv)
+		Launchy.open(@@link[6])
+	end
+	def linkbutton8__clicked(*argv)
+		Launchy.open(@@link[7])
+	end
+
 end
