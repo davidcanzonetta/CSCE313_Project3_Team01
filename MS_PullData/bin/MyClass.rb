@@ -7,12 +7,13 @@ class Reddit #(change name)
 
 	include GladeGUI
 
+	@@page = 0
+
 	@@title = Array.new
   @@link = Array.new
 	
 	@@saved = Hash.new
 	
-
   def initialize()
 
     @url = 'http://reddit.com/.json'
@@ -26,19 +27,20 @@ class Reddit #(change name)
 
       @@title.push(x['data']['title'])
       @@link.push(x['data']['url'])
-    }
+    }	
   end
 
 	def show()
 		load_glade(__FILE__)  #loads file, glade/MyClass.glade into @builder
-		@linkbutton1 = @@title[0]
-		@linkbutton2 = @@title[1]
-		@linkbutton3 = @@title[2]
-		@linkbutton4 = @@title[3]
-		@linkbutton5 = @@title[4]
-		@linkbutton6 = @@title[5]
-		@linkbutton7 = @@title[6]
-		@linkbutton8 = @@title[7]
+		
+		@linkbutton1 = @@title[0 + @@page]
+		@linkbutton2 = @@title[1 + @@page]
+		@linkbutton3 = @@title[2 + @@page]
+		@linkbutton4 = @@title[3 + @@page]
+		@linkbutton5 = @@title[4 + @@page]
+		@linkbutton6 = @@title[5 + @@page]
+		@linkbutton7 = @@title[6 + @@page]
+		@linkbutton8 = @@title[7 + @@page]
 
 		set_glade_variables(self) # fills label with message
 		@builder["window1"].title = "Reddit App" 
@@ -79,7 +81,28 @@ class Reddit #(change name)
 		Launchy.open(@@link[7])
 	end
 
-	def checkbutton1__toggled(*argv)
+	def button2__clicked(*argv)				#Next button, when pressed, it will display the next page in the reddit page
+	
+	if @@page == 0
+	
+	else
+
+	@@page = @@page - 8
+	self.destroy_window	
+	self.show
+	end 
+
+	end
+
+	def button3__clicked(*argv)				#Next button, when pressed, it will display the next page in the reddit page
+	
+	@@page = @@page + 8
+	self.destroy_window	
+	self.show
+
+	end
+
+	def checkbutton1__toggled(*argv)			#checkbuttons: when checked, the data will be saved in a hash
 		@@saved[@@title[0]] = @@link[0]				
 	end	
 	def checkbutton2__toggled(*argv)
@@ -102,11 +125,11 @@ class Reddit #(change name)
 		@@saved[@@title[5]] = @@link[5]				
 		
 	end
-	def checkbutton7__toggled(*argv)
+	def checkbutton7__toggled(*argv)		
 		@@saved[@@title[6]] = @@link[6]				
 	end
 
-	def button1__clicked(*argv)
+	def button1__clicked(*argv) #Save button, when pressed, it will save anything that it's in @@saved hash into a json file
 	
 		myStr = @@saved.to_json
 
