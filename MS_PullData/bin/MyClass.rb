@@ -7,7 +7,8 @@ class Reddit #(change name)
 
 	include GladeGUI
 
-	@@page = 0
+	@@page = 0							#page will be used to browse along different pages, since title and link array contain more than
+													#7 posts from the homepage (title might have 27 entries)
 
 	@@title = Array.new
   @@link = Array.new
@@ -33,7 +34,7 @@ class Reddit #(change name)
 	def show()
 		load_glade(__FILE__)  #loads file, glade/MyClass.glade into @builder
 		
-		@linkbutton1 = @@title[0 + @@page]
+		@linkbutton1 = @@title[0 + @@page]		#at the beginning, we are using title[0+0], if we press next, page becomes 8 and this becomes title[8]
 		@linkbutton2 = @@title[1 + @@page]
 		@linkbutton3 = @@title[2 + @@page]
 		@linkbutton4 = @@title[3 + @@page]
@@ -45,6 +46,10 @@ class Reddit #(change name)
 		set_glade_variables(self) # fills label with message
 		@builder["window1"].title = "Reddit App" 
 		
+		@builder["button1"].label = "Save"
+		@builder["button2"].label = "Prev"
+		@builder["button3"].label = "Next"
+
 		@builder["checkbutton1"].label = "Save Post"
 		@builder["checkbutton2"].label = "Save Post"
 	  @builder["checkbutton3"].label = "Save Post"
@@ -57,28 +62,52 @@ class Reddit #(change name)
 	end	
 
 	def linkbutton1__clicked(*argv)
-		Launchy.open(@@link[0])
+		if @@link[0+@@page] == nil				#if there is no link in the array do nothing when the button is pressed
+		else															#else show the link
+		Launchy.open(@@link[0+@@page])
+		end
 	end
 	def linkbutton2__clicked(*argv)
-		Launchy.open(@@link[1])
+		if @@link[1+@@page] == nil
+		else	
+		Launchy.open(@@link[1+@@page])
+		end
 	end
 	def linkbutton3__clicked(*argv)
-		Launchy.open(@@link[2])
+		if @@link[2+@@page] == nil
+		else	
+		Launchy.open(@@link[2+@@page])
+		end
 	end
 	def linkbutton4__clicked(*argv)
-		Launchy.open(@@link[3])
+		if @@link[3+@@page] == nil
+		else	
+		Launchy.open(@@link[3+@@page])
+		end
 	end
 	def linkbutton5__clicked(*argv)
-		Launchy.open(@@link[4])
+		if @@link[4+@@page] == nil
+		else	
+		Launchy.open(@@link[4+@@page])
+		end
 	end
 	def linkbutton6__clicked(*argv)
-		Launchy.open(@@link[5])
+		if @@link[5+@@page] == nil
+		else	
+		Launchy.open(@@link[5+@@page])
+		end
 	end
 	def linkbutton7__clicked(*argv)
-		Launchy.open(@@link[6])
+		if @@link[6+@@page] == nil
+		else	
+		Launchy.open(@@link[6+@@page])
+		end
 	end
 	def linkbutton8__clicked(*argv)
-		Launchy.open(@@link[7])
+		if @@link[7+@@page] == nil
+		else	
+		Launchy.open(@@link[7+@@page])
+		end
 	end
 
 	def button2__clicked(*argv)				#Next button, when pressed, it will display the next page in the reddit page
