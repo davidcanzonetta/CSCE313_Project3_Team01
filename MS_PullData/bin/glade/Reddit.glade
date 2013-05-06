@@ -3,6 +3,8 @@
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="window1">
+    <property name="width_request">600</property>
+    <property name="height_request">400</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="modal">True</property>
@@ -17,10 +19,34 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkImage" id="image1">
+              <object class="GtkHBox" id="hbox3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="stock">gtk-missing-image</property>
+                <child>
+                  <object class="GtkLabel" id="redditlabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Newsfeed</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="twitterbutton">
+                    <property name="label" translatable="yes">button</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -34,8 +60,7 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkVBox" id="vbox3">
-                    <property name="width_request">300</property>
-                    <property name="height_request">0</property>
+                    <property name="width_request">400</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
@@ -61,7 +86,6 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="has_tooltip">True</property>
-                        <property name="relief">none</property>
                         <property name="uri">http://glade.gnome.org</property>
                       </object>
                       <packing>
@@ -167,11 +191,36 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="loadfavorites">
-                        <property name="label" translatable="yes">Load Favorites</property>
+                      <object class="GtkHBox" id="hbox2">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="homogeneous">True</property>
+                        <child>
+                          <object class="GtkButton" id="previous">
+                            <property name="label" translatable="yes">Previous</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="next">
+                            <property name="label" translatable="yes">Next</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -181,13 +230,14 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkVBox" id="vbox4">
+                    <property name="width_request">200</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
@@ -282,8 +332,8 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="button1">
-                        <property name="label" translatable="yes">Next</property>
+                      <object class="GtkButton" id="savebutton8">
+                        <property name="label" translatable="yes">Save to Favorites</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -292,6 +342,20 @@
                         <property name="expand">True</property>
                         <property name="fill">True</property>
                         <property name="position">7</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="loadfavs">
+                        <property name="label" translatable="yes">Load Favorites</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="image_position">right</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">8</property>
                       </packing>
                     </child>
                   </object>
