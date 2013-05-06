@@ -11,8 +11,11 @@ class Reddit #(change name)
 													#7 posts from the homepage (title might have 27 entries)
 	@@check_variable = 0 #dummy variable	
 
+	# if load_favs = 0, newsfeed links are shown, if = 1, favs are shown
+	@@load_favs = 0 
+
 	@@title = Array.new
-  @@link = Array.new
+  	@@link = Array.new
 
 	#Parse Favorites Json File
 	json_buffer = File.read("favorites.json")
@@ -54,6 +57,39 @@ class Reddit #(change name)
 		show_window()
 	end	
 
+	def show_favs()
+		load_glade(__FILE__)
+		@linkbutton1 = @@json_titles[0 + @@page]		#at the beginning, we are using title[0+0], if we press next, page becomes 8 and this becomes title[8]
+		@linkbutton2 = @@json_titles[1 + @@page]
+		@linkbutton3 = @@json_titles[2 + @@page]
+		@linkbutton4 = @@json_titles[3 + @@page]
+		@linkbutton5 = @@json_titles[4 + @@page]
+		@linkbutton6 = @@json_titles[5 + @@page]
+		@linkbutton7 = @@json_titles[6 + @@page]
+		@linkbutton8 = @@json_titles[7 + @@page]
+		@builder["loadfavs"].label = "Load Reddit Feed"
+		@builder["savebutton1"].label = "Remove From Favorites"
+		@builder["savebutton2"].label = "Remove From Favorites"
+		@builder["savebutton3"].label = "Remove From Favorites"
+		@builder["savebutton4"].label = "Remove From Favorites"
+		@builder["savebutton5"].label = "Remove From Favorites"
+		@builder["savebutton6"].label = "Remove From Favorites"
+		@builder["savebutton7"].label = "Remove From Favorites"
+		@builder["savebutton8"].label = "Remove From Favorites"
+		set_glade_variables(self) # fills label with message
+		@builder["window1"].title = "Reddit App"
+		show_window()
+	end
+
+	#decide if to save or delete when save/delete button is pressed
+	def save_or_delete(num)
+		if @@load_favs == 0
+			save_arrays(num)	
+		else
+			delete_arrays(num) 
+		end 
+	end
+	
 	#save arrays to json file
 	def save_arrays(num)
 		#ensure title and url have not already been written
@@ -83,6 +119,19 @@ class Reddit #(change name)
 			end
 			@@check_variable = 0
 		end
+		
+		#write to json file
+		File.open("favorites.json", "w") do |f|
+			f.write(@@topObject.to_json)
+		end
+		#f.close
+	end
+
+	#delete elements from json arrays
+	def delete_arrays(num)
+		#delete selection from array
+		@@json_titles.delete_at num
+		@@json_urls.delete_at num
 		
 		#write to json file
 		File.open("favorites.json", "w") do |f|
@@ -147,51 +196,77 @@ class Reddit #(change name)
 		end
 	end
 
-	def button2__clicked(*argv)				#Next button, when pressed, it will display the next page in the reddit page
-		if @@page == 0
+	#Previous button, when pressed, it will display the previous page in the reddit page
+	def previous__clicked(*argv)				
+		if @@page == 0 
 		else
 			@@page = @@page - 8
-			self.destroy_window	
-			self.show
+			destroy_window()
+			if @@load_favs == 0	
+				show()
+			else
+				show_favs()
+			end
 		end 
 	end
 
-	def button3__clicked(*argv)				#Next button, when pressed, it will display the next page in the reddit page
-		@@page = @@page + 8
-		self.destroy_window	
-		self.show
+	#Next button, when pressed, it will display the next page in the reddit page
+	def next__clicked(*argv)				
+		if @@link[0+@@page] == nil # if nothing on next or previous page, do nothing
+		else		
+			@@page = @@page + 8
+			destroy_window()
+			if @@load_favs == 0	
+				show()
+			else
+				show_favs()
+			end
+		end
 	end
 
 	#When save button pressed, that title and link are saved
 	def savebutton1__clicked(*argv)
-		save_arrays(0)			
+		save_or_delete(0+@@page)		
 	end
 	
 	def savebutton2__clicked(*argv)	
-		save_arrays(1)			
+		save_or_delete(1 + @@page)			
 	end
 
 	def savebutton3__clicked(*argv)
-		save_arrays(2)				
+		save_or_delete(2 + @@page)				
 	end
 
 	def savebutton4__clicked(*argv)
-		save_arrays(3)				
+		save_or_delete(3 + @@page)				
 	end
 
 	def savebutton5__clicked(*argv)	
-		save_arrays(4)			
+		save_or_delete(4 + @@page)			
 	end
 
 	def savebutton6__clicked(*argv)
-		save_arrays(5)			
+		save_or_delete(5 + @@page)			
 	end
 
 	def savebutton7__clicked(*argv)		
-		save_arrays(6)			
+		save_or_delete(6 + @@page)			
 	end
 
-	def loadfavorites_clicked(*argv)
+	def savebutton8__clicked(*argv)		
+		save_or_delete(7 + @@page)			
+	end
+
+	def loadfavs__clicked(*argv)		
+		destroy_window()
+		@@page = 0
+		if @@load_favs == 0
+			@@load_favs = 1
+			show_favs()
+		else
+			@@load_favs = 0
+			show()
+		end		
 	end
 
 end
