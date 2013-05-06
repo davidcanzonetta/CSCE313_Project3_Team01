@@ -15,7 +15,7 @@ class Reddit #(change name)
 	@@load_favs = 0 
 
 	@@title = Array.new
-  	@@link = Array.new
+  @@link = Array.new
 
 	#Parse Favorites Json File
 	json_buffer = File.read("favorites.json")
@@ -212,7 +212,7 @@ class Reddit #(change name)
 
 	#Next button, when pressed, it will display the next page in the reddit page
 	def next__clicked(*argv)				
-		if @@link[0+@@page] == nil # if nothing on next or previous page, do nothing
+		if (@@page == 24 && @@load_favs == 0) || (@@page == @@json_titles.length && @@load_favs == 1) # if nothing on next or previous page, do nothing
 		else		
 			@@page = @@page + 8
 			destroy_window()
