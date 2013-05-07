@@ -6,19 +6,21 @@ require 'launchy'
 class Reddit #(change name)
 
 	include GladeGUI
-
+	
 	@@page = 0							#page will be used to browse along different pages, since title and link array contain more than
 													#7 posts from the homepage (title might have 27 entries)
-
+	
+	@subreddit = ''			
 	@@title = Array.new
   @@link = Array.new
 	
 	@@saved = Hash.new
 	
   def initialize()
-
+		 	
+		
     @url = 'http://reddit.com/.json'
-
+		
     buffer = open(@url).read
 
     result = JSON.parse(buffer)
@@ -116,19 +118,24 @@ class Reddit #(change name)
 	
 	else
 
-	@@page = @@page - 8
+	@@page = @@page - 8	
 	self.destroy_window	
 	self.show
+	
+
 	end 
 
 	end
 
 	def button3__clicked(*argv)				#Next button, when pressed, it will display the next page in the reddit page
 	
-	@@page = @@page + 8
-	self.destroy_window	
-	self.show
-
+		if @@page == 24
+		else
+		@@page = @@page + 8
+		self.destroy_window	
+		self.show
+		end
+	
 	end
 
 	def checkbutton1__toggled(*argv)			#checkbuttons: when checked, the data will be saved in a hash
@@ -161,11 +168,25 @@ class Reddit #(change name)
 	def button1__clicked(*argv) #Save button, when pressed, it will save anything that it's in @@saved hash into a json file
 	
 		myStr = @@saved.to_json
-
+		
 		aFile = File.new("myString.json", "w")
 		aFile.write(myStr)
 		aFile.close
+	
+	end
 
+	def button4__clicked(*argv)
+		extra = URL_Input.new(self)
+		extra.show()
+	
+	end
+
+	def set_subreddit(url)
+	@@subreddit = url
+	self.destroy_window()
+	new_window = SubReddit.new(@@subreddit)
+	new_window.show()	
 	end
 
 end
+
