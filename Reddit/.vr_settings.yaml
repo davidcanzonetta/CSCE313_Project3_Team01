@@ -1,0 +1,18 @@
+--- !ruby/object:VR_ENV
+browser: firefox
+width: 1596
+height: 837
+panel_pos: 520
+backup_path: C:/Users/Sankar
+tab_spaces: 2
+run_command_line: ruby main.rb
+open_files:
+- C:/Users/Sankar/Desktop/Reddit/bin/RedditWindowGUI.rb
+open_folders:
+- C:/Users/Sankar/Desktop/Reddit
+- C:/Users/Sankar/Desktop/Reddit/bin
+- C:/Users/Sankar/Desktop/Reddit/bin/glade
+current_file: C:/Users/Sankar/Desktop/Reddit/bin/RedditWindowGUI.rb
+glade_path: glade-3
+font_name: Monospace 10
+rdoc_command_line: rdoc -x README
