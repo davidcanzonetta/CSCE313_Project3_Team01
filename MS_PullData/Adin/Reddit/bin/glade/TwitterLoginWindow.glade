@@ -52,6 +52,20 @@
           </packing>
         </child>
         <child>
+          <object class="GtkLabel" id="instructionlabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="ypad">1</property>
+            <property name="label" translatable="yes">Click 'Login' and follow the instructions
+to receive your Twitter Pin Code</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkHButtonBox" id="hbuttonbox1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
@@ -73,11 +87,10 @@
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>
     </child>
   </object>
 </interface>
-
