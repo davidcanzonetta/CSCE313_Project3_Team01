@@ -2,10 +2,20 @@ require 'json'
 require 'open-uri'
 require 'uri'
 require 'launchy'
+require 'snoo'
 
 class Reddit #(change name)
 
 	include GladeGUI
+
+	@username = "rocky24682"
+	@password = "031792"
+
+	#twitter client variable initialized
+	@@twitter_client = ""
+
+	#whether or not user logged in to twitter
+ 	@@logged_in = false
 
 	@@page = 0							#page will be used to browse along different pages, since title and link array contain more than
 													#7 posts from the homepage (title might have 27 entries)
@@ -26,6 +36,9 @@ class Reddit #(change name)
 	def initialize()
 		
 		#Parse Reddit Json
+
+		@reddit = Snoo::Client.new
+
     @url = 'http://reddit.com/.json'
 
     buffer = open(@url).read
@@ -257,6 +270,54 @@ class Reddit #(change name)
 		save_or_delete(7 + @@page)			
 	end
 
+	def twitterbutton1__clicked(*argv)
+		if @@logged_in == true
+			@@twitter_client.update("Check this out! " + @@link[0+@@page])
+		end
+	end
+	
+	def twitterbutton2__clicked(*argv)
+		if @@logged_in == true
+			@@twitter_client.update("Whoa! " + @@link[1+@@page])
+		end
+	end
+	
+	def twitterbutton3__clicked(*argv)
+		if @@logged_in == true
+			@@twitter_client.update("Look what I found. " + @@link[2+@@page])
+		end
+	end
+
+	def twitterbutton4__clicked(*argv)
+		if @@logged_in == true
+			@@twitter_client.update("Got this from the best app ever. " + @@link[3+@@page])
+		end
+	end
+
+	def twitterbutton5__clicked(*argv)
+		if @@logged_in == true
+			@@twitter_client.update("Mind. Blown. " + @@link[4+@@page])
+		end
+	end
+
+	def twitterbutton6__clicked(*argv)
+		if @@logged_in == true
+			@@twitter_client.update("#hashtag " + @@link[5+@@page])
+		end
+	end
+
+	def twitterbutton7__clicked(*argv)
+		if @@logged_in == true
+			@@twitter_client.update("Almost as cool as Drake. #awesome " + @@link[6+@@page])
+		end
+	end
+
+	def twitterbutton8__clicked(*argv)
+		if @@logged_in == true
+			@@twitter_client.update("#brilliant " + @@link[7+@@page])
+		end
+	end
+
 	def loadfavs__clicked(*argv)		
 		destroy_window()
 		@@page = 0
@@ -267,6 +328,29 @@ class Reddit #(change name)
 			@@load_favs = 0
 			show()
 		end		
+	end
+
+	def on_twitterlogin_activate
+		# log in to twitter
+		@twitterWin = TwitterLoginWindow.new(self) #self = parent
+		@twitterWin.show(self)
+	end
+
+	def list_subreddits
+	end
+
+	def from_child(client)
+		#client.update("I'm kind of a big deal")
+		@@logged_in = true
+		@builder["twitterbutton1"].sensitive = true
+		@builder["twitterbutton2"].sensitive = true
+		@builder["twitterbutton3"].sensitive = true
+		@builder["twitterbutton4"].sensitive = true
+		@builder["twitterbutton5"].sensitive = true
+		@builder["twitterbutton6"].sensitive = true
+		@builder["twitterbutton7"].sensitive = true
+		@builder["twitterbutton8"].sensitive = true
+		@@twitter_client = client
 	end
 
 end
