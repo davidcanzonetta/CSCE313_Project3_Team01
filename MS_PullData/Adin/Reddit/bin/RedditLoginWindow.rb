@@ -18,10 +18,9 @@ class RedditLoginWindow #(change name)
 		@password = @builder["entry2"].text
 		if @username.size > 0 && @password.size > 0
 			if (@reddit.log_in @username, @password).code == 200
+				self.destroy_window()	
 				@redditWin = RedditWindowGUI.new() 
-							
-				@redditWin.show
-				self.destroy_window()							
+				@redditWin.show(self)					
 			end
 		else
 				@builder["label3"].text = "Please enter a valid username and/or password"
