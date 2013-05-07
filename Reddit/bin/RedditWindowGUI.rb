@@ -417,22 +417,21 @@ class RedditWindowGUI < RedditWindow #(change name)
 	end
 
 	def commentbutton__clicked(*argv)
-		#@comment = @builder["commentbox"].text
-		@comment = "This is a test"
+		@comment = @builder["commentbox"].text
 		@id = "t3_" + @@current_selection[0]
 		
 		@reddit.comment @comment, @id
+		@commentbox = ""
+		set_glade_variables(self)
 	end
 	
 	def button1__clicked(*argv)
 		@id = "t3_" + @@current_selection[0]
-		
 		@reddit.upvote @id
 	end
 
 	def button2__clicked(*argv)
 		@id = "t3_" + @@current_selection[0]
-		
 		@reddit.downvote @id
 	end
 
