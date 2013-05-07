@@ -1,4 +1,4 @@
-class RedditWindowGUI < RedditWindow #(change name)
+class RedditWindowGUI #< RedditWindow #(change name)
 
 	include GladeGUI
 
@@ -7,7 +7,7 @@ class RedditWindowGUI < RedditWindow #(change name)
 		show_window()
 	end
 
-	def image1__clicked(*argv) 
+	def button1__clicked(*argv) 
 		@twitterWin = TwitterLoginWindow.new() #self = parent
 		@twitterWin.show(self)
 	end

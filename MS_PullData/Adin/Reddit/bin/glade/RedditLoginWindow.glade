@@ -6,7 +6,6 @@
     <property name="visible">True</property>
     <property name="modal">True</property>
     <property name="window_position">center-always</property>
-    <signal name="destroy" handler="destroy_window"/>
     <child>
       <object class="GtkVBox" id="vbox2">
         <property name="visible">True</property>
@@ -32,6 +31,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x25CF;</property>
+                    <property name="caps_lock_warning">False</property>
                   </object>
                   <packing>
                     <property name="padding">10</property>
